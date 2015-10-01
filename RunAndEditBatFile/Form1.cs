@@ -187,14 +187,14 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 }
                 else
                 {
-                    //if (Directory.Exists(textBoxQfPath.Text))
+                    if (Directory.Exists(textBoxQfPath.Text))
                     {
                         count = int.Parse(textBoxTo.Text) - int.Parse(textBoxFrom.Text);
                         from = int.Parse(textBoxFrom.Text);
                         isFirstRun = true;
 
-                        while (count > 0)
-                        {
+                        //while (count > 0)
+                        //{
                             //if-sats för första körningen om restore av Db
                             if (textBoxFrom.Text == "0" && isFirstRun)
                             {

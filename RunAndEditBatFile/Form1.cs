@@ -195,7 +195,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
 
                         while (count > 0)
                         {
-                            //if-sats för första körningen om restore av Db
+                            if-sats för första körningen om restore av Db
                             if (textBoxFrom.Text == "0" && isFirstRun)
                             {
                                 restoreAndToQF1bat = "";

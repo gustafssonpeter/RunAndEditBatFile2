@@ -317,45 +317,45 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
 
         private void buttonBackupDb_Click(object sender, EventArgs e)
         {
-            //if (textBoxBackupClient.Text.IndexOf(@"\") != -1)
-            //    isNotLocalServer = true;
-            //else
-            //    isNotLocalServer = false;
+            if (textBoxBackupClient.Text.IndexOf(@"\") != -1)
+                isNotLocalServer = true;
+            else
+                isNotLocalServer = false;
 
-            //if (!String.IsNullOrEmpty(textBoxBackupClient.Text) && !String.IsNullOrEmpty(textBoxBackupDb.Text) && !String.IsNullOrEmpty(textBoxBackupPath.Text))
-            //{
-            //    if (Directory.Exists(textBoxBackupPath.Text))
-            //    {
-            //        createBackupSqlFile("C:\\Databaser\\DbBackup.sql", sqlBackupDatabase);
-            //        createBackupBatFile("C:\\Databaser\\DbBackup.bat", runBackupScript);
-
-            //        startFile("C:\\Databaser\\DbBackup.bat");
-            //    }
-            //    else
-            //        MessageBox.Show("The directory " + textBoxBackupPath.Text + " don't exists");
-            //}
-            //else
-            //    MessageBox.Show("Please enter:\rClient, Database and Path for backup file");
-
-            //if (File.Exists(@"C:\databaser\DbBackupSQL.txt"))
-            //    MessageBox.Show(File.ReadAllText("C:\\databaser\\DbBackupSQL.txt"), "Backup result!");
-
-            //TEST
-            System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo(@"C:\Databaser\DbBackup.bat");
-            psi.RedirectStandardOutput = true;
-            psi.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-            psi.UseShellExecute = false;
-            System.Diagnostics.Process listFiles;
-            listFiles = System.Diagnostics.Process.Start(psi);
-            System.IO.StreamReader myOutput = listFiles.StandardOutput;
-            listFiles.WaitForExit(2000);
-            if (listFiles.HasExited)
+            if (!String.IsNullOrEmpty(textBoxBackupClient.Text) && !String.IsNullOrEmpty(textBoxBackupDb.Text) && !String.IsNullOrEmpty(textBoxBackupPath.Text))
             {
-                string output = myOutput.ReadToEnd();
-                MessageBox.Show("KLAR!");
-            }
+                if (Directory.Exists(textBoxBackupPath.Text))
+                {
+                    createBackupSqlFile("C:\\Databaser\\DbBackup.sql", sqlBackupDatabase);
+                    createBackupBatFile("C:\\Databaser\\DbBackup.bat", runBackupScript);
 
-            //TEST
+                    startFile("C:\\Databaser\\DbBackup.bat");
+                }
+                else
+                    MessageBox.Show("The directory " + textBoxBackupPath.Text + " don't exists");
+            }
+            else
+                MessageBox.Show("Please enter:\rClient, Database and Path for backup file");
+
+            if (File.Exists(@"C:\databaser\DbBackupSQL.txt"))
+                MessageBox.Show(File.ReadAllText("C:\\databaser\\DbBackupSQL.txt"), "Backup result!");
+
+            ////TEST
+            //System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo(@"C:\Databaser\DbBackup.bat");
+            //psi.RedirectStandardOutput = true;
+            //psi.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            //psi.UseShellExecute = false;
+            //System.Diagnostics.Process listFiles;
+            //listFiles = System.Diagnostics.Process.Start(psi);
+            //System.IO.StreamReader myOutput = listFiles.StandardOutput;
+            //listFiles.WaitForExit(2000);
+            //if (listFiles.HasExited)
+            //{
+            //    string output = myOutput.ReadToEnd();
+            //    MessageBox.Show("KLAR!");
+            //}
+
+            ////TEST
         }
 
         private void buttonBackupPath_Click(object sender, EventArgs e)

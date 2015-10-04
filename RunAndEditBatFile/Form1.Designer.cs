@@ -100,14 +100,14 @@
             this.textBoxClient.Location = new System.Drawing.Point(244, 120);
             this.textBoxClient.Name = "textBoxClient";
             this.textBoxClient.Size = new System.Drawing.Size(133, 20);
-            this.textBoxClient.TabIndex = 6;
+            this.textBoxClient.TabIndex = 7;
             // 
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(454, 327);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(160, 23);
-            this.button2.TabIndex = 16;
+            this.button2.TabIndex = 17;
             this.button2.Text = "Clear Form";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
@@ -118,7 +118,7 @@
             this.textBoxDatabaseP.Location = new System.Drawing.Point(244, 171);
             this.textBoxDatabaseP.Name = "textBoxDatabaseP";
             this.textBoxDatabaseP.Size = new System.Drawing.Size(133, 20);
-            this.textBoxDatabaseP.TabIndex = 7;
+            this.textBoxDatabaseP.TabIndex = 8;
             // 
             // label5
             // 
@@ -144,7 +144,7 @@
             this.textBoxDatabaseH.Location = new System.Drawing.Point(244, 224);
             this.textBoxDatabaseH.Name = "textBoxDatabaseH";
             this.textBoxDatabaseH.Size = new System.Drawing.Size(133, 20);
-            this.textBoxDatabaseH.TabIndex = 8;
+            this.textBoxDatabaseH.TabIndex = 9;
             // 
             // checkBoxRestoreDB
             // 
@@ -197,7 +197,7 @@
             this.textBoxVersion.Location = new System.Drawing.Point(244, 69);
             this.textBoxVersion.Name = "textBoxVersion";
             this.textBoxVersion.Size = new System.Drawing.Size(133, 20);
-            this.textBoxVersion.TabIndex = 5;
+            this.textBoxVersion.TabIndex = 6;
             // 
             // label6
             // 
@@ -251,7 +251,7 @@
             this.radioButtonRestoreToTRUNK.Location = new System.Drawing.Point(7, 70);
             this.radioButtonRestoreToTRUNK.Name = "radioButtonRestoreToTRUNK";
             this.radioButtonRestoreToTRUNK.Size = new System.Drawing.Size(115, 17);
-            this.radioButtonRestoreToTRUNK.TabIndex = 2;
+            this.radioButtonRestoreToTRUNK.TabIndex = 26;
             this.radioButtonRestoreToTRUNK.TabStop = true;
             this.radioButtonRestoreToTRUNK.Text = "Restore to TRUNK";
             this.radioButtonRestoreToTRUNK.UseVisualStyleBackColor = true;
@@ -286,7 +286,7 @@
             this.button1.Location = new System.Drawing.Point(454, 274);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(160, 23);
-            this.button1.TabIndex = 15;
+            this.button1.TabIndex = 16;
             this.button1.TabStop = false;
             this.button1.Text = "Start Restore/Upgrade";
             this.button1.UseVisualStyleBackColor = true;
@@ -297,7 +297,7 @@
             this.textBoxPath.Location = new System.Drawing.Point(244, 383);
             this.textBoxPath.Name = "textBoxPath";
             this.textBoxPath.Size = new System.Drawing.Size(163, 20);
-            this.textBoxPath.TabIndex = 14;
+            this.textBoxPath.TabIndex = 15;
             // 
             // label7
             // 
@@ -313,7 +313,7 @@
             this.buttonFolderPath.Location = new System.Drawing.Point(163, 380);
             this.buttonFolderPath.Name = "buttonFolderPath";
             this.buttonFolderPath.Size = new System.Drawing.Size(75, 23);
-            this.buttonFolderPath.TabIndex = 13;
+            this.buttonFolderPath.TabIndex = 14;
             this.buttonFolderPath.Text = "Browse";
             this.buttonFolderPath.UseVisualStyleBackColor = true;
             this.buttonFolderPath.Click += new System.EventHandler(this.buttonFolderPath_Click);
@@ -329,7 +329,7 @@
             this.buttonFileProd.Location = new System.Drawing.Point(163, 275);
             this.buttonFileProd.Name = "buttonFileProd";
             this.buttonFileProd.Size = new System.Drawing.Size(75, 23);
-            this.buttonFileProd.TabIndex = 9;
+            this.buttonFileProd.TabIndex = 10;
             this.buttonFileProd.Text = "Browse";
             this.buttonFileProd.UseVisualStyleBackColor = true;
             this.buttonFileProd.Click += new System.EventHandler(this.button3_Click);
@@ -339,14 +339,14 @@
             this.textBoxFileProd.Location = new System.Drawing.Point(244, 277);
             this.textBoxFileProd.Name = "textBoxFileProd";
             this.textBoxFileProd.Size = new System.Drawing.Size(163, 20);
-            this.textBoxFileProd.TabIndex = 10;
+            this.textBoxFileProd.TabIndex = 11;
             // 
             // textBoxFileHist
             // 
             this.textBoxFileHist.Location = new System.Drawing.Point(244, 330);
             this.textBoxFileHist.Name = "textBoxFileHist";
             this.textBoxFileHist.Size = new System.Drawing.Size(163, 20);
-            this.textBoxFileHist.TabIndex = 12;
+            this.textBoxFileHist.TabIndex = 13;
             // 
             // labelFileProd
             // 
@@ -371,7 +371,7 @@
             this.buttonFileHist.Location = new System.Drawing.Point(163, 328);
             this.buttonFileHist.Name = "buttonFileHist";
             this.buttonFileHist.Size = new System.Drawing.Size(75, 23);
-            this.buttonFileHist.TabIndex = 11;
+            this.buttonFileHist.TabIndex = 12;
             this.buttonFileHist.Text = "Browse";
             this.buttonFileHist.UseVisualStyleBackColor = true;
             this.buttonFileHist.Click += new System.EventHandler(this.buttonFileHist_Click);
@@ -450,7 +450,7 @@
             this.buttonBackupDb.Location = new System.Drawing.Point(682, 327);
             this.buttonBackupDb.Name = "buttonBackupDb";
             this.buttonBackupDb.Size = new System.Drawing.Size(108, 23);
-            this.buttonBackupDb.TabIndex = 37;
+            this.buttonBackupDb.TabIndex = 25;
             this.buttonBackupDb.Text = "Backup db";
             this.buttonBackupDb.UseVisualStyleBackColor = true;
             this.buttonBackupDb.Click += new System.EventHandler(this.buttonBackupDb_Click);
@@ -460,14 +460,14 @@
             this.textBoxBackupClient.Location = new System.Drawing.Point(682, 69);
             this.textBoxBackupClient.Name = "textBoxBackupClient";
             this.textBoxBackupClient.Size = new System.Drawing.Size(131, 20);
-            this.textBoxBackupClient.TabIndex = 32;
+            this.textBoxBackupClient.TabIndex = 20;
             // 
             // textBoxBackupDb
             // 
             this.textBoxBackupDb.Location = new System.Drawing.Point(682, 120);
             this.textBoxBackupDb.Name = "textBoxBackupDb";
             this.textBoxBackupDb.Size = new System.Drawing.Size(131, 20);
-            this.textBoxBackupDb.TabIndex = 33;
+            this.textBoxBackupDb.TabIndex = 21;
             // 
             // label8
             // 
@@ -492,7 +492,7 @@
             this.textBoxBackupPath.Location = new System.Drawing.Point(682, 224);
             this.textBoxBackupPath.Name = "textBoxBackupPath";
             this.textBoxBackupPath.Size = new System.Drawing.Size(155, 20);
-            this.textBoxBackupPath.TabIndex = 35;
+            this.textBoxBackupPath.TabIndex = 23;
             // 
             // label10
             // 
@@ -508,7 +508,7 @@
             this.buttonBackupPath.Location = new System.Drawing.Point(682, 251);
             this.buttonBackupPath.Name = "buttonBackupPath";
             this.buttonBackupPath.Size = new System.Drawing.Size(75, 23);
-            this.buttonBackupPath.TabIndex = 36;
+            this.buttonBackupPath.TabIndex = 24;
             this.buttonBackupPath.Text = "Browse";
             this.buttonBackupPath.UseVisualStyleBackColor = true;
             this.buttonBackupPath.Click += new System.EventHandler(this.buttonBackupPath_Click);
@@ -518,7 +518,7 @@
             this.textBoxBackupFile.Location = new System.Drawing.Point(682, 171);
             this.textBoxBackupFile.Name = "textBoxBackupFile";
             this.textBoxBackupFile.Size = new System.Drawing.Size(131, 20);
-            this.textBoxBackupFile.TabIndex = 34;
+            this.textBoxBackupFile.TabIndex = 22;
             // 
             // label11
             // 
@@ -534,7 +534,7 @@
             this.buttonSave.Location = new System.Drawing.Point(454, 380);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(73, 23);
-            this.buttonSave.TabIndex = 41;
+            this.buttonSave.TabIndex = 18;
             this.buttonSave.Text = "Save data";
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
@@ -544,7 +544,7 @@
             this.buttonLoad.Location = new System.Drawing.Point(545, 380);
             this.buttonLoad.Name = "buttonLoad";
             this.buttonLoad.Size = new System.Drawing.Size(69, 23);
-            this.buttonLoad.TabIndex = 42;
+            this.buttonLoad.TabIndex = 19;
             this.buttonLoad.Text = "Load data";
             this.buttonLoad.UseVisualStyleBackColor = true;
             this.buttonLoad.Click += new System.EventHandler(this.buttonLoad_Click);

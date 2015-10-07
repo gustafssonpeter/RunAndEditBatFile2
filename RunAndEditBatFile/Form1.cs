@@ -509,6 +509,9 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 case 5:
                     rbUpgradeFromPath.Checked = true;
                     break;
+                case 6:
+                    rbBackupDb.Checked = true;
+                    break;
             }
         }
 
@@ -597,8 +600,15 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             checkBoxRestoreDB.Enabled = true;
             label1.Enabled = true;
             label2.Enabled = true;
+            label3.Enabled = true;
+            label4.Enabled = true;
+            label5.Enabled = true;
             label6.Enabled = true;
             label7.Enabled = false;
+            label8.Enabled = false;
+            label9.Enabled = false;
+            label10.Enabled = false;
+            label11.Enabled = false;
             buttonFolderPath.Enabled = false;
             labelFileProd.Enabled = false;
             labelFileHist.Enabled = false;
@@ -606,11 +616,19 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             textBoxFileHist.Enabled = false;
             buttonFileProd.Enabled = false;
             buttonFileHist.Enabled = false;
+            button1.Enabled = true;
             checkBoxRestoreDB.Focus();
             labelQfPath.Enabled = true;
             textBoxQfPath.Enabled = true;
             buttonQfPath.Enabled = true;
             checkBoxNotCopyFiles.Enabled = true;
+            checkBoxNotCopyFiles.Enabled = false;
+            buttonBackupDb.Enabled = false;
+            buttonBackupPath.Enabled = false;
+            textBoxBackupClient.Enabled = false;
+            textBoxBackupDb.Enabled = false;
+            textBoxBackupPath.Enabled = false;
+            textBoxBackupFile.Enabled = false;
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
@@ -625,8 +643,15 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             checkBoxRestoreDB.Enabled = false;
             label1.Enabled = false;
             label2.Enabled = false;
+            label3.Enabled = true;
+            label4.Enabled = true;
+            label5.Enabled = true;
             label6.Enabled = true;
             label7.Enabled = false;
+            label8.Enabled = false;
+            label9.Enabled = false;
+            label10.Enabled = false;
+            label11.Enabled = false;
             buttonFolderPath.Enabled = false;
             labelFileProd.Enabled = false;
             labelFileHist.Enabled = false;
@@ -634,11 +659,19 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             textBoxFileHist.Enabled = false;
             buttonFileProd.Enabled = false;
             buttonFileHist.Enabled = false;
+            button1.Enabled = true;
             textBoxVersion.Focus();
             labelQfPath.Enabled = false;
             textBoxQfPath.Enabled = false;
             buttonQfPath.Enabled = false;
             checkBoxNotCopyFiles.Enabled = true;
+            checkBoxNotCopyFiles.Enabled = false;
+            buttonBackupDb.Enabled = false;
+            buttonBackupPath.Enabled = false;
+            textBoxBackupClient.Enabled = false;
+            textBoxBackupDb.Enabled = false;
+            textBoxBackupPath.Enabled = false;
+            textBoxBackupFile.Enabled = false;
         }
 
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
@@ -653,8 +686,15 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             checkBoxRestoreDB.Enabled = false;
             label1.Enabled = false;
             label2.Enabled = false;
+            label3.Enabled = true;
+            label4.Enabled = true;
+            label5.Enabled = true;
             label6.Enabled = true;
             label7.Enabled = false;
+            label8.Enabled = false;
+            label9.Enabled = false;
+            label10.Enabled = false;
+            label11.Enabled = false;
             buttonFolderPath.Enabled = false;
             labelFileProd.Enabled = false;
             labelFileHist.Enabled = false;
@@ -662,11 +702,19 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             textBoxFileHist.Enabled = false;
             buttonFileProd.Enabled = false;
             buttonFileHist.Enabled = false;
+            button1.Enabled = true;
             textBoxVersion.Focus();
             labelQfPath.Enabled = false;
             textBoxQfPath.Enabled = false;
             buttonQfPath.Enabled = false;
             checkBoxNotCopyFiles.Enabled = true;
+            checkBoxNotCopyFiles.Enabled = false;
+            buttonBackupDb.Enabled = false;
+            buttonBackupPath.Enabled = false;
+            textBoxBackupClient.Enabled = false;
+            textBoxBackupDb.Enabled = false;
+            textBoxBackupPath.Enabled = false;
+            textBoxBackupFile.Enabled = false;
         }
 
         private void radioButtonRestoreOtherFiles_CheckedChanged(object sender, EventArgs e)
@@ -681,8 +729,15 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             checkBoxRestoreDB.Enabled = false;
             label1.Enabled = false;
             label2.Enabled = false;
+            label3.Enabled = true;
+            label4.Enabled = true;
+            label5.Enabled = true;
             label6.Enabled = false;
             label7.Enabled = false;
+            label8.Enabled = false;
+            label9.Enabled = false;
+            label10.Enabled = false;
+            label11.Enabled = false;
             buttonFolderPath.Enabled = false;
             labelFileProd.Enabled = true;
             labelFileHist.Enabled = true;
@@ -690,11 +745,19 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             textBoxFileHist.Enabled = true;
             buttonFileProd.Enabled = true;
             buttonFileHist.Enabled = true;
+            button1.Enabled = true;
             textBoxVersion.Focus();
             labelQfPath.Enabled = false;
             textBoxQfPath.Enabled = false;
             buttonQfPath.Enabled = false;
             checkBoxNotCopyFiles.Enabled = false;
+            checkBoxNotCopyFiles.Enabled = false;
+            buttonBackupDb.Enabled = false;
+            buttonBackupPath.Enabled = false;
+            textBoxBackupClient.Enabled = false;
+            textBoxBackupDb.Enabled = false;
+            textBoxBackupPath.Enabled = false;
+            textBoxBackupFile.Enabled = false;
         }
 
         private void rbUpgradeFromPath_CheckedChanged(object sender, EventArgs e)
@@ -709,8 +772,15 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             checkBoxRestoreDB.Enabled = false;
             label1.Enabled = false;
             label2.Enabled = false;
+            label3.Enabled = true;
+            label4.Enabled = true;
+            label5.Enabled = true;
             label6.Enabled = false;
-            label7.Enabled = true;
+            label7.Enabled = false;
+            label8.Enabled = false;
+            label9.Enabled = false;
+            label10.Enabled = false;
+            label11.Enabled = false;
             buttonFolderPath.Enabled = true;
             labelFileProd.Enabled = false;
             labelFileHist.Enabled = false;
@@ -718,11 +788,60 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             textBoxFileHist.Enabled = false;
             buttonFileProd.Enabled = false;
             buttonFileHist.Enabled = false;
+            button1.Enabled = true;
             textBoxVersion.Focus();
             labelQfPath.Enabled = false;
             textBoxQfPath.Enabled = false;
             buttonQfPath.Enabled = false;
             checkBoxNotCopyFiles.Enabled = false;
+            buttonBackupDb.Enabled = false;
+            buttonBackupPath.Enabled = false;
+            textBoxBackupClient.Enabled = false;
+            textBoxBackupDb.Enabled = false;
+            textBoxBackupPath.Enabled = false;
+            textBoxBackupFile.Enabled = false;
+        }
+
+        private void rbBackupDb_CheckedChanged(object sender, EventArgs e)
+        {
+            textBoxFrom.Enabled = false;
+            textBoxTo.Enabled = false;
+            textBoxVersion.Enabled = false;
+            textBoxClient.Enabled = false;
+            textBoxDatabaseP.Enabled = false;
+            textBoxDatabaseH.Enabled = false;
+            textBoxPath.Enabled = false;
+            checkBoxRestoreDB.Enabled = false;
+            label1.Enabled = false;
+            label2.Enabled = false;
+            label3.Enabled = false;
+            label4.Enabled = false;
+            label5.Enabled = false;
+            label6.Enabled = false;
+            label7.Enabled = false;
+            label8.Enabled = true;
+            label9.Enabled = true;
+            label10.Enabled = true;
+            label11.Enabled = true;
+            buttonFolderPath.Enabled = false;
+            labelFileProd.Enabled = false;
+            labelFileHist.Enabled = false;
+            textBoxFileProd.Enabled = false;
+            textBoxFileHist.Enabled = false;
+            buttonFileProd.Enabled = false;
+            buttonFileHist.Enabled = false;
+            button1.Enabled = false;
+            textBoxVersion.Focus();
+            labelQfPath.Enabled = false;
+            textBoxQfPath.Enabled = false;
+            buttonQfPath.Enabled = false;
+            checkBoxNotCopyFiles.Enabled = false;
+            buttonBackupDb.Enabled = true;
+            buttonBackupPath.Enabled = true;
+            textBoxBackupClient.Enabled = true;
+            textBoxBackupDb.Enabled = true;
+            textBoxBackupPath.Enabled = true;
+            textBoxBackupFile.Enabled = true;
         }
 
         static public void startFile(string file)

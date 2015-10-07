@@ -81,6 +81,7 @@
             this.label11 = new System.Windows.Forms.Label();
             this.buttonSave = new System.Windows.Forms.Button();
             this.buttonLoad = new System.Windows.Forms.Button();
+            this.rbBackupDb = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -210,6 +211,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.rbBackupDb);
             this.groupBox1.Controls.Add(this.radioButtonRestoreFromOtherFiles);
             this.groupBox1.Controls.Add(this.rbUpgradeFromPath);
             this.groupBox1.Controls.Add(this.radioButtonRestoreToTRUNK);
@@ -217,7 +219,7 @@
             this.groupBox1.Controls.Add(this.radioButtonUpgradeQFdb);
             this.groupBox1.Location = new System.Drawing.Point(406, 40);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(180, 151);
+            this.groupBox1.Size = new System.Drawing.Size(180, 178);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             // 
@@ -438,7 +440,7 @@
             // checkBoxNotCopyFiles
             // 
             this.checkBoxNotCopyFiles.AutoSize = true;
-            this.checkBoxNotCopyFiles.Location = new System.Drawing.Point(406, 207);
+            this.checkBoxNotCopyFiles.Location = new System.Drawing.Point(406, 224);
             this.checkBoxNotCopyFiles.Name = "checkBoxNotCopyFiles";
             this.checkBoxNotCopyFiles.Size = new System.Drawing.Size(188, 17);
             this.checkBoxNotCopyFiles.TabIndex = 30;
@@ -548,6 +550,17 @@
             this.buttonLoad.Text = "Load data";
             this.buttonLoad.UseVisualStyleBackColor = true;
             this.buttonLoad.Click += new System.EventHandler(this.buttonLoad_Click);
+            // 
+            // rbBackupDb
+            // 
+            this.rbBackupDb.AutoSize = true;
+            this.rbBackupDb.Location = new System.Drawing.Point(7, 144);
+            this.rbBackupDb.Name = "rbBackupDb";
+            this.rbBackupDb.Size = new System.Drawing.Size(77, 17);
+            this.rbBackupDb.TabIndex = 27;
+            this.rbBackupDb.TabStop = true;
+            this.rbBackupDb.Text = "Backup db";
+            this.rbBackupDb.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -665,6 +678,7 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.Button buttonLoad;
+        private System.Windows.Forms.RadioButton rbBackupDb;
     }
 }
 

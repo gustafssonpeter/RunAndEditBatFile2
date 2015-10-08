@@ -311,6 +311,9 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             }
             else
                 MessageBox.Show("Please enter:\rClient, Database and Path for backup file");
+
+            if(File.Exists(@"C:\databaser\DbBackupSQL.txt"))
+                MessageBox.Show(File.ReadAllText("C:\\databaser\\DbBackupSQL.txt"), "Backup result!");
         }
 
         private void buttonBackupPath_Click(object sender, EventArgs e)

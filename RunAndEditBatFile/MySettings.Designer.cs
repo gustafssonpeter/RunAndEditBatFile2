@@ -178,5 +178,29 @@ namespace DB_Updater {
                 this["backupPath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool checkBoxNotCopyFiles {
+            get {
+                return ((bool)(this["checkBoxNotCopyFiles"]));
+            }
+            set {
+                this["checkBoxNotCopyFiles"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool checkBoxRestoreDB {
+            get {
+                return ((bool)(this["checkBoxRestoreDB"]));
+            }
+            set {
+                this["checkBoxRestoreDB"] = value;
+            }
+        }
     }
 }

@@ -1,14 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.IO.Compression;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using System.Text.RegularExpressions;
 using System.Diagnostics;
 
 namespace DB_Updater
@@ -96,7 +88,7 @@ GO";
 @"
 cd ""c:\databaser""
 sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\databaser\DbBackupSQL.txt""";
-
+        
 
         public Form1()
         {
@@ -113,35 +105,20 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 isNotLocalServer = false;
 
             if (radioButtonUpgradeQFdb.Checked)
-            {
-                rbState = 1;
                 startQfUpgrade();
-            }
 
             if (radioButtonRestoreToBase.Checked)
-            {
-                rbState = 2;
                 restoreToBaseVersion();
-            }
-
+  
             if (radioButtonRestoreToTRUNK.Checked)
-            {
-                rbState = 3;
                 restoreToTrunk();
-            }
 
             if (radioButtonRestoreFromOtherFiles.Checked)
-            {
-                rbState = 4;
                 restoreToOther();
-            }
-
+            
             if (rbUpgradeFromPath.Checked)
-            {
-                rbState = 5;
                 upgradeFromPathFiles();
-            }
-
+           
             if (isRestored)
             {
                 MessageBox.Show(File.ReadAllText("C:\\databaser\\DBupdate_restoreSQL.txt"), "Restore result!");
@@ -152,25 +129,23 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
         //Clear button
         private void button2_Click(object sender, EventArgs e)
         {
-            textBoxFrom.Clear();
-            textBoxTo.Clear();
+            radioButtonRestoreToTRUNK.Checked = true;
+            textBoxVersion.Clear();
             textBoxClient.Clear();
             textBoxDatabaseP.Clear();
             textBoxDatabaseH.Clear();
-            textBoxVersion.Clear();
             textBoxPath.Clear();
             textBoxFileProd.Clear();
             textBoxFileHist.Clear();
-            checkBoxRestoreDB.Checked = false;
-            radioButtonUpgradeQFdb.Checked = false;
-            radioButtonRestoreToTRUNK.Checked = true;
-            checkBoxRestoreDB.Focus();
             textBoxQfPath.Clear();
-            checkBoxNotCopyFiles.Checked = false;
             textBoxBackupClient.Clear();
             textBoxBackupDb.Clear();
             textBoxBackupFile.Clear();
             textBoxBackupPath.Clear();
+            textBoxFrom.Clear();
+            textBoxTo.Clear();
+            checkBoxNotCopyFiles.Checked = false;
+            checkBoxRestoreDB.Checked = false;
         }
 
         private void startQfUpgrade()
@@ -336,26 +311,6 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             }
             else
                 MessageBox.Show("Please enter:\rClient, Database and Path for backup file");
-
-            if (File.Exists(@"C:\databaser\DbBackupSQL.txt"))
-                MessageBox.Show(File.ReadAllText("C:\\databaser\\DbBackupSQL.txt"), "Backup result!");
-
-            ////TEST
-            //System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo(@"C:\Databaser\DbBackup.bat");
-            //psi.RedirectStandardOutput = true;
-            //psi.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-            //psi.UseShellExecute = false;
-            //System.Diagnostics.Process listFiles;
-            //listFiles = System.Diagnostics.Process.Start(psi);
-            //System.IO.StreamReader myOutput = listFiles.StandardOutput;
-            //listFiles.WaitForExit(2000);
-            //if (listFiles.HasExited)
-            //{
-            //    string output = myOutput.ReadToEnd();
-            //    MessageBox.Show("KLAR!");
-            //}
-
-            ////TEST
         }
 
         private void buttonBackupPath_Click(object sender, EventArgs e)
@@ -491,6 +446,10 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             textBoxBackupDb.Text = MySettings.Default.backupDatabase;
             textBoxBackupFile.Text = MySettings.Default.backupFile;
             textBoxBackupPath.Text = MySettings.Default.backupPath;
+            bool checkBox1 = MySettings.Default.checkBoxRestoreDB;
+            bool checkBox2 = MySettings.Default.checkBoxNotCopyFiles;
+            checkBoxRestoreDB.Checked = checkBox1;
+            checkBoxNotCopyFiles.Checked = checkBox2;
 
             switch (MySettings.Default.rb)
             {
@@ -527,7 +486,18 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 rbState = 4;
             if (rbUpgradeFromPath.Checked)
                 rbState = 5;
+            if (rbBackupDb.Checked)
+                rbState = 6;
 
+            if (checkBoxRestoreDB.Checked == true)
+                MySettings.Default.checkBoxRestoreDB = true;
+            if (checkBoxRestoreDB.Checked == false)
+                MySettings.Default.checkBoxRestoreDB = false;
+            if (checkBoxNotCopyFiles.Checked == true)
+                MySettings.Default.checkBoxNotCopyFiles = true;
+            if (checkBoxNotCopyFiles.Checked == false)
+                MySettings.Default.checkBoxNotCopyFiles = false;
+            
             MySettings.Default.version = textBoxVersion.Text;
             MySettings.Default.client = textBoxClient.Text;
             MySettings.Default.dbp = textBoxDatabaseP.Text;
@@ -665,7 +635,6 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             textBoxQfPath.Enabled = false;
             buttonQfPath.Enabled = false;
             checkBoxNotCopyFiles.Enabled = true;
-            checkBoxNotCopyFiles.Enabled = false;
             buttonBackupDb.Enabled = false;
             buttonBackupPath.Enabled = false;
             textBoxBackupClient.Enabled = false;
@@ -708,7 +677,6 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             textBoxQfPath.Enabled = false;
             buttonQfPath.Enabled = false;
             checkBoxNotCopyFiles.Enabled = true;
-            checkBoxNotCopyFiles.Enabled = false;
             buttonBackupDb.Enabled = false;
             buttonBackupPath.Enabled = false;
             textBoxBackupClient.Enabled = false;
@@ -750,8 +718,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             labelQfPath.Enabled = false;
             textBoxQfPath.Enabled = false;
             buttonQfPath.Enabled = false;
-            checkBoxNotCopyFiles.Enabled = false;
-            checkBoxNotCopyFiles.Enabled = false;
+            checkBoxNotCopyFiles.Enabled = true;
             buttonBackupDb.Enabled = false;
             buttonBackupPath.Enabled = false;
             textBoxBackupClient.Enabled = false;
@@ -848,25 +815,26 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
         {
             if (File.Exists(file))
             {
-                //Process proc = new Process();
-                //proc.StartInfo.FileName = "cmd.exe";
-                //proc.StartInfo.Arguments = @"/C " + file;
-                //proc.Start();
-                //proc.WaitForExit();
-                //proc.Close();
-                System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo(file);
-                psi.RedirectStandardOutput = true;
-                psi.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
-                psi.UseShellExecute = false;
-                System.Diagnostics.Process listFiles;
-                listFiles = System.Diagnostics.Process.Start(psi);
-                System.IO.StreamReader myOutput = listFiles.StandardOutput;
-                listFiles.WaitForExit(2000);
-                if (listFiles.HasExited)
-                {
-                    //string output = myOutput.ReadToEnd();
-                    MessageBox.Show("KLAR!");
-                }
+                Process proc = new Process();
+                proc.StartInfo.FileName = "cmd.exe";
+                proc.StartInfo.Arguments = @"/C " + file;
+                proc.Start();
+                proc.WaitForExit();
+                proc.Close();
+                //Test för att försöka förbättra batch körningen
+                //System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo(file);
+                //psi.RedirectStandardOutput = true;
+                //psi.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
+                //psi.UseShellExecute = false;
+                //System.Diagnostics.Process listFiles;
+                //listFiles = System.Diagnostics.Process.Start(psi);
+                //System.IO.StreamReader myOutput = listFiles.StandardOutput;
+                //listFiles.WaitForExit(2000);
+                //if (listFiles.HasExited)
+                //{
+                //    //string output = myOutput.ReadToEnd();
+                //    MessageBox.Show("KLAR!");
+                //}
             }
             else
                 MessageBox.Show("File " + file + " doesn't exists");
@@ -882,9 +850,9 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 Array.Reverse(dirs);
                 foreach (string dir in dirs)
                 {
-                    string normalized1 = SearchString.Replace("*", "");
-                    string normalized2 = dir.Replace(" ", "");
-                    if (normalized2.ToLower().Contains(normalized1.ToLower()))
+                    string firstNormalizedSearchString = SearchString.Replace("*", "");
+                    string secondNormalizedSearchString = dir.Replace(" ", "");
+                    if (secondNormalizedSearchString.ToLower().Contains(firstNormalizedSearchString.ToLower()))
                         path = dir;
                 }
                 return path;

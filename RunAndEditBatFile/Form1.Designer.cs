@@ -165,6 +165,7 @@
             this.textBoxFrom.Name = "textBoxFrom";
             this.textBoxFrom.Size = new System.Drawing.Size(78, 20);
             this.textBoxFrom.TabIndex = 2;
+            this.textBoxFrom.TextChanged += new System.EventHandler(this.textBoxFrom_TextChanged);
             // 
             // textBoxTo
             // 

@@ -310,7 +310,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                     MessageBox.Show("The directory " + textBoxBackupPath.Text + " don't exists");
             }
             else
-                MessageBox.Show("Please enter:\rClient, Database and Path for backup file");
+                MessageBox.Show("Please enter:\rClient, Database to backup, Name of backup file and Path for backup file");
 
             if(File.Exists(@"C:\databaser\DbBackupSQL.txt"))
                 MessageBox.Show(File.ReadAllText("C:\\databaser\\DbBackupSQL.txt"), "Backup result!");
@@ -433,6 +433,14 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
         private void buttonLoad_Click(object sender, EventArgs e)
         {
             loadSettings();
+        }
+
+        private void textBoxFrom_TextChanged(object sender, EventArgs e)
+        {
+            if (textBoxFrom.Text == "0" || textBoxFrom.Text.Length <= 0)
+                checkBoxRestoreDB.Enabled = true;
+            else
+                checkBoxRestoreDB.Enabled = false;
         }
 
         private void loadSettings()

@@ -157,6 +157,7 @@
             this.checkBoxRestoreDB.TabIndex = 1;
             this.checkBoxRestoreDB.Text = "Restore DB to Base version\r\n(Only if QF From = 0)";
             this.checkBoxRestoreDB.UseVisualStyleBackColor = true;
+            this.checkBoxRestoreDB.CheckedChanged += new System.EventHandler(this.checkBoxRestoreDB_CheckedChanged);
             // 
             // textBoxFrom
             // 

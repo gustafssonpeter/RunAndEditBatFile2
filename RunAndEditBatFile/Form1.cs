@@ -776,7 +776,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             label4.Enabled = true;
             label5.Enabled = true;
             label6.Enabled = false;
-            label7.Enabled = false;
+            label7.Enabled = true;
             label8.Enabled = false;
             label9.Enabled = false;
             label10.Enabled = false;

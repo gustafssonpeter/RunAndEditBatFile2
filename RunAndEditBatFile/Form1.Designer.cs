@@ -152,9 +152,9 @@
             this.checkBoxRestoreDB.Enabled = false;
             this.checkBoxRestoreDB.Location = new System.Drawing.Point(34, 59);
             this.checkBoxRestoreDB.Name = "checkBoxRestoreDB";
-            this.checkBoxRestoreDB.Size = new System.Drawing.Size(157, 30);
+            this.checkBoxRestoreDB.Size = new System.Drawing.Size(157, 17);
             this.checkBoxRestoreDB.TabIndex = 1;
-            this.checkBoxRestoreDB.Text = "Restore DB to Base version\r\n(Only if QF From = 0)";
+            this.checkBoxRestoreDB.Text = "Restore DB to Base version\r\n";
             this.checkBoxRestoreDB.UseVisualStyleBackColor = true;
             this.checkBoxRestoreDB.CheckedChanged += new System.EventHandler(this.checkBoxRestoreDB_CheckedChanged);
             // 
@@ -206,9 +206,9 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(241, 40);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(113, 26);
+            this.label6.Size = new System.Drawing.Size(119, 26);
             this.label6.TabIndex = 16;
-            this.label6.Text = "Version to restore to\r\n(Base version e.g. 5.9)";
+            this.label6.Text = "Version to restore to\r\n(Base version e.g. 5.10)";
             // 
             // groupBox1
             // 
@@ -229,10 +229,10 @@
             this.rbBackupDb.AutoSize = true;
             this.rbBackupDb.Location = new System.Drawing.Point(7, 144);
             this.rbBackupDb.Name = "rbBackupDb";
-            this.rbBackupDb.Size = new System.Drawing.Size(77, 17);
+            this.rbBackupDb.Size = new System.Drawing.Size(109, 17);
             this.rbBackupDb.TabIndex = 27;
             this.rbBackupDb.TabStop = true;
-            this.rbBackupDb.Text = "Backup db";
+            this.rbBackupDb.Text = "Backup database";
             this.rbBackupDb.UseVisualStyleBackColor = true;
             this.rbBackupDb.CheckedChanged += new System.EventHandler(this.rbBackupDb_CheckedChanged);
             // 
@@ -241,10 +241,10 @@
             this.radioButtonRestoreFromOtherFiles.AutoSize = true;
             this.radioButtonRestoreFromOtherFiles.Location = new System.Drawing.Point(7, 95);
             this.radioButtonRestoreFromOtherFiles.Name = "radioButtonRestoreFromOtherFiles";
-            this.radioButtonRestoreFromOtherFiles.Size = new System.Drawing.Size(136, 17);
+            this.radioButtonRestoreFromOtherFiles.Size = new System.Drawing.Size(133, 17);
             this.radioButtonRestoreFromOtherFiles.TabIndex = 4;
             this.radioButtonRestoreFromOtherFiles.TabStop = true;
-            this.radioButtonRestoreFromOtherFiles.Text = "Restore from other Files";
+            this.radioButtonRestoreFromOtherFiles.Text = "Restore from other files";
             this.radioButtonRestoreFromOtherFiles.UseVisualStyleBackColor = true;
             this.radioButtonRestoreFromOtherFiles.CheckedChanged += new System.EventHandler(this.radioButtonRestoreOtherFiles_CheckedChanged);
             // 
@@ -253,10 +253,10 @@
             this.rbUpgradeFromPath.AutoSize = true;
             this.rbUpgradeFromPath.Location = new System.Drawing.Point(7, 120);
             this.rbUpgradeFromPath.Name = "rbUpgradeFromPath";
-            this.rbUpgradeFromPath.Size = new System.Drawing.Size(114, 17);
+            this.rbUpgradeFromPath.Size = new System.Drawing.Size(113, 17);
             this.rbUpgradeFromPath.TabIndex = 3;
             this.rbUpgradeFromPath.TabStop = true;
-            this.rbUpgradeFromPath.Text = "Upgrade from Path";
+            this.rbUpgradeFromPath.Text = "Upgrade from path";
             this.rbUpgradeFromPath.UseVisualStyleBackColor = true;
             this.rbUpgradeFromPath.CheckedChanged += new System.EventHandler(this.rbUpgradeFromPath_CheckedChanged);
             // 
@@ -289,10 +289,10 @@
             this.radioButtonUpgradeQFdb.AutoSize = true;
             this.radioButtonUpgradeQFdb.Location = new System.Drawing.Point(7, 20);
             this.radioButtonUpgradeQFdb.Name = "radioButtonUpgradeQFdb";
-            this.radioButtonUpgradeQFdb.Size = new System.Drawing.Size(98, 17);
+            this.radioButtonUpgradeQFdb.Size = new System.Drawing.Size(142, 17);
             this.radioButtonUpgradeQFdb.TabIndex = 0;
             this.radioButtonUpgradeQFdb.TabStop = true;
-            this.radioButtonUpgradeQFdb.Text = "Upgrade QF db";
+            this.radioButtonUpgradeQFdb.Text = "Upgrade database to QF";
             this.radioButtonUpgradeQFdb.UseVisualStyleBackColor = true;
             this.radioButtonUpgradeQFdb.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 

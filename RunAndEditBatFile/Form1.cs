@@ -7,8 +7,8 @@ namespace DB_Updater
 {
     public partial class Form1 : Form
     {
-        string replaceFileLatestVersion, strFileProd, strFileHist, strSearch, strSearchResult, restoreToBaseBat,
-            setupLocalTrunkBat, restoreAndToQF1bat;
+        string replaceFileLatestVersion, strFileProd, strFileHist, strSearch, strSearchResult, 
+            restoreToBaseBat, setupLocalTrunkBat, restoreAndToQF1bat;
         string myHostName = System.Net.Dns.GetHostName();
         int count, from, to, outputValue, rbState;
         bool isFirstRun, isNumberFrom, isNumberTo, isRestoreFromBase, isNotLocalServer, isRestored;

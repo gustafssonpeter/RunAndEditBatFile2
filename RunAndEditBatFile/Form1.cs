@@ -319,32 +319,6 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 MessageBox.Show("Please enter:\rClient, Database Prod, Database Hist and Path");
         }
 
-        private void buttonBackupDb_Click(object sender, EventArgs e)
-        {
-            if (textBoxBackupClient.Text.IndexOf(@"\") != -1)
-                isNotLocalServer = true;
-            else
-                isNotLocalServer = false;
-
-            if (!String.IsNullOrEmpty(textBoxBackupClient.Text) && !String.IsNullOrEmpty(textBoxBackupDb.Text) && !String.IsNullOrEmpty(textBoxBackupPath.Text))
-            {
-                if (Directory.Exists(textBoxBackupPath.Text))
-                {
-                    createBackupSqlFile("C:\\Databaser\\DbBackup.sql", sqlBackupDatabase);
-                    createBackupBatFile("C:\\Databaser\\DbBackup.bat", runBackupScript);
-
-                    startFile("C:\\Databaser\\DbBackup.bat");
-                }
-                else
-                    MessageBox.Show("The directory " + textBoxBackupPath.Text + " don't exists");
-            }
-            else
-                MessageBox.Show("Please enter:\rClient, Database to backup, Name of backup file and Path for backup file");
-
-            if (File.Exists(@"C:\databaser\DbBackupSQL.txt"))
-                MessageBox.Show(File.ReadAllText("C:\\databaser\\DbBackupSQL.txt"), "Backup result!");
-        }
-
         private void buttonBackupPath_Click(object sender, EventArgs e)
         {
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)

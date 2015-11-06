@@ -70,7 +70,6 @@
             this.buttonQfPath = new System.Windows.Forms.Button();
             this.labelQfPath = new System.Windows.Forms.Label();
             this.checkBoxNotCopyFiles = new System.Windows.Forms.CheckBox();
-            this.buttonBackupDb = new System.Windows.Forms.Button();
             this.textBoxBackupClient = new System.Windows.Forms.TextBox();
             this.textBoxBackupDb = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -461,16 +460,6 @@
             this.checkBoxNotCopyFiles.Text = "Don\'t copy restore files from server";
             this.checkBoxNotCopyFiles.UseVisualStyleBackColor = true;
             // 
-            // buttonBackupDb
-            // 
-            this.buttonBackupDb.Location = new System.Drawing.Point(682, 327);
-            this.buttonBackupDb.Name = "buttonBackupDb";
-            this.buttonBackupDb.Size = new System.Drawing.Size(108, 23);
-            this.buttonBackupDb.TabIndex = 25;
-            this.buttonBackupDb.Text = "Backup db";
-            this.buttonBackupDb.UseVisualStyleBackColor = true;
-            this.buttonBackupDb.Click += new System.EventHandler(this.buttonBackupDb_Click);
-            // 
             // textBoxBackupClient
             // 
             this.textBoxBackupClient.Location = new System.Drawing.Point(682, 69);
@@ -581,7 +570,6 @@
             this.Controls.Add(this.label8);
             this.Controls.Add(this.textBoxBackupDb);
             this.Controls.Add(this.textBoxBackupClient);
-            this.Controls.Add(this.buttonBackupDb);
             this.Controls.Add(this.checkBoxNotCopyFiles);
             this.Controls.Add(this.labelQfPath);
             this.Controls.Add(this.buttonQfPath);
@@ -669,7 +657,6 @@
         private System.Windows.Forms.Button buttonQfPath;
         private System.Windows.Forms.Label labelQfPath;
         private System.Windows.Forms.CheckBox checkBoxNotCopyFiles;
-        private System.Windows.Forms.Button buttonBackupDb;
         private System.Windows.Forms.TextBox textBoxBackupClient;
         private System.Windows.Forms.TextBox textBoxBackupDb;
         private System.Windows.Forms.Label label8;

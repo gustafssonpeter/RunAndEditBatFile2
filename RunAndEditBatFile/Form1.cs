@@ -119,6 +119,9 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             if (rbUpgradeFromPath.Checked)
                 upgradeFromPathFiles();
 
+            if (rbBackupDb.Checked)
+                runDbBackup();
+
             if (isRestored)
             {
                 MessageBox.Show(File.ReadAllText("C:\\databaser\\DBupdate_restoreSQL.txt"), "Restore result!");
@@ -215,6 +218,32 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             }
             else
                 MessageBox.Show("Please enter:\rQF From, QF To, QF Path, Version, Client, Database Prod. and Database Hist.");
+        }
+
+        private void runDbBackup()
+        {
+            if (textBoxBackupClient.Text.IndexOf(@"\") != -1)
+                isNotLocalServer = true;
+            else
+                isNotLocalServer = false;
+
+            if (!String.IsNullOrEmpty(textBoxBackupClient.Text) && !String.IsNullOrEmpty(textBoxBackupDb.Text) && !String.IsNullOrEmpty(textBoxBackupPath.Text))
+            {
+                if (Directory.Exists(textBoxBackupPath.Text))
+                {
+                    createBackupSqlFile("C:\\Databaser\\DbBackup.sql", sqlBackupDatabase);
+                    createBackupBatFile("C:\\Databaser\\DbBackup.bat", runBackupScript);
+
+                    startFile("C:\\Databaser\\DbBackup.bat");
+                }
+                else
+                    MessageBox.Show("The directory " + textBoxBackupPath.Text + " don't exists");
+            }
+            else
+                MessageBox.Show("Please enter:\rClient, Database to backup, Name of backup file and Path for backup file");
+
+            if (File.Exists(@"C:\databaser\DbBackupSQL.txt"))
+                MessageBox.Show(File.ReadAllText("C:\\databaser\\DbBackupSQL.txt"), "Backup result!");
         }
 
         private void restoreToBaseVersion()
@@ -440,12 +469,12 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             if (textBoxFrom.Text == "0" || textBoxFrom.Text.Length <= 0)
             {
                 checkBoxRestoreDB.Enabled = true;
-                button1.Text = "Start Restore/QF-upgrade";
+                button1.Text = "Restore and upgrade to QF";
             }
             else
             {
                 checkBoxRestoreDB.Enabled = false;
-                button1.Text = "Start QF-upgrade";
+                button1.Text = "Upgrade to QF";
             }
                 
         }
@@ -453,9 +482,9 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
         private void checkBoxRestoreDB_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBoxRestoreDB.Enabled == true && radioButtonUpgradeQFdb.Checked == true && checkBoxRestoreDB.Checked == true)
-                    button1.Text = "Start Restore/QF-upgrade";
+                    button1.Text = "Restore and upgrade to QF";
             else
-                button1.Text = "Start QF-upgrade";
+                button1.Text = "Upgrade to QF";
         }
 
         private void loadSettings()
@@ -613,22 +642,20 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             buttonFileProd.Enabled = false;
             buttonFileHist.Enabled = false;
             button1.Enabled = true;
-            //checkBoxRestoreDB.Focus();
             labelQfPath.Enabled = true;
             textBoxQfPath.Enabled = true;
             buttonQfPath.Enabled = true;
             checkBoxNotCopyFiles.Enabled = true;
             checkBoxNotCopyFiles.Enabled = false;
-            buttonBackupDb.Enabled = false;
             buttonBackupPath.Enabled = false;
             textBoxBackupClient.Enabled = false;
             textBoxBackupDb.Enabled = false;
             textBoxBackupPath.Enabled = false;
             textBoxBackupFile.Enabled = false;
             if (checkBoxRestoreDB.Enabled == true && radioButtonUpgradeQFdb.Checked == true && checkBoxRestoreDB.Checked == true)
-                button1.Text = "Start Restore/QF-upgrade";
+                button1.Text = "Restore and upgrade to QF";
             else
-                button1.Text = "Start QF-upgrade";
+                button1.Text = "Upgrade to QF";
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
@@ -660,18 +687,16 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             buttonFileProd.Enabled = false;
             buttonFileHist.Enabled = false;
             button1.Enabled = true;
-            //textBoxVersion.Focus();
             labelQfPath.Enabled = false;
             textBoxQfPath.Enabled = false;
             buttonQfPath.Enabled = false;
             checkBoxNotCopyFiles.Enabled = true;
-            buttonBackupDb.Enabled = false;
             buttonBackupPath.Enabled = false;
             textBoxBackupClient.Enabled = false;
             textBoxBackupDb.Enabled = false;
             textBoxBackupPath.Enabled = false;
             textBoxBackupFile.Enabled = false;
-            button1.Text = "Start Restore";
+            button1.Text = "Restore from base";
         }
 
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
@@ -703,18 +728,16 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             buttonFileProd.Enabled = false;
             buttonFileHist.Enabled = false;
             button1.Enabled = true;
-            //textBoxVersion.Focus();
             labelQfPath.Enabled = false;
             textBoxQfPath.Enabled = false;
             buttonQfPath.Enabled = false;
             checkBoxNotCopyFiles.Enabled = true;
-            buttonBackupDb.Enabled = false;
             buttonBackupPath.Enabled = false;
             textBoxBackupClient.Enabled = false;
             textBoxBackupDb.Enabled = false;
             textBoxBackupPath.Enabled = false;
             textBoxBackupFile.Enabled = false;
-            button1.Text = "Start Restore";
+            button1.Text = "Restore to TRUNK";
         }
 
         private void radioButtonRestoreOtherFiles_CheckedChanged(object sender, EventArgs e)
@@ -746,18 +769,16 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             buttonFileProd.Enabled = true;
             buttonFileHist.Enabled = true;
             button1.Enabled = true;
-            //textBoxVersion.Focus();
             labelQfPath.Enabled = false;
             textBoxQfPath.Enabled = false;
             buttonQfPath.Enabled = false;
             checkBoxNotCopyFiles.Enabled = true;
-            buttonBackupDb.Enabled = false;
             buttonBackupPath.Enabled = false;
             textBoxBackupClient.Enabled = false;
             textBoxBackupDb.Enabled = false;
             textBoxBackupPath.Enabled = false;
             textBoxBackupFile.Enabled = false;
-            button1.Text = "Start Restore";
+            button1.Text = "Restore from files";
         }
 
         private void rbUpgradeFromPath_CheckedChanged(object sender, EventArgs e)
@@ -789,18 +810,16 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             buttonFileProd.Enabled = false;
             buttonFileHist.Enabled = false;
             button1.Enabled = true;
-            //textBoxVersion.Focus();
             labelQfPath.Enabled = false;
             textBoxQfPath.Enabled = false;
             buttonQfPath.Enabled = false;
             checkBoxNotCopyFiles.Enabled = false;
-            buttonBackupDb.Enabled = false;
             buttonBackupPath.Enabled = false;
             textBoxBackupClient.Enabled = false;
             textBoxBackupDb.Enabled = false;
             textBoxBackupPath.Enabled = false;
             textBoxBackupFile.Enabled = false;
-            button1.Text = "Start Upgrade";
+            button1.Text = "Upgrade from path";
         }
 
         private void rbBackupDb_CheckedChanged(object sender, EventArgs e)
@@ -831,18 +850,17 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             textBoxFileHist.Enabled = false;
             buttonFileProd.Enabled = false;
             buttonFileHist.Enabled = false;
-            button1.Enabled = false;
-            //textBoxVersion.Focus();
+            button1.Enabled = true;
             labelQfPath.Enabled = false;
             textBoxQfPath.Enabled = false;
             buttonQfPath.Enabled = false;
             checkBoxNotCopyFiles.Enabled = false;
-            buttonBackupDb.Enabled = true;
             buttonBackupPath.Enabled = true;
             textBoxBackupClient.Enabled = true;
             textBoxBackupDb.Enabled = true;
             textBoxBackupPath.Enabled = true;
             textBoxBackupFile.Enabled = true;
+            button1.Text = "Backup database";
         }
 
         static public void startFile(string file)
@@ -855,20 +873,6 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 proc.Start();
                 proc.WaitForExit();
                 proc.Close();
-                //Test för att försöka förbättra batch körningen
-                //System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo(file);
-                //psi.RedirectStandardOutput = true;
-                //psi.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
-                //psi.UseShellExecute = false;
-                //System.Diagnostics.Process listFiles;
-                //listFiles = System.Diagnostics.Process.Start(psi);
-                //System.IO.StreamReader myOutput = listFiles.StandardOutput;
-                //listFiles.WaitForExit(2000);
-                //if (listFiles.HasExited)
-                //{
-                //    //string output = myOutput.ReadToEnd();
-                //    MessageBox.Show("KLAR!");
-                //}
             }
             else
                 MessageBox.Show("File " + file + " doesn't exists");

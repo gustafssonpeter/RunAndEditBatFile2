@@ -7,8 +7,8 @@ namespace DB_Updater
 {
     public partial class Form1 : Form
     {
-        string replaceFileLatestVersion, strFileProd, strFileHist, strSearch, strSearchResult, 
-            restoreToBaseBat, setupLocalTrunkBat, restoreAndToQF1bat;
+        string replaceFileLatestVersion, strFileProd, strFileHist, strSearch, strSearchResult,
+            restoreToBaseBat, setupLocalTrunkBat, restoreAndToQF1bat, strDbFileName;
         string myHostName = System.Net.Dns.GetHostName();
         int count, from, to, outputValue, rbState;
         bool isFirstRun, isNumberFrom, isNumberTo, isRestoreFromBase, isNotLocalServer, isRestored;
@@ -111,7 +111,15 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 restoreToBaseVersion();
 
             if (radioButtonRestoreToTRUNK.Checked)
+            {
+                strDbFileName = File.ReadAllText(@"\\profdoc.lab\dfs01\System\Autobuild\dblatest.txt");
                 restoreToTrunk();
+                if(File.Exists(@"c:\databaser\" + strDbFileName + ".exe"))
+                    File.Delete(@"c:\databaser\" + strDbFileName + ".exe");
+                if(Directory.Exists(@"c:\databaser\" + strDbFileName))
+                    Directory.Delete(@"c:\databaser\" + strDbFileName);
+            }
+            
 
             if (radioButtonRestoreFromOtherFiles.Checked)
                 restoreToOther();

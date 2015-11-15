@@ -114,10 +114,11 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             {
                 strDbFileName = File.ReadAllText(@"\\profdoc.lab\dfs01\System\Autobuild\dblatest.txt");
                 restoreToTrunk();
-                if(File.Exists(@"c:\databaser\" + strDbFileName + ".exe"))
+                string filepath = @"c:\databaser\" + strDbFileName + ".exe";
+                if (File.Exists(filepath) && FileInUse(filepath) == false)
                     File.Delete(@"c:\databaser\" + strDbFileName + ".exe");
-                if(Directory.Exists(@"c:\databaser\" + strDbFileName))
-                    Directory.Delete(@"c:\databaser\" + strDbFileName);
+                //if(Directory.Exists(@"c:\databaser\" + strDbFileName))
+                //    Directory.Delete(@"c:\databaser\" + strDbFileName);
             }
             
 
@@ -881,6 +882,23 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             {
                 MessageBox.Show(ee.ToString());
                 return null;
+            }
+        }
+
+
+        private bool FileInUse(string path)
+        {
+            try
+            {
+                //if file is not lock then below statement will successfully executed otherwise it's goes to catch.
+                using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
+                {
+                }
+                return false;
+            }
+            catch (IOException)
+            {
+                return true;
             }
         }
     }

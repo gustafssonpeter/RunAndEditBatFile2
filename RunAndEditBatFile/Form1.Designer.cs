@@ -126,18 +126,18 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(241, 155);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(81, 13);
+            this.label5.Size = new System.Drawing.Size(107, 13);
             this.label5.TabIndex = 11;
-            this.label5.Text = "Database Prod.";
+            this.label5.Text = "Database Production";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(241, 208);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(74, 13);
+            this.label4.Size = new System.Drawing.Size(91, 13);
             this.label4.TabIndex = 12;
-            this.label4.Text = "Database Hist";
+            this.label4.Text = "Database Histotic";
             // 
             // textBoxDatabaseH
             // 
@@ -153,9 +153,9 @@
             this.checkBoxRestoreDB.Enabled = false;
             this.checkBoxRestoreDB.Location = new System.Drawing.Point(34, 59);
             this.checkBoxRestoreDB.Name = "checkBoxRestoreDB";
-            this.checkBoxRestoreDB.Size = new System.Drawing.Size(157, 17);
+            this.checkBoxRestoreDB.Size = new System.Drawing.Size(154, 17);
             this.checkBoxRestoreDB.TabIndex = 1;
-            this.checkBoxRestoreDB.Text = "Restore DB to Base version\r\n";
+            this.checkBoxRestoreDB.Text = "Restore db to Base version\r\n";
             this.checkBoxRestoreDB.UseVisualStyleBackColor = true;
             this.checkBoxRestoreDB.CheckedChanged += new System.EventHandler(this.checkBoxRestoreDB_CheckedChanged);
             // 
@@ -321,9 +321,9 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(242, 385);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(163, 13);
+            this.label7.Size = new System.Drawing.Size(160, 13);
             this.label7.TabIndex = 18;
-            this.label7.Text = "Path to folder of DB upgrade files";
+            this.label7.Text = "Path to folder of db upgrade files";
             // 
             // buttonFolderPath
             // 
@@ -370,18 +370,18 @@
             this.labelFileProd.AutoSize = true;
             this.labelFileProd.Location = new System.Drawing.Point(242, 279);
             this.labelFileProd.Name = "labelFileProd";
-            this.labelFileProd.Size = new System.Drawing.Size(98, 13);
+            this.labelFileProd.Size = new System.Drawing.Size(139, 13);
             this.labelFileProd.TabIndex = 23;
-            this.labelFileProd.Text = "File to restore Prod.";
+            this.labelFileProd.Text = "File to restore Production db";
             // 
             // labelFileHist
             // 
             this.labelFileHist.AutoSize = true;
             this.labelFileHist.Location = new System.Drawing.Point(242, 332);
             this.labelFileHist.Name = "labelFileHist";
-            this.labelFileHist.Size = new System.Drawing.Size(94, 13);
+            this.labelFileHist.Size = new System.Drawing.Size(123, 13);
             this.labelFileHist.TabIndex = 24;
-            this.labelFileHist.Text = "File to restore Hist.";
+            this.labelFileHist.Text = "File to restore Historic db";
             // 
             // buttonFileHist
             // 

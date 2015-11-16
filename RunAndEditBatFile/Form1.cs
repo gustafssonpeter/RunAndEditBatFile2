@@ -927,10 +927,10 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 string[] dirs = Directory.GetDirectories(strPath, SearchString);
                 foreach (string dir in dirs)
                 {
-                    DialogResult dialogResult = MessageBox.Show("Do you want to delete the folder " + dir, "Delete!", MessageBoxButtons.YesNo);
-                    if (dialogResult == DialogResult.Yes)
+                    if (Directory.Exists(dir))
                     {
-                        if (Directory.Exists(dir))
+                        DialogResult dialogResult = MessageBox.Show("Do you want to delete the folder " + dir, "Delete!", MessageBoxButtons.YesNo);
+                        if (dialogResult == DialogResult.Yes)
                             Directory.Delete(dir, true);
                     }
                 }

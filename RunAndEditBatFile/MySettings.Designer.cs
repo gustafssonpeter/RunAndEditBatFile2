@@ -202,5 +202,17 @@ namespace DB_Updater {
                 this["checkBoxRestoreDB"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool checkBoxDeleteFolder {
+            get {
+                return ((bool)(this["checkBoxDeleteFolder"]));
+            }
+            set {
+                this["checkBoxDeleteFolder"] = value;
+            }
+        }
     }
 }

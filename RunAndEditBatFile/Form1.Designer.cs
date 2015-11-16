@@ -81,6 +81,7 @@
             this.label11 = new System.Windows.Forms.Label();
             this.buttonSave = new System.Windows.Forms.Button();
             this.buttonLoad = new System.Windows.Forms.Button();
+            this.checkBoxDeleteFolders = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -104,9 +105,9 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(454, 327);
+            this.button2.Location = new System.Drawing.Point(455, 345);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(160, 23);
+            this.button2.Size = new System.Drawing.Size(170, 35);
             this.button2.TabIndex = 17;
             this.button2.Text = "Clear Form";
             this.button2.UseVisualStyleBackColor = true;
@@ -298,9 +299,10 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(454, 274);
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(455, 292);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(160, 23);
+            this.button1.Size = new System.Drawing.Size(170, 35);
             this.button1.TabIndex = 16;
             this.button1.TabStop = false;
             this.button1.Text = "Start Restore/Upgrade";
@@ -309,7 +311,7 @@
             // 
             // textBoxPath
             // 
-            this.textBoxPath.Location = new System.Drawing.Point(244, 383);
+            this.textBoxPath.Location = new System.Drawing.Point(245, 401);
             this.textBoxPath.Name = "textBoxPath";
             this.textBoxPath.Size = new System.Drawing.Size(163, 20);
             this.textBoxPath.TabIndex = 15;
@@ -317,7 +319,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(241, 367);
+            this.label7.Location = new System.Drawing.Point(242, 385);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(163, 13);
             this.label7.TabIndex = 18;
@@ -325,7 +327,7 @@
             // 
             // buttonFolderPath
             // 
-            this.buttonFolderPath.Location = new System.Drawing.Point(163, 380);
+            this.buttonFolderPath.Location = new System.Drawing.Point(164, 398);
             this.buttonFolderPath.Name = "buttonFolderPath";
             this.buttonFolderPath.Size = new System.Drawing.Size(75, 23);
             this.buttonFolderPath.TabIndex = 14;
@@ -341,7 +343,7 @@
             // 
             // buttonFileProd
             // 
-            this.buttonFileProd.Location = new System.Drawing.Point(163, 275);
+            this.buttonFileProd.Location = new System.Drawing.Point(164, 293);
             this.buttonFileProd.Name = "buttonFileProd";
             this.buttonFileProd.Size = new System.Drawing.Size(75, 23);
             this.buttonFileProd.TabIndex = 10;
@@ -351,14 +353,14 @@
             // 
             // textBoxFileProd
             // 
-            this.textBoxFileProd.Location = new System.Drawing.Point(244, 277);
+            this.textBoxFileProd.Location = new System.Drawing.Point(245, 295);
             this.textBoxFileProd.Name = "textBoxFileProd";
             this.textBoxFileProd.Size = new System.Drawing.Size(163, 20);
             this.textBoxFileProd.TabIndex = 11;
             // 
             // textBoxFileHist
             // 
-            this.textBoxFileHist.Location = new System.Drawing.Point(244, 330);
+            this.textBoxFileHist.Location = new System.Drawing.Point(245, 348);
             this.textBoxFileHist.Name = "textBoxFileHist";
             this.textBoxFileHist.Size = new System.Drawing.Size(163, 20);
             this.textBoxFileHist.TabIndex = 13;
@@ -366,7 +368,7 @@
             // labelFileProd
             // 
             this.labelFileProd.AutoSize = true;
-            this.labelFileProd.Location = new System.Drawing.Point(241, 261);
+            this.labelFileProd.Location = new System.Drawing.Point(242, 279);
             this.labelFileProd.Name = "labelFileProd";
             this.labelFileProd.Size = new System.Drawing.Size(98, 13);
             this.labelFileProd.TabIndex = 23;
@@ -375,7 +377,7 @@
             // labelFileHist
             // 
             this.labelFileHist.AutoSize = true;
-            this.labelFileHist.Location = new System.Drawing.Point(241, 314);
+            this.labelFileHist.Location = new System.Drawing.Point(242, 332);
             this.labelFileHist.Name = "labelFileHist";
             this.labelFileHist.Size = new System.Drawing.Size(94, 13);
             this.labelFileHist.TabIndex = 24;
@@ -383,7 +385,7 @@
             // 
             // buttonFileHist
             // 
-            this.buttonFileHist.Location = new System.Drawing.Point(163, 328);
+            this.buttonFileHist.Location = new System.Drawing.Point(164, 346);
             this.buttonFileHist.Name = "buttonFileHist";
             this.buttonFileHist.Size = new System.Drawing.Size(75, 23);
             this.buttonFileHist.TabIndex = 12;
@@ -397,7 +399,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(861, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(864, 24);
             this.menuStrip1.TabIndex = 26;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -536,29 +538,41 @@
             // 
             // buttonSave
             // 
-            this.buttonSave.Location = new System.Drawing.Point(454, 380);
+            this.buttonSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonSave.Location = new System.Drawing.Point(455, 398);
             this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(73, 23);
+            this.buttonSave.Size = new System.Drawing.Size(80, 23);
             this.buttonSave.TabIndex = 18;
-            this.buttonSave.Text = "Save data";
+            this.buttonSave.Text = "Save settings";
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
             // buttonLoad
             // 
-            this.buttonLoad.Location = new System.Drawing.Point(545, 380);
+            this.buttonLoad.Location = new System.Drawing.Point(545, 398);
             this.buttonLoad.Name = "buttonLoad";
-            this.buttonLoad.Size = new System.Drawing.Size(69, 23);
+            this.buttonLoad.Size = new System.Drawing.Size(80, 23);
             this.buttonLoad.TabIndex = 19;
-            this.buttonLoad.Text = "Load data";
+            this.buttonLoad.Text = "Load settings";
             this.buttonLoad.UseVisualStyleBackColor = true;
             this.buttonLoad.Click += new System.EventHandler(this.buttonLoad_Click);
+            // 
+            // checkBoxDeleteFolders
+            // 
+            this.checkBoxDeleteFolders.AutoSize = true;
+            this.checkBoxDeleteFolders.Location = new System.Drawing.Point(406, 248);
+            this.checkBoxDeleteFolders.Name = "checkBoxDeleteFolders";
+            this.checkBoxDeleteFolders.Size = new System.Drawing.Size(155, 17);
+            this.checkBoxDeleteFolders.TabIndex = 41;
+            this.checkBoxDeleteFolders.Text = "Delete old database folders";
+            this.checkBoxDeleteFolders.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(861, 443);
+            this.ClientSize = new System.Drawing.Size(864, 456);
+            this.Controls.Add(this.checkBoxDeleteFolders);
             this.Controls.Add(this.buttonLoad);
             this.Controls.Add(this.buttonSave);
             this.Controls.Add(this.label11);
@@ -602,10 +616,11 @@
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.MaximumSize = new System.Drawing.Size(877, 482);
-            this.MinimumSize = new System.Drawing.Size(877, 482);
+            this.MaximumSize = new System.Drawing.Size(880, 495);
+            this.MinimumSize = new System.Drawing.Size(880, 495);
             this.Name = "Form1";
             this.Text = "DB Updater";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
@@ -669,6 +684,7 @@
         private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.Button buttonLoad;
         private System.Windows.Forms.RadioButton rbBackupDb;
+        private System.Windows.Forms.CheckBox checkBoxDeleteFolders;
     }
 }
 

@@ -111,17 +111,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 restoreToBaseVersion();
 
             if (radioButtonRestoreToTRUNK.Checked)
-            {
-                if(checkBoxDeleteFolders.Checked == true)
-                    deleteFolderPath(@"c:\databaser", @"CGM ANALYTIX database*");
-                if(File.Exists(@"\\profdoc.lab\dfs01\System\Autobuild\dblatest.txt"))
-                    strDbFileName = File.ReadAllText(@"\\profdoc.lab\dfs01\System\Autobuild\dblatest.txt");
                 restoreToTrunk();
-                string filepath = @"c:\databaser\" + strDbFileName + ".exe";
-                if (File.Exists(filepath) && FileInUse(filepath) == false)
-                    File.Delete(@"c:\databaser\" + strDbFileName + ".exe");
-            }
-
 
             if (radioButtonRestoreFromOtherFiles.Checked)
                 restoreToOther();
@@ -279,6 +269,12 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
         {
             if (!String.IsNullOrEmpty(textBoxVersion.Text) && !String.IsNullOrEmpty(textBoxClient.Text) && !String.IsNullOrEmpty(textBoxDatabaseP.Text) && !String.IsNullOrEmpty(textBoxDatabaseH.Text))
             {
+                //Delete old db folders
+                if (checkBoxDeleteFolders.Checked == true)
+                    deleteFolderPath(@"c:\databaser", @"CGM ANALYTIX database*");
+                if (File.Exists(@"\\profdoc.lab\dfs01\System\Autobuild\dblatest.txt"))
+                    strDbFileName = File.ReadAllText(@"\\profdoc.lab\dfs01\System\Autobuild\dblatest.txt");
+
                 setupLocalTrunkBat = "";
                 if (checkBoxNotCopyFiles.Checked == true)
                     setupLocalTrunkBat = runRestoreScript + upgradeToLatestTrunk;
@@ -288,6 +284,11 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 createFile("C:\\Databaser\\DBupdate_SetupLocalTrunk.bat", setupLocalTrunkBat);
                 isRestored = true;
                 startFile("C:\\Databaser\\DBupdate_SetupLocalTrunk.bat");
+
+                //Delete the zip file
+                string filepath = @"c:\databaser\" + strDbFileName + ".exe";
+                if (File.Exists(filepath) && FileInUse(filepath) == false)
+                    File.Delete(@"c:\databaser\" + strDbFileName + ".exe");
             }
             else
                 MessageBox.Show("Please enter:\rVersion, Client, Database Prod. and Database Hist.");
@@ -899,7 +900,6 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             {
                 MessageBox.Show(ee.ToString());
                 return null;
-
             }
         }
 
@@ -910,9 +910,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             {
                 //if file is not lock then below statement will successfully executed otherwise it's goes to catch.
                 using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
-                {
-                }
-                return false;
+                    return false;
             }
             catch (IOException)
             {
@@ -929,7 +927,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 {
                     if (Directory.Exists(dir))
                     {
-                        DialogResult dialogResult = MessageBox.Show("Do you want to delete the folder " + dir, "Delete!", MessageBoxButtons.YesNo);
+                        DialogResult dialogResult = MessageBox.Show("Do you want to delete the old db folder:\n" + dir, "Delete!", MessageBoxButtons.YesNo);
                         if (dialogResult == DialogResult.Yes)
                             Directory.Delete(dir, true);
                     }

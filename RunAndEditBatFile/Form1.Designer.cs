@@ -105,9 +105,9 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(455, 345);
+            this.button2.Location = new System.Drawing.Point(443, 345);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(170, 35);
+            this.button2.Size = new System.Drawing.Size(182, 35);
             this.button2.TabIndex = 17;
             this.button2.Text = "Clear Form";
             this.button2.UseVisualStyleBackColor = true;
@@ -221,7 +221,7 @@
             this.groupBox1.Controls.Add(this.radioButtonUpgradeQFdb);
             this.groupBox1.Location = new System.Drawing.Point(406, 40);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(180, 178);
+            this.groupBox1.Size = new System.Drawing.Size(219, 178);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             // 
@@ -266,10 +266,10 @@
             this.radioButtonRestoreToTRUNK.AutoSize = true;
             this.radioButtonRestoreToTRUNK.Location = new System.Drawing.Point(7, 70);
             this.radioButtonRestoreToTRUNK.Name = "radioButtonRestoreToTRUNK";
-            this.radioButtonRestoreToTRUNK.Size = new System.Drawing.Size(115, 17);
+            this.radioButtonRestoreToTRUNK.Size = new System.Drawing.Size(178, 17);
             this.radioButtonRestoreToTRUNK.TabIndex = 26;
             this.radioButtonRestoreToTRUNK.TabStop = true;
-            this.radioButtonRestoreToTRUNK.Text = "Restore to TRUNK";
+            this.radioButtonRestoreToTRUNK.Text = "Restore and upgrade to TRUNK";
             this.radioButtonRestoreToTRUNK.UseVisualStyleBackColor = true;
             this.radioButtonRestoreToTRUNK.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
             // 
@@ -300,9 +300,9 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(455, 292);
+            this.button1.Location = new System.Drawing.Point(443, 292);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(170, 35);
+            this.button1.Size = new System.Drawing.Size(182, 35);
             this.button1.TabIndex = 16;
             this.button1.TabStop = false;
             this.button1.Text = "Start Restore/Upgrade";
@@ -539,9 +539,9 @@
             // buttonSave
             // 
             this.buttonSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonSave.Location = new System.Drawing.Point(455, 398);
+            this.buttonSave.Location = new System.Drawing.Point(443, 398);
             this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(80, 23);
+            this.buttonSave.Size = new System.Drawing.Size(82, 23);
             this.buttonSave.TabIndex = 18;
             this.buttonSave.Text = "Save settings";
             this.buttonSave.UseVisualStyleBackColor = true;
@@ -551,7 +551,7 @@
             // 
             this.buttonLoad.Location = new System.Drawing.Point(545, 398);
             this.buttonLoad.Name = "buttonLoad";
-            this.buttonLoad.Size = new System.Drawing.Size(80, 23);
+            this.buttonLoad.Size = new System.Drawing.Size(82, 23);
             this.buttonLoad.TabIndex = 19;
             this.buttonLoad.Text = "Load settings";
             this.buttonLoad.UseVisualStyleBackColor = true;

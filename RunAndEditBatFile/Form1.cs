@@ -734,7 +734,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             textBoxBackupDb.Enabled = false;
             textBoxBackupPath.Enabled = false;
             textBoxBackupFile.Enabled = false;
-            button1.Text = "Restore to TRUNK";
+            button1.Text = "Restore/upgrade to TRUNK";
             checkBoxDeleteFolders.Enabled = true;
         }
 

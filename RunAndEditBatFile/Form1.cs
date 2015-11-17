@@ -8,7 +8,7 @@ namespace DB_Updater
     public partial class Form1 : Form
     {
         string replaceFileLatestVersion, strFileProd, strFileHist, strSearch, strSearchResult,
-            restoreToBaseBat, setupLocalTrunkBat, restoreAndToQF1bat, strDbFileName;
+            restoreToBaseBat, setupLocalTrunkBat, restoreAndToQF1bat;
         string myHostName = System.Net.Dns.GetHostName();
         int count, from, to, outputValue, rbState;
         bool isFirstRun, isNumberFrom, isNumberTo, isRestoreFromBase, isNotLocalServer, isRestored;
@@ -269,6 +269,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
         {
             if (!String.IsNullOrEmpty(textBoxVersion.Text) && !String.IsNullOrEmpty(textBoxClient.Text) && !String.IsNullOrEmpty(textBoxDatabaseP.Text) && !String.IsNullOrEmpty(textBoxDatabaseH.Text))
             {
+                String strDbFileName = "";
                 //Delete old db folders
                 if (checkBoxDeleteFolders.Checked == true)
                     deleteFolderPath(@"c:\databaser", @"CGM ANALYTIX database*");

@@ -222,7 +222,7 @@
             this.groupBox1.Location = new System.Drawing.Point(406, 40);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(219, 178);
-            this.groupBox1.TabIndex = 8;
+            this.groupBox1.TabIndex = 60;
             this.groupBox1.TabStop = false;
             // 
             // rbBackupDb
@@ -304,7 +304,6 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(182, 35);
             this.button1.TabIndex = 16;
-            this.button1.TabStop = false;
             this.button1.Text = "Start Restore/Upgrade";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -313,7 +312,7 @@
             // 
             this.textBoxPath.Location = new System.Drawing.Point(245, 401);
             this.textBoxPath.Name = "textBoxPath";
-            this.textBoxPath.Size = new System.Drawing.Size(163, 20);
+            this.textBoxPath.Size = new System.Drawing.Size(165, 20);
             this.textBoxPath.TabIndex = 15;
             // 
             // label7
@@ -355,14 +354,14 @@
             // 
             this.textBoxFileProd.Location = new System.Drawing.Point(245, 295);
             this.textBoxFileProd.Name = "textBoxFileProd";
-            this.textBoxFileProd.Size = new System.Drawing.Size(163, 20);
+            this.textBoxFileProd.Size = new System.Drawing.Size(165, 20);
             this.textBoxFileProd.TabIndex = 11;
             // 
             // textBoxFileHist
             // 
             this.textBoxFileHist.Location = new System.Drawing.Point(245, 348);
             this.textBoxFileHist.Name = "textBoxFileHist";
-            this.textBoxFileHist.Size = new System.Drawing.Size(163, 20);
+            this.textBoxFileHist.Size = new System.Drawing.Size(165, 20);
             this.textBoxFileHist.TabIndex = 13;
             // 
             // labelFileProd
@@ -498,7 +497,7 @@
             // 
             this.textBoxBackupPath.Location = new System.Drawing.Point(682, 224);
             this.textBoxBackupPath.Name = "textBoxBackupPath";
-            this.textBoxBackupPath.Size = new System.Drawing.Size(155, 20);
+            this.textBoxBackupPath.Size = new System.Drawing.Size(165, 20);
             this.textBoxBackupPath.TabIndex = 23;
             // 
             // label10

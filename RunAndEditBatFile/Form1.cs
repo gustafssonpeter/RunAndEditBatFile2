@@ -3,6 +3,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
 
+
 namespace DB_Updater
 {
     public partial class Form1 : Form
@@ -770,7 +771,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             labelQfPath.Enabled = false;
             textBoxQfPath.Enabled = false;
             buttonQfPath.Enabled = false;
-            checkBoxNotCopyFiles.Enabled = true;
+            checkBoxNotCopyFiles.Enabled = false;
             buttonBackupPath.Enabled = false;
             textBoxBackupClient.Enabled = false;
             textBoxBackupDb.Enabled = false;

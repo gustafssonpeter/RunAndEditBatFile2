@@ -457,11 +457,13 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             if (textBoxFrom.Text == "0" || textBoxFrom.Text.Length <= 0)
             {
                 checkBoxRestoreDB.Enabled = true;
+                checkBoxNotCopyFiles.Enabled = true;
                 button1.Text = "Restore and upgrade to QF";
             }
             else
             {
                 checkBoxRestoreDB.Enabled = false;
+                checkBoxNotCopyFiles.Enabled = false;
                 button1.Text = "Upgrade to QF";
             }
 
@@ -470,9 +472,16 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
         private void checkBoxRestoreDB_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBoxRestoreDB.Enabled == true && radioButtonUpgradeQFdb.Checked == true && checkBoxRestoreDB.Checked == true)
+            {
                 button1.Text = "Restore and upgrade to QF";
+                checkBoxNotCopyFiles.Enabled = true;
+            }
+
             else
+            {
                 button1.Text = "Upgrade to QF";
+                checkBoxNotCopyFiles.Enabled = false;
+            }
         }
 
         private void loadSettings()
@@ -649,9 +658,16 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             textBoxBackupPath.Enabled = false;
             textBoxBackupFile.Enabled = false;
             if (checkBoxRestoreDB.Enabled == true && radioButtonUpgradeQFdb.Checked == true && checkBoxRestoreDB.Checked == true)
+            {
                 button1.Text = "Restore and upgrade to QF";
+                checkBoxNotCopyFiles.Enabled = true;
+            }
+
             else
+            {
                 button1.Text = "Upgrade to QF";
+                checkBoxNotCopyFiles.Enabled = false;
+            }
             checkBoxDeleteFolders.Enabled = false;
         }
 

@@ -30,8 +30,8 @@ xcopy \\profdoc.lab\dfs01\Databaser\Test\Orginal\%VERSION%\H%FILE_VERSION%TCO_LA
 for /f ""delims="" %%i in (\\profdoc.lab\dfs01\System\Autobuild\dblatest.txt) do xcopy ""\\profdoc.lab\dfs01\System\Autobuild\%%i.exe"" ""c:\databaser"" /D /Y
 for /f ""delims="" %%i in (\\profdoc.lab\dfs01\System\Autobuild\dblatest.txt) do unzip ""c:\databaser\%%i.exe""
 for /f ""delims="" %%i in (\\profdoc.lab\dfs01\System\Autobuild\dblatest.txt) do cd ""c:\databaser\%%i""
-START /B ""Upgrade historic"" ""Upgrade Historic.bat"" SYSADM SYSADM %DATABASE_H% %CLIENT_UPGRADE%
-START ""Upgrade production"" ""Upgrade Production.bat"" SYSADM SYSADM %DATABASE_P% %CLIENT_UPGRADE%";
+START /B ""Upgrade historic"" ""Upgrade Historic.bat"" SYSADM SYSADM %DATABASE_H% %CLIENT_UPGRADE% c:\databaser\UpgradeProduction.txt
+START ""Upgrade production"" ""Upgrade Production.bat"" SYSADM SYSADM %DATABASE_P% %CLIENT_UPGRADE% c:\databaser\UpgradeHistoric.txt";
 
         string runRestoreScript =
 @"
@@ -41,22 +41,22 @@ sqlcmd -S %CLIENT% -d %DATABASE_P% -U SYSADM -P SYSADM -i DBupdate_restoreSQL.sq
         string upgradeFromQfToQf =
 @"
 cd ""%QF_PATH%""
-START /B ""Upgrade historic"" ""Upgrade Historic From %VERSION% QF%FROM% To %VERSION% QF%TO%.bat"" SYSADM SYSADM %DATABASE_H% %CLIENT_UPGRADE%
-START /B ""Upgrade production"" ""Upgrade Production From %VERSION% QF%FROM% To %VERSION% QF%TO%.bat"" SYSADM SYSADM %DATABASE_P% %CLIENT_UPGRADE% 
+START /B ""Upgrade historic"" ""Upgrade Historic From %VERSION% QF%FROM% To %VERSION% QF%TO%.bat"" SYSADM SYSADM %DATABASE_H% %CLIENT_UPGRADE% c:\databaser\UpgradeProductionQF%TO%.txt
+START /B ""Upgrade production"" ""Upgrade Production From %VERSION% QF%FROM% To %VERSION% QF%TO%.bat"" SYSADM SYSADM %DATABASE_P% %CLIENT_UPGRADE% c:\databaser\UpgradeHistoricQF%TO%.txt
 pause";
 
         string upgradeToQF1 =
 @"
 cd ""%QF_PATH%""
-START /B ""Upgrade production"" ""Upgrade Production From %VERSION% To %VERSION% QF1.bat"" SYSADM SYSADM %DATABASE_P% %CLIENT_UPGRADE% 
-START /B ""Upgrade historic"" ""Upgrade Historic From %VERSION% To %VERSION% QF1.bat"" SYSADM SYSADM %DATABASE_H% %CLIENT_UPGRADE% 
+START /B ""Upgrade production"" ""Upgrade Production From %VERSION% To %VERSION% QF1.bat"" SYSADM SYSADM %DATABASE_P% %CLIENT_UPGRADE% c:\databaser\UpgradeProductionQF1.txt
+START /B ""Upgrade historic"" ""Upgrade Historic From %VERSION% To %VERSION% QF1.bat"" SYSADM SYSADM %DATABASE_H% %CLIENT_UPGRADE% c:\databaser\UpgradeHistoricQF1.txt
 pause";
 
         string upgradeFromPath =
 @"
 cd ""%PATH%""
-START /B ""Upgrade historic"" ""Upgrade Historic.bat"" SYSADM SYSADM %DATABASE_H% %CLIENT_UPGRADE% 
-START ""Upgrade production"" ""Upgrade Production.bat"" SYSADM SYSADM %DATABASE_P% %CLIENT_UPGRADE% ";
+START /B ""Upgrade historic"" ""Upgrade Historic.bat"" SYSADM SYSADM %DATABASE_H% %CLIENT_UPGRADE% c:\databaser\UpgradeProduction.txt
+START ""Upgrade production"" ""Upgrade Production.bat"" SYSADM SYSADM %DATABASE_P% %CLIENT_UPGRADE% c:\databaser\UpgradeHistoric.txt";
 
         string sqlRestoreScript =
 @"
@@ -151,6 +151,36 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             checkBoxNotCopyFiles.Checked = false;
             checkBoxRestoreDB.Checked = false;
             checkBoxDeleteFolders.Checked = false;
+
+            //try
+            //{
+            //    string[] files = Directory.GetFiles(@"d:\");//Directory.GetDirectories(strPath, SearchString);
+            //    foreach (string file in files)
+            //    {
+            //        //if (Directory.Exists(dir))
+            //        //{
+            //        //    DialogResult dialogResult = MessageBox.Show("Do you want to delete the old db folder:\n" + dir, "Delete!", MessageBoxButtons.YesNo);
+            //        //    if (dialogResult == DialogResult.Yes)
+            //        //        Directory.Delete(dir, true);
+            //        //}
+            //        string newFile = file.Remove(6, file.Length-6);
+            //        if (newFile.ToString() == @"d:\New")
+            //        {
+            //            MessageBox.Show("Delete");
+            //            File.Delete(file);
+            //        }
+
+
+            //        MessageBox.Show(newFile);
+            //        MessageBox.Show(file);
+            //    }
+            //}
+            //catch (Exception ee)
+            //{
+            //    MessageBox.Show(ee.ToString());
+            //}
+
+
         }
 
         private void startQfUpgrade()

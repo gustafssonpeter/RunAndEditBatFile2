@@ -186,10 +186,10 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                                 if (checkBoxRestoreDB.Checked == true)
                                 {
                                     createFile("C:\\Databaser\\DBupdate_restoreSQL.sql", sqlRestoreScript);
-                                    if (checkBoxCopyFiles.Checked == false)
-                                        restoreAndToQF1bat = runRestoreScript + upgradeToQF1;
-                                    else
+                                    if (checkBoxCopyFiles.Checked == true)
                                         restoreAndToQF1bat = copyFiles + runRestoreScript + upgradeToQF1;
+                                    else
+                                        restoreAndToQF1bat = runRestoreScript + upgradeToQF1;
                                 }
                                 else
                                     restoreAndToQF1bat = runRestoreScript + upgradeToQF1;
@@ -256,10 +256,10 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             if (!String.IsNullOrEmpty(textBoxVersion.Text) && !String.IsNullOrEmpty(textBoxClient.Text) && !String.IsNullOrEmpty(textBoxDatabaseP.Text) && !String.IsNullOrEmpty(textBoxDatabaseH.Text))
             {
                 restoreToBaseBat = "";
-                if (checkBoxCopyFiles.Checked == false)
-                    restoreToBaseBat = runRestoreScript;
-                else
+                if (checkBoxCopyFiles.Checked == true)
                     restoreToBaseBat = copyFiles + runRestoreScript;
+                else
+                    restoreToBaseBat = runRestoreScript;
                 createFile("C:\\Databaser\\DBupdate_restoreSQL.sql", sqlRestoreScript);
                 createFile("C:\\Databaser\\DBupdate_RestoreToBase.bat", restoreToBaseBat);
                 isRestored = true;
@@ -281,10 +281,10 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                     strDbFileName = File.ReadAllText(@"\\profdoc.lab\dfs01\System\Autobuild\dblatest.txt");
 
                 setupLocalTrunkBat = "";
-                if (checkBoxCopyFiles.Checked == false)
-                    setupLocalTrunkBat = runRestoreScript + upgradeToLatestTrunk;
-                else
+                if (checkBoxCopyFiles.Checked == true)
                     setupLocalTrunkBat = copyFiles + runRestoreScript + upgradeToLatestTrunk;
+                else
+                    setupLocalTrunkBat = runRestoreScript + upgradeToLatestTrunk;
                 createFile("C:\\Databaser\\DBupdate_restoreSQL.sql", sqlRestoreScript);
                 createFile("C:\\Databaser\\DBupdate_SetupLocalTrunk.bat", setupLocalTrunkBat);
                 isRestored = true;
@@ -372,9 +372,9 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             {
                 if (isNotLocalServer)
                 {
-                    if (!String.IsNullOrEmpty(textBoxFileProd.Text)) 
+                    if (!String.IsNullOrEmpty(textBoxFileProd.Text))
                         content = content.Replace("%RESTORE_FILE_PROD%", @"\\" + myHostName + textBoxFileProd.Text.Remove(0, 2));
-                    if (!String.IsNullOrEmpty(textBoxFileHist.Text)) 
+                    if (!String.IsNullOrEmpty(textBoxFileHist.Text))
                         content = content.Replace("%RESTORE_FILE_HIST%", @"\\" + myHostName + textBoxFileHist.Text.Remove(0, 2));
                 }
                 else
@@ -464,7 +464,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             {
                 checkBoxRestoreDB.Enabled = true;
                 checkBoxCopyFiles.Enabled = true;
-                if(checkBoxRestoreDB.Checked == true)
+                if (checkBoxRestoreDB.Checked == true)
                     button1.Text = "Restore and upgrade to QF";
             }
             else
@@ -472,7 +472,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 checkBoxRestoreDB.Enabled = false;
                 checkBoxCopyFiles.Enabled = false;
                 //if (checkBoxRestoreDB.Checked == false)
-                    button1.Text = "Upgrade to QF";
+                button1.Text = "Upgrade to QF";
             }
 
         }
@@ -658,7 +658,6 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             labelQfPath.Enabled = true;
             textBoxQfPath.Enabled = true;
             buttonQfPath.Enabled = true;
-            checkBoxCopyFiles.Enabled = true;
             checkBoxCopyFiles.Enabled = false;
             buttonBackupPath.Enabled = false;
             textBoxBackupClient.Enabled = false;

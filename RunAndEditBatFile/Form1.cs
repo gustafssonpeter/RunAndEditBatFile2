@@ -17,7 +17,10 @@ namespace DB_Updater
         string help =
 @"To use this program you need to create the directory C:\Databaser on your computer. This directory need to be shared to the network.
 
-You also need to put the unziped Database QF files in the direcory ""Path to folder of QF upgrade files""";
+You also need to put the unziped Database QF files in the same direcory as ""Path to QF folder""
+
+To restore to Trunk the Base version needs to be the previous version as Trunk.
+e.g. if Trunk is 5.12, base should be 5.11";
 
         string copyFiles =
 @"
@@ -30,8 +33,8 @@ xcopy \\profdoc.lab\dfs01\Databaser\Test\Orginal\%VERSION%\H%FILE_VERSION%TCO_LA
 for /f ""delims="" %%i in (\\profdoc.lab\dfs01\System\Autobuild\dblatest.txt) do xcopy ""\\profdoc.lab\dfs01\System\Autobuild\%%i.exe"" ""c:\databaser"" /D /Y
 for /f ""delims="" %%i in (\\profdoc.lab\dfs01\System\Autobuild\dblatest.txt) do unzip ""c:\databaser\%%i.exe""
 for /f ""delims="" %%i in (\\profdoc.lab\dfs01\System\Autobuild\dblatest.txt) do cd ""c:\databaser\%%i""
-START /B ""Upgrade historic"" ""Upgrade Historic.bat"" SYSADM SYSADM %DATABASE_H% %CLIENT_UPGRADE% c:\databaser\UpgradeProduction.txt
-START ""Upgrade production"" ""Upgrade Production.bat"" SYSADM SYSADM %DATABASE_P% %CLIENT_UPGRADE% c:\databaser\UpgradeHistoric.txt";
+START /B ""Upgrade historic"" ""Upgrade Historic.bat"" SYSADM SYSADM %DATABASE_H% %CLIENT_UPGRADE%
+START ""Upgrade production"" ""Upgrade Production.bat"" SYSADM SYSADM %DATABASE_P% %CLIENT_UPGRADE%";
 
         string runRestoreScript =
 @"
@@ -41,22 +44,22 @@ sqlcmd -S %CLIENT% -d %DATABASE_P% -U SYSADM -P SYSADM -i DBupdate_restoreSQL.sq
         string upgradeFromQfToQf =
 @"
 cd ""%QF_PATH%""
-START /B ""Upgrade historic"" ""Upgrade Historic From %VERSION% QF%FROM% To %VERSION% QF%TO%.bat"" SYSADM SYSADM %DATABASE_H% %CLIENT_UPGRADE% c:\databaser\UpgradeProductionQF%TO%.txt
-START /B ""Upgrade production"" ""Upgrade Production From %VERSION% QF%FROM% To %VERSION% QF%TO%.bat"" SYSADM SYSADM %DATABASE_P% %CLIENT_UPGRADE% c:\databaser\UpgradeHistoricQF%TO%.txt
+START /B ""Upgrade historic"" ""Upgrade Historic From %VERSION% QF%FROM% To %VERSION% QF%TO%.bat"" SYSADM SYSADM %DATABASE_H% %CLIENT_UPGRADE%
+START /B ""Upgrade production"" ""Upgrade Production From %VERSION% QF%FROM% To %VERSION% QF%TO%.bat"" SYSADM SYSADM %DATABASE_P% %CLIENT_UPGRADE% 
 pause";
 
         string upgradeToQF1 =
 @"
 cd ""%QF_PATH%""
-START /B ""Upgrade production"" ""Upgrade Production From %VERSION% To %VERSION% QF1.bat"" SYSADM SYSADM %DATABASE_P% %CLIENT_UPGRADE% c:\databaser\UpgradeProductionQF1.txt
-START /B ""Upgrade historic"" ""Upgrade Historic From %VERSION% To %VERSION% QF1.bat"" SYSADM SYSADM %DATABASE_H% %CLIENT_UPGRADE% c:\databaser\UpgradeHistoricQF1.txt
+START /B ""Upgrade production"" ""Upgrade Production From %VERSION% To %VERSION% QF1.bat"" SYSADM SYSADM %DATABASE_P% %CLIENT_UPGRADE% 
+START /B ""Upgrade historic"" ""Upgrade Historic From %VERSION% To %VERSION% QF1.bat"" SYSADM SYSADM %DATABASE_H% %CLIENT_UPGRADE% 
 pause";
 
         string upgradeFromPath =
 @"
 cd ""%PATH%""
-START /B ""Upgrade historic"" ""Upgrade Historic.bat"" SYSADM SYSADM %DATABASE_H% %CLIENT_UPGRADE% c:\databaser\UpgradeProduction.txt
-START ""Upgrade production"" ""Upgrade Production.bat"" SYSADM SYSADM %DATABASE_P% %CLIENT_UPGRADE% c:\databaser\UpgradeHistoric.txt";
+START /B ""Upgrade historic"" ""Upgrade Historic.bat"" SYSADM SYSADM %DATABASE_H% %CLIENT_UPGRADE% 
+START ""Upgrade production"" ""Upgrade Production.bat"" SYSADM SYSADM %DATABASE_P% %CLIENT_UPGRADE% ";
 
         string sqlRestoreScript =
 @"
@@ -148,39 +151,9 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             textBoxBackupPath.Clear();
             textBoxFrom.Clear();
             textBoxTo.Clear();
-            checkBoxNotCopyFiles.Checked = false;
+            checkBoxCopyFiles.Checked = false;
             checkBoxRestoreDB.Checked = false;
             checkBoxDeleteFolders.Checked = false;
-
-            //try
-            //{
-            //    string[] files = Directory.GetFiles(@"d:\");//Directory.GetDirectories(strPath, SearchString);
-            //    foreach (string file in files)
-            //    {
-            //        //if (Directory.Exists(dir))
-            //        //{
-            //        //    DialogResult dialogResult = MessageBox.Show("Do you want to delete the old db folder:\n" + dir, "Delete!", MessageBoxButtons.YesNo);
-            //        //    if (dialogResult == DialogResult.Yes)
-            //        //        Directory.Delete(dir, true);
-            //        //}
-            //        string newFile = file.Remove(6, file.Length-6);
-            //        if (newFile.ToString() == @"d:\New")
-            //        {
-            //            MessageBox.Show("Delete");
-            //            File.Delete(file);
-            //        }
-
-
-            //        MessageBox.Show(newFile);
-            //        MessageBox.Show(file);
-            //    }
-            //}
-            //catch (Exception ee)
-            //{
-            //    MessageBox.Show(ee.ToString());
-            //}
-
-
         }
 
         private void startQfUpgrade()
@@ -213,7 +186,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                                 if (checkBoxRestoreDB.Checked == true)
                                 {
                                     createFile("C:\\Databaser\\DBupdate_restoreSQL.sql", sqlRestoreScript);
-                                    if (checkBoxNotCopyFiles.Checked == true)
+                                    if (checkBoxCopyFiles.Checked == false)
                                         restoreAndToQF1bat = runRestoreScript + upgradeToQF1;
                                     else
                                         restoreAndToQF1bat = copyFiles + runRestoreScript + upgradeToQF1;
@@ -283,7 +256,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             if (!String.IsNullOrEmpty(textBoxVersion.Text) && !String.IsNullOrEmpty(textBoxClient.Text) && !String.IsNullOrEmpty(textBoxDatabaseP.Text) && !String.IsNullOrEmpty(textBoxDatabaseH.Text))
             {
                 restoreToBaseBat = "";
-                if (checkBoxNotCopyFiles.Checked == true)
+                if (checkBoxCopyFiles.Checked == false)
                     restoreToBaseBat = runRestoreScript;
                 else
                     restoreToBaseBat = copyFiles + runRestoreScript;
@@ -308,7 +281,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                     strDbFileName = File.ReadAllText(@"\\profdoc.lab\dfs01\System\Autobuild\dblatest.txt");
 
                 setupLocalTrunkBat = "";
-                if (checkBoxNotCopyFiles.Checked == true)
+                if (checkBoxCopyFiles.Checked == false)
                     setupLocalTrunkBat = runRestoreScript + upgradeToLatestTrunk;
                 else
                     setupLocalTrunkBat = copyFiles + runRestoreScript + upgradeToLatestTrunk;
@@ -390,7 +363,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             content = content.Replace("%DATABASE_P%", textBoxDatabaseP.Text);
             content = content.Replace("%DATABASE_H%", textBoxDatabaseH.Text);
             content = content.Replace("%VERSION%", textBoxVersion.Text.Replace(",", "."));
-            if (checkBoxNotCopyFiles.Checked == false)
+            if (checkBoxCopyFiles.Checked == true)
                 content = content.Replace("%FILE_VERSION%", replaceFileLatestVersion);
             if (rbUpgradeFromPath.Checked == true)
                 content = content.Replace("%PATH%", textBoxPath.Text);
@@ -399,15 +372,18 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             {
                 if (isNotLocalServer)
                 {
-                    content = content.Replace("%RESTORE_FILE_PROD%", @"\\" + myHostName + textBoxFileProd.Text.Remove(0, 2));
-                    content = content.Replace("%RESTORE_FILE_HIST%", @"\\" + myHostName + textBoxFileHist.Text.Remove(0, 2));
+                    if (!String.IsNullOrEmpty(textBoxFileProd.Text)) 
+                        content = content.Replace("%RESTORE_FILE_PROD%", @"\\" + myHostName + textBoxFileProd.Text.Remove(0, 2));
+                    if (!String.IsNullOrEmpty(textBoxFileHist.Text)) 
+                        content = content.Replace("%RESTORE_FILE_HIST%", @"\\" + myHostName + textBoxFileHist.Text.Remove(0, 2));
                 }
                 else
                 {
-                    content = content.Replace("%RESTORE_FILE_PROD%", textBoxFileProd.Text);
-                    content = content.Replace("%RESTORE_FILE_HIST%", textBoxFileHist.Text);
+                    if (!String.IsNullOrEmpty(textBoxFileProd.Text))
+                        content = content.Replace("%RESTORE_FILE_PROD%", textBoxFileProd.Text);
+                    if (!String.IsNullOrEmpty(textBoxFileHist.Text))
+                        content = content.Replace("%RESTORE_FILE_HIST%", textBoxFileHist.Text);
                 }
-
             }
             else
             {
@@ -487,30 +463,32 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             if (textBoxFrom.Text == "0" || textBoxFrom.Text.Length <= 0)
             {
                 checkBoxRestoreDB.Enabled = true;
-                checkBoxNotCopyFiles.Enabled = true;
-                button1.Text = "Restore and upgrade to QF";
+                checkBoxCopyFiles.Enabled = true;
+                if(checkBoxRestoreDB.Checked == true)
+                    button1.Text = "Restore and upgrade to QF";
             }
             else
             {
                 checkBoxRestoreDB.Enabled = false;
-                checkBoxNotCopyFiles.Enabled = false;
-                button1.Text = "Upgrade to QF";
+                checkBoxCopyFiles.Enabled = false;
+                //if (checkBoxRestoreDB.Checked == false)
+                    button1.Text = "Upgrade to QF";
             }
 
         }
 
         private void checkBoxRestoreDB_CheckedChanged(object sender, EventArgs e)
         {
-            if (checkBoxRestoreDB.Enabled == true && radioButtonUpgradeQFdb.Checked == true && checkBoxRestoreDB.Checked == true)
+            if (checkBoxRestoreDB.Enabled == true && radioButtonUpgradeQFdb.Checked == true && checkBoxRestoreDB.Checked == true && textBoxFrom.Text == "0")
             {
                 button1.Text = "Restore and upgrade to QF";
-                checkBoxNotCopyFiles.Enabled = true;
+                checkBoxCopyFiles.Enabled = true;
             }
 
             else
             {
                 button1.Text = "Upgrade to QF";
-                checkBoxNotCopyFiles.Enabled = false;
+                checkBoxCopyFiles.Enabled = false;
             }
         }
 
@@ -529,7 +507,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             textBoxBackupFile.Text = MySettings.Default.backupFile;
             textBoxBackupPath.Text = MySettings.Default.backupPath;
             checkBoxRestoreDB.Checked = MySettings.Default.checkBoxRestoreDB;
-            checkBoxNotCopyFiles.Checked = MySettings.Default.checkBoxNotCopyFiles;
+            checkBoxCopyFiles.Checked = MySettings.Default.checkBoxCopyFiles;
             checkBoxDeleteFolders.Checked = MySettings.Default.checkBoxDeleteFolder;
 
             switch (MySettings.Default.rb)
@@ -579,10 +557,10 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 MySettings.Default.checkBoxRestoreDB = true;
             if (checkBoxRestoreDB.Checked == false)
                 MySettings.Default.checkBoxRestoreDB = false;
-            if (checkBoxNotCopyFiles.Checked == true)
-                MySettings.Default.checkBoxNotCopyFiles = true;
-            if (checkBoxNotCopyFiles.Checked == false)
-                MySettings.Default.checkBoxNotCopyFiles = false;
+            if (checkBoxCopyFiles.Checked == true)
+                MySettings.Default.checkBoxCopyFiles = true;
+            if (checkBoxCopyFiles.Checked == false)
+                MySettings.Default.checkBoxCopyFiles = false;
             if (checkBoxDeleteFolders.Checked == true)
                 MySettings.Default.checkBoxDeleteFolder = true;
             if (checkBoxDeleteFolders.Checked == false)
@@ -680,8 +658,8 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             labelQfPath.Enabled = true;
             textBoxQfPath.Enabled = true;
             buttonQfPath.Enabled = true;
-            checkBoxNotCopyFiles.Enabled = true;
-            checkBoxNotCopyFiles.Enabled = false;
+            checkBoxCopyFiles.Enabled = true;
+            checkBoxCopyFiles.Enabled = false;
             buttonBackupPath.Enabled = false;
             textBoxBackupClient.Enabled = false;
             textBoxBackupDb.Enabled = false;
@@ -690,13 +668,13 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             if (checkBoxRestoreDB.Enabled == true && radioButtonUpgradeQFdb.Checked == true && checkBoxRestoreDB.Checked == true)
             {
                 button1.Text = "Restore and upgrade to QF";
-                checkBoxNotCopyFiles.Enabled = true;
+                checkBoxCopyFiles.Enabled = true;
             }
 
             else
             {
                 button1.Text = "Upgrade to QF";
-                checkBoxNotCopyFiles.Enabled = false;
+                checkBoxCopyFiles.Enabled = false;
             }
             checkBoxDeleteFolders.Enabled = false;
         }
@@ -733,7 +711,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             labelQfPath.Enabled = false;
             textBoxQfPath.Enabled = false;
             buttonQfPath.Enabled = false;
-            checkBoxNotCopyFiles.Enabled = true;
+            checkBoxCopyFiles.Enabled = true;
             buttonBackupPath.Enabled = false;
             textBoxBackupClient.Enabled = false;
             textBoxBackupDb.Enabled = false;
@@ -775,7 +753,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             labelQfPath.Enabled = false;
             textBoxQfPath.Enabled = false;
             buttonQfPath.Enabled = false;
-            checkBoxNotCopyFiles.Enabled = true;
+            checkBoxCopyFiles.Enabled = true;
             buttonBackupPath.Enabled = false;
             textBoxBackupClient.Enabled = false;
             textBoxBackupDb.Enabled = false;
@@ -817,7 +795,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             labelQfPath.Enabled = false;
             textBoxQfPath.Enabled = false;
             buttonQfPath.Enabled = false;
-            checkBoxNotCopyFiles.Enabled = false;
+            checkBoxCopyFiles.Enabled = false;
             buttonBackupPath.Enabled = false;
             textBoxBackupClient.Enabled = false;
             textBoxBackupDb.Enabled = false;
@@ -859,7 +837,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             labelQfPath.Enabled = false;
             textBoxQfPath.Enabled = false;
             buttonQfPath.Enabled = false;
-            checkBoxNotCopyFiles.Enabled = false;
+            checkBoxCopyFiles.Enabled = false;
             buttonBackupPath.Enabled = false;
             textBoxBackupClient.Enabled = false;
             textBoxBackupDb.Enabled = false;
@@ -901,7 +879,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             labelQfPath.Enabled = false;
             textBoxQfPath.Enabled = false;
             buttonQfPath.Enabled = false;
-            checkBoxNotCopyFiles.Enabled = false;
+            checkBoxCopyFiles.Enabled = false;
             buttonBackupPath.Enabled = true;
             textBoxBackupClient.Enabled = true;
             textBoxBackupDb.Enabled = true;
@@ -942,7 +920,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                         path = dir;
                 }
                 return path;
-                
+
             }
             catch (Exception ee)
             {

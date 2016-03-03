@@ -181,13 +181,13 @@ namespace DB_Updater {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool checkBoxNotCopyFiles {
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool checkBoxCopyFiles {
             get {
-                return ((bool)(this["checkBoxNotCopyFiles"]));
+                return ((bool)(this["checkBoxCopyFiles"]));
             }
             set {
-                this["checkBoxNotCopyFiles"] = value;
+                this["checkBoxCopyFiles"] = value;
             }
         }
         

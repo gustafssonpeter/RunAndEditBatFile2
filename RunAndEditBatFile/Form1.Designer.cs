@@ -69,7 +69,7 @@
             this.textBoxQfPath = new System.Windows.Forms.TextBox();
             this.buttonQfPath = new System.Windows.Forms.Button();
             this.labelQfPath = new System.Windows.Forms.Label();
-            this.checkBoxNotCopyFiles = new System.Windows.Forms.CheckBox();
+            this.checkBoxCopyFiles = new System.Windows.Forms.CheckBox();
             this.textBoxBackupClient = new System.Windows.Forms.TextBox();
             this.textBoxBackupDb = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -97,6 +97,7 @@
             // 
             // textBoxClient
             // 
+            this.textBoxClient.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxClient.Enabled = false;
             this.textBoxClient.Location = new System.Drawing.Point(244, 120);
             this.textBoxClient.Name = "textBoxClient";
@@ -115,6 +116,7 @@
             // 
             // textBoxDatabaseP
             // 
+            this.textBoxDatabaseP.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxDatabaseP.Enabled = false;
             this.textBoxDatabaseP.Location = new System.Drawing.Point(244, 171);
             this.textBoxDatabaseP.Name = "textBoxDatabaseP";
@@ -141,6 +143,7 @@
             // 
             // textBoxDatabaseH
             // 
+            this.textBoxDatabaseH.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxDatabaseH.Enabled = false;
             this.textBoxDatabaseH.Location = new System.Drawing.Point(244, 224);
             this.textBoxDatabaseH.Name = "textBoxDatabaseH";
@@ -196,6 +199,7 @@
             // 
             // textBoxVersion
             // 
+            this.textBoxVersion.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxVersion.Enabled = false;
             this.textBoxVersion.Location = new System.Drawing.Point(244, 69);
             this.textBoxVersion.Name = "textBoxVersion";
@@ -320,9 +324,9 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(242, 385);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(160, 13);
+            this.label7.Size = new System.Drawing.Size(170, 13);
             this.label7.TabIndex = 18;
-            this.label7.Text = "Path to folder of db upgrade files";
+            this.label7.Text = "Path to folder with db upgrade files";
             // 
             // buttonFolderPath
             // 
@@ -447,22 +451,23 @@
             this.labelQfPath.AutoSize = true;
             this.labelQfPath.Location = new System.Drawing.Point(34, 207);
             this.labelQfPath.Name = "labelQfPath";
-            this.labelQfPath.Size = new System.Drawing.Size(162, 13);
+            this.labelQfPath.Size = new System.Drawing.Size(87, 13);
             this.labelQfPath.TabIndex = 29;
-            this.labelQfPath.Text = "Path to folder of QF upgrade files";
+            this.labelQfPath.Text = "Path to QF folder";
             // 
-            // checkBoxNotCopyFiles
+            // checkBoxCopyFiles
             // 
-            this.checkBoxNotCopyFiles.AutoSize = true;
-            this.checkBoxNotCopyFiles.Location = new System.Drawing.Point(406, 224);
-            this.checkBoxNotCopyFiles.Name = "checkBoxNotCopyFiles";
-            this.checkBoxNotCopyFiles.Size = new System.Drawing.Size(188, 17);
-            this.checkBoxNotCopyFiles.TabIndex = 30;
-            this.checkBoxNotCopyFiles.Text = "Don\'t copy restore files from server";
-            this.checkBoxNotCopyFiles.UseVisualStyleBackColor = true;
+            this.checkBoxCopyFiles.AutoSize = true;
+            this.checkBoxCopyFiles.Location = new System.Drawing.Point(406, 224);
+            this.checkBoxCopyFiles.Name = "checkBoxCopyFiles";
+            this.checkBoxCopyFiles.Size = new System.Drawing.Size(188, 17);
+            this.checkBoxCopyFiles.TabIndex = 30;
+            this.checkBoxCopyFiles.Text = "Copy Base restore files from server";
+            this.checkBoxCopyFiles.UseVisualStyleBackColor = true;
             // 
             // textBoxBackupClient
             // 
+            this.textBoxBackupClient.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxBackupClient.Location = new System.Drawing.Point(682, 69);
             this.textBoxBackupClient.Name = "textBoxBackupClient";
             this.textBoxBackupClient.Size = new System.Drawing.Size(131, 20);
@@ -470,6 +475,7 @@
             // 
             // textBoxBackupDb
             // 
+            this.textBoxBackupDb.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxBackupDb.Location = new System.Drawing.Point(682, 120);
             this.textBoxBackupDb.Name = "textBoxBackupDb";
             this.textBoxBackupDb.Size = new System.Drawing.Size(131, 20);
@@ -521,6 +527,7 @@
             // 
             // textBoxBackupFile
             // 
+            this.textBoxBackupFile.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxBackupFile.Location = new System.Drawing.Point(682, 171);
             this.textBoxBackupFile.Name = "textBoxBackupFile";
             this.textBoxBackupFile.Size = new System.Drawing.Size(131, 20);
@@ -531,9 +538,9 @@
             this.label11.AutoSize = true;
             this.label11.Location = new System.Drawing.Point(679, 155);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(102, 13);
+            this.label11.Size = new System.Drawing.Size(105, 13);
             this.label11.TabIndex = 40;
-            this.label11.Text = "Name of backup file";
+            this.label11.Text = "Name for backup file";
             // 
             // buttonSave
             // 
@@ -561,16 +568,16 @@
             this.checkBoxDeleteFolders.AutoSize = true;
             this.checkBoxDeleteFolders.Location = new System.Drawing.Point(406, 248);
             this.checkBoxDeleteFolders.Name = "checkBoxDeleteFolders";
-            this.checkBoxDeleteFolders.Size = new System.Drawing.Size(155, 17);
+            this.checkBoxDeleteFolders.Size = new System.Drawing.Size(196, 17);
             this.checkBoxDeleteFolders.TabIndex = 41;
-            this.checkBoxDeleteFolders.Text = "Delete old database folders";
+            this.checkBoxDeleteFolders.Text = "Delete old TRUNK database folders";
             this.checkBoxDeleteFolders.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(864, 456);
+            this.ClientSize = new System.Drawing.Size(864, 457);
             this.Controls.Add(this.checkBoxDeleteFolders);
             this.Controls.Add(this.buttonLoad);
             this.Controls.Add(this.buttonSave);
@@ -583,7 +590,7 @@
             this.Controls.Add(this.label8);
             this.Controls.Add(this.textBoxBackupDb);
             this.Controls.Add(this.textBoxBackupClient);
-            this.Controls.Add(this.checkBoxNotCopyFiles);
+            this.Controls.Add(this.checkBoxCopyFiles);
             this.Controls.Add(this.labelQfPath);
             this.Controls.Add(this.buttonQfPath);
             this.Controls.Add(this.textBoxQfPath);
@@ -670,7 +677,7 @@
         private System.Windows.Forms.TextBox textBoxQfPath;
         private System.Windows.Forms.Button buttonQfPath;
         private System.Windows.Forms.Label labelQfPath;
-        private System.Windows.Forms.CheckBox checkBoxNotCopyFiles;
+        private System.Windows.Forms.CheckBox checkBoxCopyFiles;
         private System.Windows.Forms.TextBox textBoxBackupClient;
         private System.Windows.Forms.TextBox textBoxBackupDb;
         private System.Windows.Forms.Label label8;

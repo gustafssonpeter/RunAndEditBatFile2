@@ -12,7 +12,7 @@ namespace DB_Updater
             restoreToBaseBat, setupLocalTrunkBat, restoreAndToQF1bat;
         string myHostName = System.Net.Dns.GetHostName();
         int count, from, to, outputValue, rbState;
-        bool isFirstRun, isNumberFrom, isNumberTo, isRestoreFromBase, isNotLocalServer, isRestored;
+        bool isFirstRun, isNumberFrom, isNumberTo, isRestoreFromBase, isLocalServer, isRestored;
 
         string help =
 @"To use this program you need to create the directory C:\Databaser on your computer. This directory need to be shared to the network.
@@ -103,10 +103,10 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
         //Start button
         private void button1_Click(object sender, EventArgs e)
         {
-            if (textBoxClient.Text.IndexOf(@"\") != -1)
-                isNotLocalServer = true;
+            if (textBoxClient.Text.IndexOf(@"\") == -1)
+                isLocalServer = true;
             else
-                isNotLocalServer = false;
+                isLocalServer = false;
 
             if (radioButtonUpgradeQFdb.Checked)
                 startQfUpgrade();
@@ -227,10 +227,10 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
 
         private void runDbBackup()
         {
-            if (textBoxBackupClient.Text.IndexOf(@"\") != -1)
-                isNotLocalServer = true;
+            if (textBoxBackupClient.Text.IndexOf(@"\") == -1)
+                isLocalServer = true;
             else
-                isNotLocalServer = false;
+                isLocalServer = false;
 
             if (!String.IsNullOrEmpty(textBoxBackupClient.Text) && !String.IsNullOrEmpty(textBoxBackupDb.Text) && !String.IsNullOrEmpty(textBoxBackupPath.Text))
             {
@@ -370,48 +370,48 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
 
             if (radioButtonRestoreFromOtherFiles.Checked)
             {
-                if (isNotLocalServer)
-                {
-                    if (!String.IsNullOrEmpty(textBoxFileProd.Text))
-                        content = content.Replace("%RESTORE_FILE_PROD%", @"\\" + myHostName + textBoxFileProd.Text.Remove(0, 2));
-                    if (!String.IsNullOrEmpty(textBoxFileHist.Text))
-                        content = content.Replace("%RESTORE_FILE_HIST%", @"\\" + myHostName + textBoxFileHist.Text.Remove(0, 2));
-                }
-                else
+                if (isLocalServer)
                 {
                     if (!String.IsNullOrEmpty(textBoxFileProd.Text))
                         content = content.Replace("%RESTORE_FILE_PROD%", textBoxFileProd.Text);
                     if (!String.IsNullOrEmpty(textBoxFileHist.Text))
                         content = content.Replace("%RESTORE_FILE_HIST%", textBoxFileHist.Text);
                 }
+                else
+                {
+                    if (!String.IsNullOrEmpty(textBoxFileProd.Text))
+                        content = content.Replace("%RESTORE_FILE_PROD%", @"\\" + myHostName + textBoxFileProd.Text.Remove(0, 2));
+                    if (!String.IsNullOrEmpty(textBoxFileHist.Text))
+                        content = content.Replace("%RESTORE_FILE_HIST%", @"\\" + myHostName + textBoxFileHist.Text.Remove(0, 2));
+                }
             }
             else
             {
-                if (isNotLocalServer)
-                {
-                    content = content.Replace("%RESTORE_FILE_PROD%", @"\\" + myHostName + @"\Databaser\P" + replaceFileLatestVersion + "TCO_LATEST.bak");
-                    content = content.Replace("%RESTORE_FILE_HIST%", @"\\" + myHostName + @"\Databaser\H" + replaceFileLatestVersion + "TCO_LATEST.bak");
-                }
-
-                else
+                if (isLocalServer)
                 {
                     content = content.Replace("%RESTORE_FILE_PROD%", @"C:\Databaser\P" + replaceFileLatestVersion + "TCO_LATEST.bak");
                     content = content.Replace("%RESTORE_FILE_HIST%", @"C:\Databaser\H" + replaceFileLatestVersion + "TCO_LATEST.bak");
                 }
+
+                else
+                {
+                    content = content.Replace("%RESTORE_FILE_PROD%", @"\\" + myHostName + @"\Databaser\P" + replaceFileLatestVersion + "TCO_LATEST.bak");
+                    content = content.Replace("%RESTORE_FILE_HIST%", @"\\" + myHostName + @"\Databaser\H" + replaceFileLatestVersion + "TCO_LATEST.bak");
+                }
             }
 
-            if (isNotLocalServer)
+            if (isLocalServer)
             {
-                string str = textBoxClient.Text;
-                str = str.Insert(str.IndexOf(@"\"), " ");
-
-                content = content.Replace("%CLIENT_UPGRADE%", str);
+                content = content.Replace("%CLIENT_UPGRADE%", textBoxClient.Text);
                 content = content.Replace("%CLIENT%", textBoxClient.Text);
             }
 
             else
             {
-                content = content.Replace("%CLIENT_UPGRADE%", textBoxClient.Text);
+                string str = textBoxClient.Text;
+                str = str.Insert(str.IndexOf(@"\"), " ");
+
+                content = content.Replace("%CLIENT_UPGRADE%", str);
                 content = content.Replace("%CLIENT%", textBoxClient.Text);
             }
 
@@ -422,14 +422,15 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
 
         private void createBackupSqlFile(string filePath, string content)
         {
-            if (isNotLocalServer)
+            if (isLocalServer)
+                content = content.Replace("%FOLDER_PATH%", textBoxBackupPath.Text);
+            else
             {
                 string str = textBoxBackupPath.Text.Remove(0, 2);
                 str = @"\\" + myHostName + str;
                 content = content.Replace("%FOLDER_PATH%", str);
             }
-            else
-                content = content.Replace("%FOLDER_PATH%", textBoxBackupPath.Text);
+
             content = content.Replace("%DATABASE%", textBoxBackupDb.Text);
             content = content.Replace("%FILENAME%", textBoxBackupFile.Text);
 

@@ -91,8 +91,6 @@ RESTORE DATABASE %DATABASE_H% FROM  DISK = N'%RESTORE_FILE_HIST%' WITH  FILE = 1
 GO
 use %DATABASE_H%
 update databaser set dat_databas = '%DATABASE_H%', dat_orgdatabas='%DATABASE_H%', dat_servernamn='%CLIENT%' where dat_typ ='H'
-Exec GrantAnalytixPermissions
-use %DATABASE_H%
 Exec a_ResetHistProdUser";
 
         string sqlBackupDatabase =

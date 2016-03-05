@@ -11,8 +11,8 @@ namespace DB_Updater
         string replaceFileLatestVersion, strFileProd, strFileHist, strSearch, strSearchResult,
             restoreToBaseBat, setupLocalTrunkBat, restoreAndToQF1bat;
         string myHostName = System.Net.Dns.GetHostName();
-        int count, from, to, outputValue, rbState;
-        bool isFirstRun, isNumberFrom, isNumberTo, isRestoreFromBase, isLocalServer, isRestored;
+        int from, to, rbState;
+        bool isFirstRun, isNumberFrom, isNumberTo, isFromBaseToQf1, isLocalServer, isRestored;
 
         string help =
 @"To use this program you need to create the directory C:\Databaser on your computer. This directory need to be shared to the network.
@@ -84,6 +84,17 @@ use %DATABASE_P%
 update databaser set dat_databas = '%DATABASE_P%', dat_orgdatabas='%DATABASE_P%', dat_servernamn='%CLIENT%' where dat_typ ='P'
 Exec GrantAnalytixPermissions";
 
+        string sqlRestoreScriptHist =
+@"
+use master
+RESTORE DATABASE %DATABASE_H% FROM  DISK = N'%RESTORE_FILE_HIST%' WITH  FILE = 1,  NOUNLOAD,  REPLACE,  STATS = 10
+GO
+use %DATABASE_H%
+update databaser set dat_databas = '%DATABASE_H%', dat_orgdatabas='%DATABASE_H%', dat_servernamn='%CLIENT%' where dat_typ ='H'
+Exec GrantAnalytixPermissions
+use %DATABASE_H%
+Exec a_ResetHistProdUser";
+
         string sqlBackupDatabase =
 @"BACKUP DATABASE [%DATABASE%] TO  DISK = N'%FOLDER_PATH%\%FILENAME%.bak' WITH NOFORMAT, INIT,  NAME = N'Backup db', SKIP, NOREWIND, NOUNLOAD,  STATS = 10
 GO";
@@ -118,7 +129,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 restoreToTrunk();
 
             if (radioButtonRestoreFromOtherFiles.Checked)
-                restoreToOther();
+                restoreFromOther();
 
             if (rbUpgradeFromPath.Checked)
                 upgradeFromPathFiles();
@@ -158,6 +169,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
 
         private void startQfUpgrade()
         {
+            int outputValue, count;
             if (!String.IsNullOrEmpty(textBoxFrom.Text) && !String.IsNullOrEmpty(textBoxTo.Text) && !String.IsNullOrEmpty(textBoxVersion.Text)
                 && !String.IsNullOrEmpty(textBoxClient.Text) && !String.IsNullOrEmpty(textBoxDatabaseP.Text) && !String.IsNullOrEmpty(textBoxDatabaseH.Text) && !String.IsNullOrEmpty(textBoxQfPath.Text))
             {
@@ -178,11 +190,11 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
 
                         while (count > 0)
                         {
-                            //if-sats för första körningen om restore av Db
+                            //if-sats för första körningen
                             if (textBoxFrom.Text == "0" && isFirstRun)
                             {
                                 restoreAndToQF1bat = "";
-                                isRestoreFromBase = true;
+                                isFromBaseToQf1 = true;
                                 if (checkBoxRestoreDB.Checked == true)
                                 {
                                     createFile("C:\\Databaser\\DBupdate_restoreSQL.sql", sqlRestoreScript);
@@ -190,17 +202,20 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                                         restoreAndToQF1bat = copyFiles + runRestoreScript + upgradeToQF1;
                                     else
                                         restoreAndToQF1bat = runRestoreScript + upgradeToQF1;
+                                    isRestored = true;
                                 }
                                 else
-                                    restoreAndToQF1bat = runRestoreScript + upgradeToQF1;
+                                {
+                                    restoreAndToQF1bat = upgradeToQF1;
+                                    //restoreAndToQF1bat = runRestoreScript + upgradeToQF1;
+                                }
                                 to = 1;
                                 createFile("C:\\Databaser\\DBupdate_RestoreQF.bat", restoreAndToQF1bat);
-                                isRestored = true;
                                 startFile("C:\\Databaser\\DBupdate_RestoreQF.bat");
                             }
 
-                            //if-sats för resterande, eller första med bara upgrade av Db
-                            if (!isRestoreFromBase)
+                            //if-sats för resterande QF'ar
+                            if (!isFromBaseToQf1)
                             {
                                 if (textBoxFrom.Text == "0")
                                     from++;
@@ -214,7 +229,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                             }
                             count--;
                             isFirstRun = false;
-                            isRestoreFromBase = false;
+                            isFromBaseToQf1 = false;
                         }
                     }
                     else
@@ -299,7 +314,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 MessageBox.Show("Please enter:\rVersion, Client, Database Prod. and Database Hist.");
         }
 
-        private void restoreToOther()
+        private void restoreFromOther()
         {
             if (!String.IsNullOrEmpty(textBoxClient.Text) && (!String.IsNullOrEmpty(textBoxDatabaseP.Text) || !String.IsNullOrEmpty(textBoxDatabaseH.Text)) && (!String.IsNullOrEmpty(textBoxFileProd.Text) || !String.IsNullOrEmpty(textBoxFileHist.Text)))
             {
@@ -307,11 +322,13 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 {
                     if (String.IsNullOrEmpty(textBoxDatabaseH.Text))
                         createFile("C:\\Databaser\\DBupdate_restoreSQL.sql", sqlRestoreScriptProd);
+                    if (String.IsNullOrEmpty(textBoxDatabaseP.Text))
+                        createFile("C:\\Databaser\\DBupdate_restoreSQL.sql", sqlRestoreScriptHist);
                     else
                         createFile("C:\\Databaser\\DBupdate_restoreSQL.sql", sqlRestoreScript);
-                    createFile("C:\\Databaser\\DBupdate_RestoreToOtherFiles.bat", runRestoreScript);
+                    createFile("C:\\Databaser\\DBupdate_RestoreFromOtherFiles.bat", runRestoreScript);
                     isRestored = true;
-                    startFile("C:\\Databaser\\DBupdate_RestoreToOtherFiles.bat");
+                    startFile("C:\\Databaser\\DBupdate_RestoreFromOtherFiles.bat");
                 }
                 else
                     MessageBox.Show("One (or both) of the backup files to restore from doesn't exists");

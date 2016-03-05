@@ -460,9 +460,9 @@
             this.checkBoxCopyFiles.AutoSize = true;
             this.checkBoxCopyFiles.Location = new System.Drawing.Point(406, 224);
             this.checkBoxCopyFiles.Name = "checkBoxCopyFiles";
-            this.checkBoxCopyFiles.Size = new System.Drawing.Size(188, 17);
+            this.checkBoxCopyFiles.Size = new System.Drawing.Size(169, 17);
             this.checkBoxCopyFiles.TabIndex = 30;
-            this.checkBoxCopyFiles.Text = "Copy Base restore files from server";
+            this.checkBoxCopyFiles.Text = "Copy Base restore files from Z:";
             this.checkBoxCopyFiles.UseVisualStyleBackColor = true;
             // 
             // textBoxBackupClient
@@ -577,7 +577,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(864, 457);
+            this.ClientSize = new System.Drawing.Size(864, 456);
             this.Controls.Add(this.checkBoxDeleteFolders);
             this.Controls.Add(this.buttonLoad);
             this.Controls.Add(this.buttonSave);

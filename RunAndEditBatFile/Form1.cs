@@ -8,11 +8,11 @@ namespace DB_Updater
 {
     public partial class Form1 : Form
     {
-        string replaceFileLatestVersion, strFileProd, strFileHist, strSearch, strSearchResult,
-            restoreToBaseBat, setupLocalTrunkBat, restoreAndToQF1bat;
-        string myHostName = System.Net.Dns.GetHostName();
         int from, to, rbState;
         bool isFirstRun, isNumberFrom, isNumberTo, isFromBaseToQf1, isLocalServer, isRestored;
+        string replaceFileLatestVersion, strFileProd, strFileHist, strSearch, strSearchResult,
+          restoreToBaseBat, setupLocalTrunkBat, restoreAndToQF1bat;
+        string myHostName = System.Net.Dns.GetHostName();
 
         string help =
 @"To use this program you need to create the directory C:\Databaser on your computer. This directory need to be shared to the network.
@@ -210,8 +210,10 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                                 else
                                 {
                                     restoreAndToQF1bat = upgradeToQF1;
-                                    //restoreAndToQF1bat = runRestoreScript + upgradeToQF1;
+                                    isRestored = false;
                                 }
+                                    
+
                                 to = 1;
                                 createFile("C:\\Databaser\\DBupdate_RestoreQF.bat", restoreAndToQF1bat);
                                 startFile("C:\\Databaser\\DBupdate_RestoreQF.bat");
@@ -334,13 +336,13 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                         createFile("C:\\Databaser\\DBupdate_restoreSQL.sql", sqlRestoreScriptHist);
                         createFile("C:\\Databaser\\DBupdate_RestoreFromOtherFiles.bat", runRestoreScriptHist);
                     }
-                        
+
                     if (!String.IsNullOrEmpty(textBoxDatabaseP.Text) && !String.IsNullOrEmpty(textBoxDatabaseH.Text))
                     {
                         createFile("C:\\Databaser\\DBupdate_restoreSQL.sql", sqlRestoreScript);
                         createFile("C:\\Databaser\\DBupdate_RestoreFromOtherFiles.bat", runRestoreScript);
                     }
-              
+
                     startFile("C:\\Databaser\\DBupdate_RestoreFromOtherFiles.bat");
                     isRestored = true;
                 }
@@ -503,7 +505,6 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             {
                 checkBoxRestoreDB.Enabled = false;
                 checkBoxCopyFiles.Enabled = false;
-                //if (checkBoxRestoreDB.Checked == false)
                 button1.Text = "Upgrade to QF";
             }
 
@@ -565,10 +566,10 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             }
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
+        //private void Form1_Load(object sender, EventArgs e)
+        //{
 
-        }
+        //}
 
         private void saveSettings()
         {

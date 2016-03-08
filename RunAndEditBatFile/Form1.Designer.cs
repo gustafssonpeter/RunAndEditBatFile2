@@ -626,7 +626,7 @@
             this.MinimumSize = new System.Drawing.Size(880, 495);
             this.Name = "Form1";
             this.Text = "DB Updater";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            //this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);

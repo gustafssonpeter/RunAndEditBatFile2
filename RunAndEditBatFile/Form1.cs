@@ -41,6 +41,11 @@ START ""Upgrade production"" ""Upgrade Production.bat"" SYSADM SYSADM %DATABASE_
 cd ""c:\databaser""
 sqlcmd -S %CLIENT% -d %DATABASE_P% -U SYSADM -P SYSADM -i DBupdate_restoreSQL.sql -o ""c:\databaser\DBupdate_restoreSQL.txt""";
 
+        string runRestoreScriptHist =
+@"
+cd ""c:\databaser""
+sqlcmd -S %CLIENT% -d %DATABASE_H% -U SYSADM -P SYSADM -i DBupdate_restoreSQL.sql -o ""c:\databaser\DBupdate_restoreSQL.txt""";
+
         string upgradeFromQfToQf =
 @"
 cd ""%QF_PATH%""
@@ -319,14 +324,25 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 if (File.Exists(textBoxFileHist.Text) || File.Exists(textBoxFileProd.Text))
                 {
                     if (String.IsNullOrEmpty(textBoxDatabaseH.Text))
+                    {
                         createFile("C:\\Databaser\\DBupdate_restoreSQL.sql", sqlRestoreScriptProd);
+                        createFile("C:\\Databaser\\DBupdate_RestoreFromOtherFiles.bat", runRestoreScript);
+                    }
+
                     if (String.IsNullOrEmpty(textBoxDatabaseP.Text))
+                    {
                         createFile("C:\\Databaser\\DBupdate_restoreSQL.sql", sqlRestoreScriptHist);
-                    else
+                        createFile("C:\\Databaser\\DBupdate_RestoreFromOtherFiles.bat", runRestoreScriptHist);
+                    }
+                        
+                    if (!String.IsNullOrEmpty(textBoxDatabaseP.Text) && !String.IsNullOrEmpty(textBoxDatabaseH.Text))
+                    {
                         createFile("C:\\Databaser\\DBupdate_restoreSQL.sql", sqlRestoreScript);
-                    createFile("C:\\Databaser\\DBupdate_RestoreFromOtherFiles.bat", runRestoreScript);
-                    isRestored = true;
+                        createFile("C:\\Databaser\\DBupdate_RestoreFromOtherFiles.bat", runRestoreScript);
+                    }
+              
                     startFile("C:\\Databaser\\DBupdate_RestoreFromOtherFiles.bat");
+                    isRestored = true;
                 }
                 else
                     MessageBox.Show("One (or both) of the backup files to restore from doesn't exists");
@@ -378,7 +394,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             content = content.Replace("%DATABASE_P%", textBoxDatabaseP.Text);
             content = content.Replace("%DATABASE_H%", textBoxDatabaseH.Text);
             content = content.Replace("%VERSION%", textBoxVersion.Text.Replace(",", "."));
-            if (checkBoxCopyFiles.Checked == true)
+            if (checkBoxCopyFiles.Checked == true && checkBoxCopyFiles.Enabled == true)
                 content = content.Replace("%FILE_VERSION%", replaceFileLatestVersion);
             if (rbUpgradeFromPath.Checked == true)
                 content = content.Replace("%PATH%", textBoxPath.Text);

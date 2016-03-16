@@ -118,7 +118,6 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
         private void button1_Click(object sender, EventArgs e)
         {
             if (textBoxClient.Text.IndexOf(@"\") != -1 || textBoxClient.Text.IndexOf(@"/") != -1)
-            //if (textBoxClient.Text.IndexOf(@"/") != -1)
                 isLocalServer = false;
             else
                 isLocalServer = true;
@@ -248,6 +247,11 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
 
         private void runDbBackup()
         {
+            if (textBoxBackupClient.Text.IndexOf(@"\") != -1 || textBoxBackupClient.Text.IndexOf(@"/") != -1)
+                isLocalServer = false;
+            else
+                isLocalServer = true;
+
             if (!String.IsNullOrEmpty(textBoxBackupClient.Text) && !String.IsNullOrEmpty(textBoxBackupDb.Text) && !String.IsNullOrEmpty(textBoxBackupPath.Text))
             {
                 if (Directory.Exists(textBoxBackupPath.Text))
@@ -438,16 +442,22 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             else
             {
                 string str = textBoxClient.Text;
-                if (textBoxClient.Text.IndexOf(@"\") == -1)
-                    str = str.Insert(str.IndexOf(@"/"), " ");
-                else
+                if (textBoxClient.Text.IndexOf(@"\") != -1)
                     str = str.Insert(str.IndexOf(@"\"), " ");
-
+                if (textBoxClient.Text.IndexOf(@"/") != -1)
+                {
+                    str = str.Replace(@"/", @"\");
+                    str = str.Insert(str.IndexOf(@"\"), " ");
+                }
                 content = content.Replace("%CLIENT_UPGRADE%", str);
-                if (textBoxClient.Text.IndexOf(@"\") == -1)
-                    content = content.Replace("%CLIENT%", textBoxClient.Text);
+                if (textBoxClient.Text.IndexOf(@"/") != -1)
+                {
+                    str = textBoxClient.Text;
+                    str = str.Replace(@"/", @"\");
+                    content = content.Replace("%CLIENT%", str);
+                }
                 else
-                    content = content.Replace("%CLIENT%", textBoxClient.Text.Replace(@"/", @"\"));
+                    content = content.Replace("%CLIENT%", textBoxClient.Text);
             }
 
             StreamWriter writer = new StreamWriter(filePath);
@@ -476,7 +486,10 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
 
         private void createBackupBatFile(string filePath, string content)
         {
-            content = content.Replace("%CLIENT%", textBoxBackupClient.Text);
+            if (textBoxBackupClient.Text.IndexOf("/") != -1)
+                content = content.Replace("%CLIENT%", textBoxBackupClient.Text.Replace(@"/",@"\"));
+            else
+                content = content.Replace("%CLIENT%", textBoxBackupClient.Text);
             content = content.Replace("%DATABASE%", textBoxBackupDb.Text);
 
             StreamWriter writer = new StreamWriter(filePath);

@@ -117,11 +117,21 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
         //Start button
         private void button1_Click(object sender, EventArgs e)
         {
-            if (textBoxClient.Text.IndexOf(@"\") != -1 || textBoxClient.Text.IndexOf(@"/") != -1)
-                isLocalServer = false;
+            if (rbBackupDb.Checked)
+            {
+                if (textBoxBackupClient.Text.IndexOf(@"\") != -1 || textBoxBackupClient.Text.IndexOf(@"/") != -1)
+                    isLocalServer = false;
+                else
+                    isLocalServer = true;
+            }
             else
-                isLocalServer = true;
-
+            {
+                if (textBoxClient.Text.IndexOf(@"\") != -1 || textBoxClient.Text.IndexOf(@"/") != -1)
+                    isLocalServer = false;
+                else
+                    isLocalServer = true;
+            }
+           
             if (radioButtonUpgradeQFdb.Checked)
                 startQfUpgrade();
 
@@ -247,11 +257,6 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
 
         private void runDbBackup()
         {
-            if (textBoxBackupClient.Text.IndexOf(@"\") != -1 || textBoxBackupClient.Text.IndexOf(@"/") != -1)
-                isLocalServer = false;
-            else
-                isLocalServer = true;
-
             if (!String.IsNullOrEmpty(textBoxBackupClient.Text) && !String.IsNullOrEmpty(textBoxBackupDb.Text) && !String.IsNullOrEmpty(textBoxBackupPath.Text))
             {
                 if (Directory.Exists(textBoxBackupPath.Text))
@@ -487,7 +492,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
         private void createBackupBatFile(string filePath, string content)
         {
             if (textBoxBackupClient.Text.IndexOf("/") != -1)
-                content = content.Replace("%CLIENT%", textBoxBackupClient.Text.Replace(@"/",@"\"));
+                content = content.Replace("%CLIENT%", textBoxBackupClient.Text.Replace(@"/", @"\"));
             else
                 content = content.Replace("%CLIENT%", textBoxBackupClient.Text);
             content = content.Replace("%DATABASE%", textBoxBackupDb.Text);

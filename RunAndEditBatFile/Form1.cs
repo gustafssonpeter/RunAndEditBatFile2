@@ -51,14 +51,14 @@ sqlcmd -S %CLIENT% -d %DATABASE_H% -U SYSADM -P SYSADM -i DBupdate_restoreSQL.sq
 cd ""%QF_PATH%""
 START /B ""Upgrade historic"" ""Upgrade Historic From %VERSION% QF%FROM% To %VERSION% QF%TO%.bat"" SYSADM SYSADM %DATABASE_H% %CLIENT_UPGRADE%
 START /B ""Upgrade production"" ""Upgrade Production From %VERSION% QF%FROM% To %VERSION% QF%TO%.bat"" SYSADM SYSADM %DATABASE_P% %CLIENT_UPGRADE% 
-";
+pause";
 
         string upgradeToQF1 =
 @"
 cd ""%QF_PATH%""
 START /B ""Upgrade production"" ""Upgrade Production From %VERSION% To %VERSION% QF1.bat"" SYSADM SYSADM %DATABASE_P% %CLIENT_UPGRADE% 
 START /B ""Upgrade historic"" ""Upgrade Historic From %VERSION% To %VERSION% QF1.bat"" SYSADM SYSADM %DATABASE_H% %CLIENT_UPGRADE% 
-";
+pause";
 
         string upgradeFromPath =
 @"
@@ -915,35 +915,12 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
         {
             if (File.Exists(file))
             {
-                //Process proc = new Process();
-                //proc.StartInfo.FileName = "cmd.exe";
-                //proc.StartInfo.Arguments = @"/C " + file;
-                //proc.Start();
-                //proc.WaitForExit();
-                //proc.Close();
-                // Use ProcessStartInfo class
-                ProcessStartInfo startInfo = new ProcessStartInfo();
-                startInfo.CreateNoWindow = false;
-                startInfo.UseShellExecute = true;
-                //Give the name as Xcopy
-                startInfo.FileName = "cmd.exe";
-                //make the window Hidden
-                startInfo.WindowStyle = ProcessWindowStyle.Normal;
-                //Send the Source and destination as Arguments to the process
-                startInfo.Arguments = @"/C " + file;
-                try
-                {
-                    // Start the process with the info we specified.
-                    // Call WaitForExit and then the using statement will close.
-                    using (Process exeProcess = Process.Start(startInfo))
-                    {
-                        exeProcess.WaitForExit();
-                    }
-                }
-                catch (Exception exp)
-                {
-                    throw exp;
-                }
+                Process proc = new Process();
+                proc.StartInfo.FileName = "cmd.exe";
+                proc.StartInfo.Arguments = @"/C " + file;
+                proc.Start();
+                proc.WaitForExit();
+                proc.Close();
             }
             else
                 MessageBox.Show("File " + file + " doesn't exists");

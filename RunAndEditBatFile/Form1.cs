@@ -8,8 +8,8 @@ namespace DB_Updater
 {
     public partial class Form1 : Form
     {
-        int fromQf, toQf, rbState;
-        bool isFirstRun, isNumberFrom, isNumberTo, isFromBaseToQf1, isRestored;
+        int from, to, rbState;
+        bool isFirstRun, isNumberFrom, isNumberTo, isFromBaseToQf1, isLocalServer, isRestored;
         string replaceFileLatestVersion, strFileProd, strFileHist, strSearch, strSearchResult,
           restoreToBaseBat, setupLocalTrunkBat, restoreAndToQF1bat;
         string myHostName = System.Net.Dns.GetHostName();
@@ -117,6 +117,21 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
         //Start button
         private void button1_Click(object sender, EventArgs e)
         {
+            if (rbBackupDb.Checked)
+            {
+                if (textBoxBackupClient.Text.IndexOf(@"\") != -1 || textBoxBackupClient.Text.IndexOf(@"/") != -1)
+                    isLocalServer = false;
+                else
+                    isLocalServer = true;
+            }
+            else
+            {
+                if (textBoxClient.Text.IndexOf(@"\") != -1 || textBoxClient.Text.IndexOf(@"/") != -1)
+                    isLocalServer = false;
+                else
+                    isLocalServer = true;
+            }
+           
             if (radioButtonUpgradeQFdb.Checked)
                 startQfUpgrade();
 
@@ -175,13 +190,15 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 isNumberTo = int.TryParse(textBoxTo.Text, out outputValue);
 
                 if (!isNumberFrom || !isNumberTo)
+                {
                     MessageBox.Show("Only numbers in QF From and QF To!");
+                }
                 else
                 {
                     if (Directory.Exists(textBoxQfPath.Text))
                     {
                         count = int.Parse(textBoxTo.Text) - int.Parse(textBoxFrom.Text);
-                        fromQf = int.Parse(textBoxFrom.Text);
+                        from = int.Parse(textBoxFrom.Text);
                         isFirstRun = true;
 
                         while (count > 0)
@@ -205,7 +222,9 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                                     restoreAndToQF1bat = upgradeToQF1;
                                     isRestored = false;
                                 }
-                                toQf = 1;
+
+
+                                to = 1;
                                 createFile("C:\\Databaser\\DBupdate_RestoreQF.bat", restoreAndToQF1bat);
                                 startFile("C:\\Databaser\\DBupdate_RestoreQF.bat");
                             }
@@ -214,14 +233,14 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                             if (!isFromBaseToQf1)
                             {
                                 if (textBoxFrom.Text == "0")
-                                    fromQf++;
-                                toQf = fromQf + 1;
+                                    from++;
+                                to = from + 1;
 
                                 createFile("C:\\Databaser\\DBupdate_QfToQf.bat", upgradeFromQfToQf);
                                 startFile("C:\\Databaser\\DBupdate_QfToQf.bat");
 
                                 if (textBoxFrom.Text != "0")
-                                    fromQf++;
+                                    from++;
                             }
                             count--;
                             isFirstRun = false;
@@ -298,7 +317,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
 
                 //Delete the zip file
                 string filepath = @"c:\databaser\" + strDbFileName + ".exe";
-                if (File.Exists(filepath) && isFileInUse(filepath) == false)
+                if (File.Exists(filepath) && FileInUse(filepath) == false)
                     File.Delete(@"c:\databaser\" + strDbFileName + ".exe");
             }
             else
@@ -328,6 +347,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                         createFile("C:\\Databaser\\DBupdate_restoreSQL.sql", sqlRestoreScript);
                         createFile("C:\\Databaser\\DBupdate_RestoreFromOtherFiles.bat", runRestoreScript);
                     }
+
                     startFile("C:\\Databaser\\DBupdate_RestoreFromOtherFiles.bat");
                     isRestored = true;
                 }
@@ -357,7 +377,9 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
         private void buttonBackupPath_Click(object sender, EventArgs e)
         {
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+            {
                 this.textBoxBackupPath.Text = folderBrowserDialog1.SelectedPath;
+            }
         }
 
         private void createFile(string filePath, string content)
@@ -369,11 +391,11 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
 
             if (radioButtonUpgradeQFdb.Checked == true)
             {
-                strSearch = @"*database*" + textBoxVersion.Text.Replace(",", ".") + @"*" + "qf" + @"*" + toQf.ToString() + @"*";
+                strSearch = @"*database*" + textBoxVersion.Text.Replace(",", ".") + @"*" + "qf" + @"*" + to.ToString() + @"*";
                 strSearchResult = getSubFolderPath(textBoxQfPath.Text, strSearch);
                 content = content.Replace("%QF_PATH%", strSearchResult);
-                content = content.Replace("%TO%", toQf.ToString());
-                content = content.Replace("%FROM%", fromQf.ToString());
+                content = content.Replace("%TO%", to.ToString());
+                content = content.Replace("%FROM%", from.ToString());
             }
 
             content = content.Replace("%DATABASE_P%", textBoxDatabaseP.Text);
@@ -386,7 +408,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
 
             if (radioButtonRestoreFromOtherFiles.Checked)
             {
-                if (isLocalServer())
+                if (isLocalServer)
                 {
                     if (!String.IsNullOrEmpty(textBoxFileProd.Text))
                         content = content.Replace("%RESTORE_FILE_PROD%", textBoxFileProd.Text);
@@ -403,11 +425,12 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             }
             else
             {
-                if (isLocalServer())
+                if (isLocalServer)
                 {
                     content = content.Replace("%RESTORE_FILE_PROD%", @"C:\Databaser\P" + replaceFileLatestVersion + "TCO_LATEST.bak");
                     content = content.Replace("%RESTORE_FILE_HIST%", @"C:\Databaser\H" + replaceFileLatestVersion + "TCO_LATEST.bak");
                 }
+
                 else
                 {
                     content = content.Replace("%RESTORE_FILE_PROD%", @"\\" + myHostName + @"\Databaser\P" + replaceFileLatestVersion + "TCO_LATEST.bak");
@@ -415,7 +438,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 }
             }
 
-            if (isLocalServer())
+            if (isLocalServer)
             {
                 content = content.Replace("%CLIENT_UPGRADE%", textBoxClient.Text);
                 content = content.Replace("%CLIENT%", textBoxClient.Text);
@@ -441,6 +464,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 else
                     content = content.Replace("%CLIENT%", textBoxClient.Text);
             }
+
             StreamWriter writer = new StreamWriter(filePath);
             writer.Write(content);
             writer.Close();
@@ -448,7 +472,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
 
         private void createBackupSqlFile(string filePath, string content)
         {
-            if (isLocalServer())
+            if (isLocalServer)
                 content = content.Replace("%FOLDER_PATH%", textBoxBackupPath.Text);
             else
             {
@@ -503,6 +527,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 checkBoxCopyFiles.Enabled = false;
                 button1.Text = "Upgrade to QF";
             }
+
         }
 
         private void checkBoxRestoreDB_CheckedChanged(object sender, EventArgs e)
@@ -560,6 +585,11 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                     break;
             }
         }
+
+        //private void Form1_Load(object sender, EventArgs e)
+        //{
+
+        //}
 
         private void saveSettings()
         {
@@ -974,6 +1004,21 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             }
         }
 
+
+        private bool FileInUse(string path)
+        {
+            try
+            {
+                //if file is not lock then below statement will successfully executed otherwise it's goes to catch.
+                using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
+                    return false;
+            }
+            catch (IOException)
+            {
+                return true;
+            }
+        }
+
         private void deleteFolderPath(string strPath, string SearchString)
         {
             try
@@ -992,38 +1037,6 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             catch (Exception ee)
             {
                 MessageBox.Show(ee.ToString());
-            }
-        }
-
-        private bool isFileInUse(string path)
-        {
-            try
-            {
-                //if file is not lock then below statement will successfully executed otherwise it's goes to catch.
-                using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
-                    return false;
-            }
-            catch (IOException)
-            {
-                return true;
-            }
-        }
-
-        private bool isLocalServer()
-        {
-            if (rbBackupDb.Checked)
-            {
-                if (textBoxBackupClient.Text.IndexOf(@"\") != -1 || textBoxBackupClient.Text.IndexOf(@"/") != -1)
-                    return false;
-                else
-                    return true;
-            }
-            else
-            {
-                if (textBoxClient.Text.IndexOf(@"\") != -1 || textBoxClient.Text.IndexOf(@"/") != -1)
-                    return false;
-                else
-                    return true;
             }
         }
     }

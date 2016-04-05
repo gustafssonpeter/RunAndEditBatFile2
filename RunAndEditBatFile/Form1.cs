@@ -311,16 +311,16 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             {
                 if (File.Exists(textBoxFileHist.Text) || File.Exists(textBoxFileProd.Text))
                 {
-                    if (String.IsNullOrEmpty(textBoxDatabaseH.Text))
-                    {
-                        createFile("C:\\Databaser\\DBupdate_restoreSQL.sql", sqlRestoreScriptProd);
-                        createFile("C:\\Databaser\\DBupdate_RestoreFromOtherFiles.bat", runRestoreScript);
-                    }
-
-                    if (String.IsNullOrEmpty(textBoxDatabaseP.Text))
+                    if (String.IsNullOrEmpty(textBoxDatabaseP.Text) || String.IsNullOrEmpty(textBoxFileProd.Text))
                     {
                         createFile("C:\\Databaser\\DBupdate_restoreSQL.sql", sqlRestoreScriptHist);
                         createFile("C:\\Databaser\\DBupdate_RestoreFromOtherFiles.bat", runRestoreScriptHist);
+                    }
+
+                    if (String.IsNullOrEmpty(textBoxDatabaseH.Text) || String.IsNullOrEmpty(textBoxFileHist.Text))
+                    {
+                        createFile("C:\\Databaser\\DBupdate_restoreSQL.sql", sqlRestoreScriptProd);
+                        createFile("C:\\Databaser\\DBupdate_RestoreFromOtherFiles.bat", runRestoreScript);
                     }
 
                     if (!String.IsNullOrEmpty(textBoxDatabaseP.Text) && !String.IsNullOrEmpty(textBoxDatabaseH.Text))

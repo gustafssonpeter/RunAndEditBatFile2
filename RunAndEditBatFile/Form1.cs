@@ -2,12 +2,14 @@
 using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
-
+using System.Reflection;
+using System.Globalization;
 
 namespace DB_Updater
 {
     public partial class Form1 : Form
     {
+        string About = File.GetLastWriteTime(System.Reflection.Assembly.GetExecutingAssembly().Location).ToString("yyyy.MM.dd.HHMM");
         int fromQf, toQf, rbState;
         bool isFirstRun, isNumberFrom, isNumberTo, isFromBaseToQf1, isRestored;
         string replaceFileLatestVersion, strFileProd, strFileHist, strSearch, strSearchResult,
@@ -646,7 +648,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Made by:\nPeter Gustafsson");
+            MessageBox.Show("Made by:\nPeter Gustafsson\n\nVersion :" + About);
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)

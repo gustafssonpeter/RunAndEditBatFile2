@@ -3,13 +3,12 @@ using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Reflection;
-using System.Globalization;
 
 namespace DB_Updater
 {
     public partial class Form1 : Form
     {
-        string About = File.GetLastWriteTime(System.Reflection.Assembly.GetExecutingAssembly().Location).ToString("yyyy.MM.dd.HHMM");
+        string About = File.GetLastWriteTime(System.Reflection.Assembly.GetExecutingAssembly().Location).ToString("yyyy.MM.dd.HHmm");
         int fromQf, toQf, rbState;
         bool isFirstRun, isNumberFrom, isNumberTo, isFromBaseToQf1, isRestored;
         string replaceFileLatestVersion, strFileProd, strFileHist, strSearch, strSearchResult,

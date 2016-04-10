@@ -115,7 +115,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
         }
 
         //Start button
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonStart(object sender, EventArgs e)
         {
             if (radioButtonUpgradeQFdb.Checked)
                 startQfUpgrade();
@@ -495,13 +495,13 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 checkBoxRestoreDB.Enabled = true;
                 checkBoxCopyFiles.Enabled = true;
                 if (checkBoxRestoreDB.Checked == true)
-                    button1.Text = "Restore and upgrade to QF";
+                    buttonStart.Text = "Restore and upgrade to QF";
             }
             else
             {
                 checkBoxRestoreDB.Enabled = false;
                 checkBoxCopyFiles.Enabled = false;
-                button1.Text = "Upgrade to QF";
+                buttonStart.Text = "Upgrade to QF";
             }
         }
 
@@ -509,13 +509,13 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
         {
             if (checkBoxRestoreDB.Enabled == true && radioButtonUpgradeQFdb.Checked == true && checkBoxRestoreDB.Checked == true && textBoxFrom.Text == "0")
             {
-                button1.Text = "Restore and upgrade to QF";
+                buttonStart.Text = "Restore and upgrade to QF";
                 checkBoxCopyFiles.Enabled = true;
             }
 
             else
             {
-                button1.Text = "Upgrade to QF";
+                buttonStart.Text = "Upgrade to QF";
                 checkBoxCopyFiles.Enabled = false;
             }
         }
@@ -677,7 +677,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             textBoxFileHist.Enabled = false;
             buttonFileProd.Enabled = false;
             buttonFileHist.Enabled = false;
-            button1.Enabled = true;
+            buttonStart.Enabled = true;
             labelQfPath.Enabled = true;
             textBoxQfPath.Enabled = true;
             buttonQfPath.Enabled = true;
@@ -689,13 +689,13 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             textBoxBackupFile.Enabled = false;
             if (checkBoxRestoreDB.Enabled == true && radioButtonUpgradeQFdb.Checked == true && checkBoxRestoreDB.Checked == true)
             {
-                button1.Text = "Restore and upgrade to QF";
+                buttonStart.Text = "Restore and upgrade to QF";
                 checkBoxCopyFiles.Enabled = true;
             }
 
             else
             {
-                button1.Text = "Upgrade to QF";
+                buttonStart.Text = "Upgrade to QF";
                 checkBoxCopyFiles.Enabled = false;
             }
             checkBoxDeleteFolders.Enabled = false;
@@ -729,7 +729,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             textBoxFileHist.Enabled = false;
             buttonFileProd.Enabled = false;
             buttonFileHist.Enabled = false;
-            button1.Enabled = true;
+            buttonStart.Enabled = true;
             labelQfPath.Enabled = false;
             textBoxQfPath.Enabled = false;
             buttonQfPath.Enabled = false;
@@ -739,7 +739,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             textBoxBackupDb.Enabled = false;
             textBoxBackupPath.Enabled = false;
             textBoxBackupFile.Enabled = false;
-            button1.Text = "Restore from base";
+            buttonStart.Text = "Restore from base";
             checkBoxDeleteFolders.Enabled = false;
         }
 
@@ -771,7 +771,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             textBoxFileHist.Enabled = false;
             buttonFileProd.Enabled = false;
             buttonFileHist.Enabled = false;
-            button1.Enabled = true;
+            buttonStart.Enabled = true;
             labelQfPath.Enabled = false;
             textBoxQfPath.Enabled = false;
             buttonQfPath.Enabled = false;
@@ -781,7 +781,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             textBoxBackupDb.Enabled = false;
             textBoxBackupPath.Enabled = false;
             textBoxBackupFile.Enabled = false;
-            button1.Text = "Restore/upgrade to TRUNK";
+            buttonStart.Text = "Restore/upgrade to TRUNK";
             checkBoxDeleteFolders.Enabled = true;
         }
 
@@ -813,7 +813,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             textBoxFileHist.Enabled = true;
             buttonFileProd.Enabled = true;
             buttonFileHist.Enabled = true;
-            button1.Enabled = true;
+            buttonStart.Enabled = true;
             labelQfPath.Enabled = false;
             textBoxQfPath.Enabled = false;
             buttonQfPath.Enabled = false;
@@ -823,7 +823,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             textBoxBackupDb.Enabled = false;
             textBoxBackupPath.Enabled = false;
             textBoxBackupFile.Enabled = false;
-            button1.Text = "Restore from files";
+            buttonStart.Text = "Restore from files";
             checkBoxDeleteFolders.Enabled = false;
         }
 
@@ -855,7 +855,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             textBoxFileHist.Enabled = false;
             buttonFileProd.Enabled = false;
             buttonFileHist.Enabled = false;
-            button1.Enabled = true;
+            buttonStart.Enabled = true;
             labelQfPath.Enabled = false;
             textBoxQfPath.Enabled = false;
             buttonQfPath.Enabled = false;
@@ -865,7 +865,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             textBoxBackupDb.Enabled = false;
             textBoxBackupPath.Enabled = false;
             textBoxBackupFile.Enabled = false;
-            button1.Text = "Upgrade from path";
+            buttonStart.Text = "Upgrade from path";
             checkBoxDeleteFolders.Enabled = false;
         }
 
@@ -897,7 +897,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             textBoxFileHist.Enabled = false;
             buttonFileProd.Enabled = false;
             buttonFileHist.Enabled = false;
-            button1.Enabled = true;
+            buttonStart.Enabled = true;
             labelQfPath.Enabled = false;
             textBoxQfPath.Enabled = false;
             buttonQfPath.Enabled = false;
@@ -907,7 +907,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             textBoxBackupDb.Enabled = true;
             textBoxBackupPath.Enabled = true;
             textBoxBackupFile.Enabled = true;
-            button1.Text = "Backup database";
+            buttonStart.Text = "Backup database";
             checkBoxDeleteFolders.Enabled = false;
         }
 

@@ -2,18 +2,17 @@
 using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
-using System.Reflection;
 
 namespace DB_Updater
 {
     public partial class Form1 : Form
     {
-        string About = File.GetLastWriteTime(System.Reflection.Assembly.GetExecutingAssembly().Location).ToString("yyyy.MM.dd.HHmm");
         int fromQf, toQf, rbState;
         bool isFirstRun, isNumberFrom, isNumberTo, isFromBaseToQf1, isRestored;
         string replaceFileLatestVersion, strFileProd, strFileHist, strSearch, strSearchResult,
           restoreToBaseBat, setupLocalTrunkBat, restoreAndToQF1bat;
         string myHostName = System.Net.Dns.GetHostName();
+        string About = File.GetLastWriteTime(System.Reflection.Assembly.GetExecutingAssembly().Location).ToString("yyyy.MM.dd.HHmm");
 
         string help =
 @"To use this program you need to create the directory C:\Databaser on your computer. This directory need to be shared to the network.
@@ -128,7 +127,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 restoreToTrunk();
 
             if (radioButtonRestoreFromOtherFiles.Checked)
-                restoreFromOther();
+                restoreFromOtherFiles();
 
             if (rbUpgradeFromPath.Checked)
                 upgradeFromPathFiles();
@@ -306,7 +305,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 MessageBox.Show("Please enter:\rVersion, Client, Database Prod. and Database Hist.");
         }
 
-        private void restoreFromOther()
+        private void restoreFromOtherFiles()
         {
             if (!String.IsNullOrEmpty(textBoxClient.Text) && (!String.IsNullOrEmpty(textBoxDatabaseP.Text) || !String.IsNullOrEmpty(textBoxDatabaseH.Text)) && (!String.IsNullOrEmpty(textBoxFileProd.Text) || !String.IsNullOrEmpty(textBoxFileHist.Text)))
             {

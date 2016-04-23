@@ -194,7 +194,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                                 if (checkBoxRestoreDB.Checked == true)
                                 {
                                     createFile("C:\\Databaser\\DBupdate_restoreSQL.sql", sqlRestoreScript);
-                                    if (checkBoxCopyFiles.Checked == true)
+                                    if (checkBoxCopyFiles.Checked == true && isLocalServer())
                                         restoreAndToQF1bat = copyFiles + runRestoreScript + upgradeToQF1;
                                     else
                                         restoreAndToQF1bat = runRestoreScript + upgradeToQF1;
@@ -262,7 +262,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             if (!String.IsNullOrEmpty(textBoxVersion.Text) && !String.IsNullOrEmpty(textBoxClient.Text) && !String.IsNullOrEmpty(textBoxDatabaseP.Text) && !String.IsNullOrEmpty(textBoxDatabaseH.Text))
             {
                 restoreToBaseBat = "";
-                if (checkBoxCopyFiles.Checked == true)
+                if (checkBoxCopyFiles.Checked == true && isLocalServer())
                     restoreToBaseBat = copyFiles + runRestoreScript;
                 else
                     restoreToBaseBat = runRestoreScript;
@@ -287,7 +287,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                     strDbFileName = File.ReadAllText(@"\\profdoc.lab\dfs01\System\Autobuild\dblatest.txt");
 
                 setupLocalTrunkBat = "";
-                if (checkBoxCopyFiles.Checked == true)
+                if (checkBoxCopyFiles.Checked == true && isLocalServer())
                     setupLocalTrunkBat = copyFiles + runRestoreScript + upgradeToLatestTrunk;
                 else
                     setupLocalTrunkBat = runRestoreScript + upgradeToLatestTrunk;
@@ -410,8 +410,11 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 }
                 else
                 {
-                    content = content.Replace("%RESTORE_FILE_PROD%", @"\\" + myHostName + @"\Databaser\P" + replaceFileLatestVersion + "TCO_LATEST.bak");
-                    content = content.Replace("%RESTORE_FILE_HIST%", @"\\" + myHostName + @"\Databaser\H" + replaceFileLatestVersion + "TCO_LATEST.bak");
+                    //content = content.Replace("%RESTORE_FILE_PROD%", @"\\" + myHostName + @"\Databaser\P" + replaceFileLatestVersion + "TCO_LATEST.bak");
+                    //content = content.Replace("%RESTORE_FILE_HIST%", @"\\" + myHostName + @"\Databaser\H" + replaceFileLatestVersion + "TCO_LATEST.bak");
+          
+                    content = content.Replace("%RESTORE_FILE_PROD%", @"\\profdoc.lab\dfs01\Databaser\Test\Orginal\" + textBoxVersion.Text.Replace(",", ".") + @"\P" + replaceFileLatestVersion + "TCO_LATEST.bak");
+                    content = content.Replace("%RESTORE_FILE_HIST%", @"\\profdoc.lab\dfs01\Databaser\Test\Orginal\" + textBoxVersion.Text.Replace(",", ".") + @"\H" + replaceFileLatestVersion + "TCO_LATEST.bak");
                 }
             }
 

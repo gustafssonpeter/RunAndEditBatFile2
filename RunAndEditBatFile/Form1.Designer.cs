@@ -225,7 +225,7 @@
             this.groupBox1.Controls.Add(this.radioButtonUpgradeQFdb);
             this.groupBox1.Location = new System.Drawing.Point(406, 40);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(219, 178);
+            this.groupBox1.Size = new System.Drawing.Size(240, 178);
             this.groupBox1.TabIndex = 60;
             this.groupBox1.TabStop = false;
             // 
@@ -460,9 +460,9 @@
             this.checkBoxCopyFiles.AutoSize = true;
             this.checkBoxCopyFiles.Location = new System.Drawing.Point(406, 224);
             this.checkBoxCopyFiles.Name = "checkBoxCopyFiles";
-            this.checkBoxCopyFiles.Size = new System.Drawing.Size(169, 17);
+            this.checkBoxCopyFiles.Size = new System.Drawing.Size(240, 17);
             this.checkBoxCopyFiles.TabIndex = 30;
-            this.checkBoxCopyFiles.Text = "Copy Base restore files from Z:";
+            this.checkBoxCopyFiles.Text = "Copy Base restore files and Unzip.exe from Z:";
             this.checkBoxCopyFiles.UseVisualStyleBackColor = true;
             // 
             // textBoxBackupClient
@@ -626,7 +626,6 @@
             this.MinimumSize = new System.Drawing.Size(880, 495);
             this.Name = "Form1";
             this.Text = "DB Updater";
-            //this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);

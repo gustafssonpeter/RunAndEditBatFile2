@@ -22,9 +22,12 @@ You also need to put the unziped Database QF files in the same direcory as ""Pat
 To restore to Trunk the Base version needs to be the previous version as Trunk.
 e.g. if Trunk is 5.12, base should be 5.11";
 
-        string copyFiles =
+        string copyUnzipFile =
 @"
-xcopy \\profdoc.lab\dfs01\Gemensam\Test\Verktyg\unzip.exe c:\Databaser\unzip.exe /D /Y
+xcopy \\profdoc.lab\dfs01\Gemensam\Test\Verktyg\unzip.exe c:\Databaser\unzip.exe /D /Y";
+
+        string copyDbFiles =
+@"
 xcopy \\profdoc.lab\dfs01\Databaser\Test\Orginal\%VERSION%\P%FILE_VERSION%TCO_LATEST.bak c:\Databaser\P%FILE_VERSION%TCO_LATEST.bak /D /Y
 xcopy \\profdoc.lab\dfs01\Databaser\Test\Orginal\%VERSION%\H%FILE_VERSION%TCO_LATEST.bak c:\Databaser\H%FILE_VERSION%TCO_LATEST.bak /D /Y";
 
@@ -194,8 +197,14 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                                 if (checkBoxRestoreDB.Checked == true)
                                 {
                                     createFile("C:\\Databaser\\DBupdate_restoreSQL.sql", sqlRestoreScript);
-                                    if (checkBoxCopyFiles.Checked == true && isLocalServer())
-                                        restoreAndToQF1bat = copyFiles + runRestoreScript + upgradeToQF1;
+                                    if (checkBoxCopyFiles.Checked == true)
+                                    {
+                                        if (isLocalServer())
+                                            restoreAndToQF1bat = copyUnzipFile + copyDbFiles + runRestoreScript + upgradeToQF1;
+                                        else
+                                            restoreAndToQF1bat = copyUnzipFile + runRestoreScript + upgradeToQF1;
+                                    }
+
                                     else
                                         restoreAndToQF1bat = runRestoreScript + upgradeToQF1;
                                     isRestored = true;
@@ -262,8 +271,13 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             if (!String.IsNullOrEmpty(textBoxVersion.Text) && !String.IsNullOrEmpty(textBoxClient.Text) && !String.IsNullOrEmpty(textBoxDatabaseP.Text) && !String.IsNullOrEmpty(textBoxDatabaseH.Text))
             {
                 restoreToBaseBat = "";
-                if (checkBoxCopyFiles.Checked == true && isLocalServer())
-                    restoreToBaseBat = copyFiles + runRestoreScript;
+                if (checkBoxCopyFiles.Checked == true)
+                {
+                    if (isLocalServer())
+                        restoreToBaseBat = copyUnzipFile + copyDbFiles + runRestoreScript;
+                    else
+                        restoreToBaseBat = copyUnzipFile + runRestoreScript;
+                }
                 else
                     restoreToBaseBat = runRestoreScript;
                 createFile("C:\\Databaser\\DBupdate_restoreSQL.sql", sqlRestoreScript);
@@ -287,8 +301,13 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                     strDbFileName = File.ReadAllText(@"\\profdoc.lab\dfs01\System\Autobuild\dblatest.txt");
 
                 setupLocalTrunkBat = "";
-                if (checkBoxCopyFiles.Checked == true && isLocalServer())
-                    setupLocalTrunkBat = copyFiles + runRestoreScript + upgradeToLatestTrunk;
+                if (checkBoxCopyFiles.Checked == true)
+                {
+                    if (isLocalServer())
+                        setupLocalTrunkBat = copyUnzipFile + copyDbFiles + runRestoreScript + upgradeToLatestTrunk;
+                    else
+                        setupLocalTrunkBat = copyUnzipFile + runRestoreScript + upgradeToLatestTrunk;
+                }
                 else
                     setupLocalTrunkBat = runRestoreScript + upgradeToLatestTrunk;
                 createFile("C:\\Databaser\\DBupdate_restoreSQL.sql", sqlRestoreScript);
@@ -394,12 +413,15 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                         content = content.Replace("%RESTORE_FILE_HIST%", textBoxFileHist.Text);
                 }
                 else
-                {
-                    if (!String.IsNullOrEmpty(textBoxFileProd.Text))
-                        content = content.Replace("%RESTORE_FILE_PROD%", @"\\" + myHostName + textBoxFileProd.Text.Remove(0, 2));
-                    if (!String.IsNullOrEmpty(textBoxFileHist.Text))
-                        content = content.Replace("%RESTORE_FILE_HIST%", @"\\" + myHostName + textBoxFileHist.Text.Remove(0, 2));
-                }
+                    MessageBox.Show("You can't restore from local files when you restore a database on a server");
+                //}
+                //else
+                //{
+                //    if (!String.IsNullOrEmpty(textBoxFileProd.Text))
+                //        content = content.Replace("%RESTORE_FILE_PROD%", @"\\" + myHostName + textBoxFileProd.Text.Remove(0, 2));
+                //    if (!String.IsNullOrEmpty(textBoxFileHist.Text))
+                //        content = content.Replace("%RESTORE_FILE_HIST%", @"\\" + myHostName + textBoxFileHist.Text.Remove(0, 2));
+                //}
             }
             else
             {
@@ -410,9 +432,6 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 }
                 else
                 {
-                    //content = content.Replace("%RESTORE_FILE_PROD%", @"\\" + myHostName + @"\Databaser\P" + replaceFileLatestVersion + "TCO_LATEST.bak");
-                    //content = content.Replace("%RESTORE_FILE_HIST%", @"\\" + myHostName + @"\Databaser\H" + replaceFileLatestVersion + "TCO_LATEST.bak");
-          
                     content = content.Replace("%RESTORE_FILE_PROD%", @"\\profdoc.lab\dfs01\Databaser\Test\Orginal\" + textBoxVersion.Text.Replace(",", ".") + @"\P" + replaceFileLatestVersion + "TCO_LATEST.bak");
                     content = content.Replace("%RESTORE_FILE_HIST%", @"\\profdoc.lab\dfs01\Databaser\Test\Orginal\" + textBoxVersion.Text.Replace(",", ".") + @"\H" + replaceFileLatestVersion + "TCO_LATEST.bak");
                 }
@@ -452,17 +471,19 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
         private void createBackupSqlFile(string filePath, string content)
         {
             if (isLocalServer())
-                content = content.Replace("%FOLDER_PATH%", textBoxBackupPath.Text);
-            else
-            {
-                string str = textBoxBackupPath.Text.Remove(0, 2);
-                str = @"\\" + myHostName + str;
-                content = content.Replace("%FOLDER_PATH%", str);
-            }
-
+            { 
+            content = content.Replace("%FOLDER_PATH%", textBoxBackupPath.Text);
+            //else
+            //{
+            //    string str = textBoxBackupPath.Text.Remove(0, 2);
+            //    str = @"\\" + myHostName + str;
+            //    content = content.Replace("%FOLDER_PATH%", str);
+            //}
             content = content.Replace("%DATABASE%", textBoxBackupDb.Text);
             content = content.Replace("%FILENAME%", textBoxBackupFile.Text);
-
+            }
+            else
+                MessageBox.Show("You can't backup to local file when you backup from a server");
             StreamWriter writer = new StreamWriter(filePath);
             writer.Write(content);
             writer.Close();
@@ -649,7 +670,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Made by:\nPeter Gustafsson\n\nVersion :" + About);
+            MessageBox.Show("Made by:\nPeter Gustafsson\ngustafsson.peter@gmail.com\n\nVersion : " + About);
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
@@ -993,14 +1014,14 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
         {
             if (rbBackupDb.Checked)
             {
-                if (textBoxBackupClient.Text.IndexOf(@"\") != -1 || textBoxBackupClient.Text.IndexOf(@"/") != -1)
+                if (textBoxClient.Text.Contains("SDEVDBBOR"))
                     return false;
                 else
                     return true;
             }
             else
             {
-                if (textBoxClient.Text.IndexOf(@"\") != -1 || textBoxClient.Text.IndexOf(@"/") != -1)
+                if (textBoxClient.Text.Contains("SDEVDBBOR"))
                     return false;
                 else
                     return true;

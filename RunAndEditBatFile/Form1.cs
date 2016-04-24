@@ -130,13 +130,24 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 restoreToTrunk();
 
             if (radioButtonRestoreFromOtherFiles.Checked)
-                restoreFromOtherFiles();
+            {
+                if (!isLocalServer() && (textBoxFileProd.Text.Contains(@"c:") || textBoxFileHist.Text.Contains(@"c:")))
+                    MessageBox.Show("You can't restore from a local files when you restore a database on a server");
+                else
+                    restoreFromOtherFiles();
+            }
 
             if (rbUpgradeFromPath.Checked)
                 upgradeFromPathFiles();
 
             if (rbBackupDb.Checked)
-                runDbBackup();
+            {
+                if (!isLocalServer() && textBoxBackupPath.Text.Contains(@"c:"))
+                    MessageBox.Show("You can't backup to a local file when you backup from a server");
+                else
+                    runDbBackup();
+            }
+
 
             if (isRestored)
             {
@@ -405,16 +416,10 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
 
             if (radioButtonRestoreFromOtherFiles.Checked)
             {
-                if (isLocalServer())
-                {
-                    if (!String.IsNullOrEmpty(textBoxFileProd.Text))
-                        content = content.Replace("%RESTORE_FILE_PROD%", textBoxFileProd.Text);
-                    if (!String.IsNullOrEmpty(textBoxFileHist.Text))
-                        content = content.Replace("%RESTORE_FILE_HIST%", textBoxFileHist.Text);
-                }
-                else
-                    MessageBox.Show("You can't restore from local files when you restore a database on a server");
-                //}
+                if (!String.IsNullOrEmpty(textBoxFileProd.Text))
+                    content = content.Replace("%RESTORE_FILE_PROD%", textBoxFileProd.Text);
+                if (!String.IsNullOrEmpty(textBoxFileHist.Text))
+                    content = content.Replace("%RESTORE_FILE_HIST%", textBoxFileHist.Text);
                 //else
                 //{
                 //    if (!String.IsNullOrEmpty(textBoxFileProd.Text))
@@ -470,8 +475,6 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
 
         private void createBackupSqlFile(string filePath, string content)
         {
-            if (isLocalServer())
-            { 
             content = content.Replace("%FOLDER_PATH%", textBoxBackupPath.Text);
             //else
             //{
@@ -481,9 +484,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             //}
             content = content.Replace("%DATABASE%", textBoxBackupDb.Text);
             content = content.Replace("%FILENAME%", textBoxBackupFile.Text);
-            }
-            else
-                MessageBox.Show("You can't backup to local file when you backup from a server");
+   
             StreamWriter writer = new StreamWriter(filePath);
             writer.Write(content);
             writer.Close();
@@ -1014,7 +1015,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
         {
             if (rbBackupDb.Checked)
             {
-                if (textBoxClient.Text.Contains("SDEVDBBOR"))
+                if (textBoxBackupClient.Text.Contains("SDEVDBBOR"))
                     return false;
                 else
                     return true;

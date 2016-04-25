@@ -82,6 +82,8 @@
             this.buttonSave = new System.Windows.Forms.Button();
             this.buttonLoad = new System.Windows.Forms.Button();
             this.checkBoxDeleteFolders = new System.Windows.Forms.CheckBox();
+            this.rbUseServerRestoreFiles = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -106,7 +108,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(443, 345);
+            this.button2.Location = new System.Drawing.Point(456, 383);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(182, 35);
             this.button2.TabIndex = 17;
@@ -156,9 +158,9 @@
             this.checkBoxRestoreDB.Enabled = false;
             this.checkBoxRestoreDB.Location = new System.Drawing.Point(34, 59);
             this.checkBoxRestoreDB.Name = "checkBoxRestoreDB";
-            this.checkBoxRestoreDB.Size = new System.Drawing.Size(154, 17);
+            this.checkBoxRestoreDB.Size = new System.Drawing.Size(154, 30);
             this.checkBoxRestoreDB.TabIndex = 1;
-            this.checkBoxRestoreDB.Text = "Restore db to Base version\r\n";
+            this.checkBoxRestoreDB.Text = "Restore db to Base version\r\n(Only if QF From = 0)";
             this.checkBoxRestoreDB.UseVisualStyleBackColor = true;
             this.checkBoxRestoreDB.CheckedChanged += new System.EventHandler(this.checkBoxRestoreDB_CheckedChanged);
             // 
@@ -223,16 +225,16 @@
             this.groupBox1.Controls.Add(this.radioButtonRestoreToTRUNK);
             this.groupBox1.Controls.Add(this.radioButtonRestoreToBase);
             this.groupBox1.Controls.Add(this.radioButtonUpgradeQFdb);
-            this.groupBox1.Location = new System.Drawing.Point(406, 40);
+            this.groupBox1.Location = new System.Drawing.Point(442, 40);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(240, 178);
+            this.groupBox1.Size = new System.Drawing.Size(230, 165);
             this.groupBox1.TabIndex = 60;
             this.groupBox1.TabStop = false;
             // 
             // rbBackupDb
             // 
             this.rbBackupDb.AutoSize = true;
-            this.rbBackupDb.Location = new System.Drawing.Point(7, 144);
+            this.rbBackupDb.Location = new System.Drawing.Point(36, 130);
             this.rbBackupDb.Name = "rbBackupDb";
             this.rbBackupDb.Size = new System.Drawing.Size(109, 17);
             this.rbBackupDb.TabIndex = 27;
@@ -244,7 +246,7 @@
             // radioButtonRestoreFromOtherFiles
             // 
             this.radioButtonRestoreFromOtherFiles.AutoSize = true;
-            this.radioButtonRestoreFromOtherFiles.Location = new System.Drawing.Point(7, 95);
+            this.radioButtonRestoreFromOtherFiles.Location = new System.Drawing.Point(36, 86);
             this.radioButtonRestoreFromOtherFiles.Name = "radioButtonRestoreFromOtherFiles";
             this.radioButtonRestoreFromOtherFiles.Size = new System.Drawing.Size(133, 17);
             this.radioButtonRestoreFromOtherFiles.TabIndex = 4;
@@ -256,7 +258,7 @@
             // rbUpgradeFromPath
             // 
             this.rbUpgradeFromPath.AutoSize = true;
-            this.rbUpgradeFromPath.Location = new System.Drawing.Point(7, 120);
+            this.rbUpgradeFromPath.Location = new System.Drawing.Point(36, 109);
             this.rbUpgradeFromPath.Name = "rbUpgradeFromPath";
             this.rbUpgradeFromPath.Size = new System.Drawing.Size(113, 17);
             this.rbUpgradeFromPath.TabIndex = 3;
@@ -268,7 +270,7 @@
             // radioButtonRestoreToTRUNK
             // 
             this.radioButtonRestoreToTRUNK.AutoSize = true;
-            this.radioButtonRestoreToTRUNK.Location = new System.Drawing.Point(7, 70);
+            this.radioButtonRestoreToTRUNK.Location = new System.Drawing.Point(36, 64);
             this.radioButtonRestoreToTRUNK.Name = "radioButtonRestoreToTRUNK";
             this.radioButtonRestoreToTRUNK.Size = new System.Drawing.Size(178, 17);
             this.radioButtonRestoreToTRUNK.TabIndex = 26;
@@ -280,7 +282,7 @@
             // radioButtonRestoreToBase
             // 
             this.radioButtonRestoreToBase.AutoSize = true;
-            this.radioButtonRestoreToBase.Location = new System.Drawing.Point(7, 45);
+            this.radioButtonRestoreToBase.Location = new System.Drawing.Point(36, 42);
             this.radioButtonRestoreToBase.Name = "radioButtonRestoreToBase";
             this.radioButtonRestoreToBase.Size = new System.Drawing.Size(101, 17);
             this.radioButtonRestoreToBase.TabIndex = 1;
@@ -292,7 +294,7 @@
             // radioButtonUpgradeQFdb
             // 
             this.radioButtonUpgradeQFdb.AutoSize = true;
-            this.radioButtonUpgradeQFdb.Location = new System.Drawing.Point(7, 20);
+            this.radioButtonUpgradeQFdb.Location = new System.Drawing.Point(36, 20);
             this.radioButtonUpgradeQFdb.Name = "radioButtonUpgradeQFdb";
             this.radioButtonUpgradeQFdb.Size = new System.Drawing.Size(142, 17);
             this.radioButtonUpgradeQFdb.TabIndex = 0;
@@ -304,7 +306,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(443, 292);
+            this.button1.Location = new System.Drawing.Point(456, 330);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(182, 35);
             this.button1.TabIndex = 16;
@@ -314,7 +316,7 @@
             // 
             // textBoxPath
             // 
-            this.textBoxPath.Location = new System.Drawing.Point(245, 401);
+            this.textBoxPath.Location = new System.Drawing.Point(244, 383);
             this.textBoxPath.Name = "textBoxPath";
             this.textBoxPath.Size = new System.Drawing.Size(165, 20);
             this.textBoxPath.TabIndex = 15;
@@ -322,7 +324,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(242, 385);
+            this.label7.Location = new System.Drawing.Point(241, 367);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(170, 13);
             this.label7.TabIndex = 18;
@@ -330,7 +332,7 @@
             // 
             // buttonFolderPath
             // 
-            this.buttonFolderPath.Location = new System.Drawing.Point(164, 398);
+            this.buttonFolderPath.Location = new System.Drawing.Point(163, 380);
             this.buttonFolderPath.Name = "buttonFolderPath";
             this.buttonFolderPath.Size = new System.Drawing.Size(75, 23);
             this.buttonFolderPath.TabIndex = 14;
@@ -346,7 +348,7 @@
             // 
             // buttonFileProd
             // 
-            this.buttonFileProd.Location = new System.Drawing.Point(164, 293);
+            this.buttonFileProd.Location = new System.Drawing.Point(163, 275);
             this.buttonFileProd.Name = "buttonFileProd";
             this.buttonFileProd.Size = new System.Drawing.Size(75, 23);
             this.buttonFileProd.TabIndex = 10;
@@ -356,14 +358,14 @@
             // 
             // textBoxFileProd
             // 
-            this.textBoxFileProd.Location = new System.Drawing.Point(245, 295);
+            this.textBoxFileProd.Location = new System.Drawing.Point(244, 277);
             this.textBoxFileProd.Name = "textBoxFileProd";
             this.textBoxFileProd.Size = new System.Drawing.Size(165, 20);
             this.textBoxFileProd.TabIndex = 11;
             // 
             // textBoxFileHist
             // 
-            this.textBoxFileHist.Location = new System.Drawing.Point(245, 348);
+            this.textBoxFileHist.Location = new System.Drawing.Point(244, 330);
             this.textBoxFileHist.Name = "textBoxFileHist";
             this.textBoxFileHist.Size = new System.Drawing.Size(165, 20);
             this.textBoxFileHist.TabIndex = 13;
@@ -371,7 +373,7 @@
             // labelFileProd
             // 
             this.labelFileProd.AutoSize = true;
-            this.labelFileProd.Location = new System.Drawing.Point(242, 279);
+            this.labelFileProd.Location = new System.Drawing.Point(241, 261);
             this.labelFileProd.Name = "labelFileProd";
             this.labelFileProd.Size = new System.Drawing.Size(139, 13);
             this.labelFileProd.TabIndex = 23;
@@ -380,7 +382,7 @@
             // labelFileHist
             // 
             this.labelFileHist.AutoSize = true;
-            this.labelFileHist.Location = new System.Drawing.Point(242, 332);
+            this.labelFileHist.Location = new System.Drawing.Point(241, 314);
             this.labelFileHist.Name = "labelFileHist";
             this.labelFileHist.Size = new System.Drawing.Size(123, 13);
             this.labelFileHist.TabIndex = 24;
@@ -388,7 +390,7 @@
             // 
             // buttonFileHist
             // 
-            this.buttonFileHist.Location = new System.Drawing.Point(164, 346);
+            this.buttonFileHist.Location = new System.Drawing.Point(163, 328);
             this.buttonFileHist.Name = "buttonFileHist";
             this.buttonFileHist.Size = new System.Drawing.Size(75, 23);
             this.buttonFileHist.TabIndex = 12;
@@ -402,7 +404,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(864, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(927, 24);
             this.menuStrip1.TabIndex = 26;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -458,7 +460,7 @@
             // checkBoxCopyFiles
             // 
             this.checkBoxCopyFiles.AutoSize = true;
-            this.checkBoxCopyFiles.Location = new System.Drawing.Point(406, 224);
+            this.checkBoxCopyFiles.Location = new System.Drawing.Point(442, 224);
             this.checkBoxCopyFiles.Name = "checkBoxCopyFiles";
             this.checkBoxCopyFiles.Size = new System.Drawing.Size(240, 17);
             this.checkBoxCopyFiles.TabIndex = 30;
@@ -468,7 +470,7 @@
             // textBoxBackupClient
             // 
             this.textBoxBackupClient.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.textBoxBackupClient.Location = new System.Drawing.Point(682, 69);
+            this.textBoxBackupClient.Location = new System.Drawing.Point(723, 69);
             this.textBoxBackupClient.Name = "textBoxBackupClient";
             this.textBoxBackupClient.Size = new System.Drawing.Size(131, 20);
             this.textBoxBackupClient.TabIndex = 20;
@@ -476,7 +478,7 @@
             // textBoxBackupDb
             // 
             this.textBoxBackupDb.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.textBoxBackupDb.Location = new System.Drawing.Point(682, 120);
+            this.textBoxBackupDb.Location = new System.Drawing.Point(723, 120);
             this.textBoxBackupDb.Name = "textBoxBackupDb";
             this.textBoxBackupDb.Size = new System.Drawing.Size(131, 20);
             this.textBoxBackupDb.TabIndex = 21;
@@ -484,7 +486,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(679, 53);
+            this.label8.Location = new System.Drawing.Point(720, 53);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(33, 13);
             this.label8.TabIndex = 34;
@@ -493,7 +495,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(679, 104);
+            this.label9.Location = new System.Drawing.Point(720, 104);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(104, 13);
             this.label9.TabIndex = 35;
@@ -501,7 +503,7 @@
             // 
             // textBoxBackupPath
             // 
-            this.textBoxBackupPath.Location = new System.Drawing.Point(682, 224);
+            this.textBoxBackupPath.Location = new System.Drawing.Point(723, 224);
             this.textBoxBackupPath.Name = "textBoxBackupPath";
             this.textBoxBackupPath.Size = new System.Drawing.Size(165, 20);
             this.textBoxBackupPath.TabIndex = 23;
@@ -509,7 +511,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(679, 207);
+            this.label10.Location = new System.Drawing.Point(720, 207);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(99, 13);
             this.label10.TabIndex = 37;
@@ -517,7 +519,7 @@
             // 
             // buttonBackupPath
             // 
-            this.buttonBackupPath.Location = new System.Drawing.Point(682, 251);
+            this.buttonBackupPath.Location = new System.Drawing.Point(723, 251);
             this.buttonBackupPath.Name = "buttonBackupPath";
             this.buttonBackupPath.Size = new System.Drawing.Size(75, 23);
             this.buttonBackupPath.TabIndex = 24;
@@ -528,7 +530,7 @@
             // textBoxBackupFile
             // 
             this.textBoxBackupFile.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
-            this.textBoxBackupFile.Location = new System.Drawing.Point(682, 171);
+            this.textBoxBackupFile.Location = new System.Drawing.Point(723, 171);
             this.textBoxBackupFile.Name = "textBoxBackupFile";
             this.textBoxBackupFile.Size = new System.Drawing.Size(131, 20);
             this.textBoxBackupFile.TabIndex = 22;
@@ -536,7 +538,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(679, 155);
+            this.label11.Location = new System.Drawing.Point(720, 155);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(105, 13);
             this.label11.TabIndex = 40;
@@ -545,7 +547,7 @@
             // buttonSave
             // 
             this.buttonSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonSave.Location = new System.Drawing.Point(443, 398);
+            this.buttonSave.Location = new System.Drawing.Point(682, 336);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(82, 23);
             this.buttonSave.TabIndex = 18;
@@ -555,7 +557,7 @@
             // 
             // buttonLoad
             // 
-            this.buttonLoad.Location = new System.Drawing.Point(545, 398);
+            this.buttonLoad.Location = new System.Drawing.Point(682, 389);
             this.buttonLoad.Name = "buttonLoad";
             this.buttonLoad.Size = new System.Drawing.Size(82, 23);
             this.buttonLoad.TabIndex = 19;
@@ -566,18 +568,42 @@
             // checkBoxDeleteFolders
             // 
             this.checkBoxDeleteFolders.AutoSize = true;
-            this.checkBoxDeleteFolders.Location = new System.Drawing.Point(406, 248);
+            this.checkBoxDeleteFolders.Location = new System.Drawing.Point(442, 247);
             this.checkBoxDeleteFolders.Name = "checkBoxDeleteFolders";
             this.checkBoxDeleteFolders.Size = new System.Drawing.Size(196, 17);
             this.checkBoxDeleteFolders.TabIndex = 41;
             this.checkBoxDeleteFolders.Text = "Delete old TRUNK database folders";
             this.checkBoxDeleteFolders.UseVisualStyleBackColor = true;
             // 
+            // rbUseServerRestoreFiles
+            // 
+            this.rbUseServerRestoreFiles.AutoSize = true;
+            this.rbUseServerRestoreFiles.Location = new System.Drawing.Point(442, 275);
+            this.rbUseServerRestoreFiles.Name = "rbUseServerRestoreFiles";
+            this.rbUseServerRestoreFiles.Size = new System.Drawing.Size(85, 17);
+            this.rbUseServerRestoreFiles.TabIndex = 61;
+            this.rbUseServerRestoreFiles.TabStop = true;
+            this.rbUseServerRestoreFiles.Text = "radioButton1";
+            this.rbUseServerRestoreFiles.UseVisualStyleBackColor = true;
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(442, 297);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(85, 17);
+            this.radioButton2.TabIndex = 62;
+            this.radioButton2.TabStop = true;
+            this.radioButton2.Text = "radioButton2";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(864, 456);
+            this.ClientSize = new System.Drawing.Size(927, 477);
+            this.Controls.Add(this.radioButton2);
+            this.Controls.Add(this.rbUseServerRestoreFiles);
             this.Controls.Add(this.checkBoxDeleteFolders);
             this.Controls.Add(this.buttonLoad);
             this.Controls.Add(this.buttonSave);
@@ -622,8 +648,8 @@
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.MaximumSize = new System.Drawing.Size(880, 495);
-            this.MinimumSize = new System.Drawing.Size(880, 495);
+            this.MaximumSize = new System.Drawing.Size(1000, 700);
+            this.MinimumSize = new System.Drawing.Size(880, 500);
             this.Name = "Form1";
             this.Text = "DB Updater";
             this.groupBox1.ResumeLayout(false);
@@ -690,6 +716,8 @@
         private System.Windows.Forms.Button buttonLoad;
         private System.Windows.Forms.RadioButton rbBackupDb;
         private System.Windows.Forms.CheckBox checkBoxDeleteFolders;
+        private System.Windows.Forms.RadioButton rbUseServerRestoreFiles;
+        private System.Windows.Forms.RadioButton radioButton2;
     }
 }
 

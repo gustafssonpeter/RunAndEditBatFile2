@@ -82,8 +82,7 @@
             this.buttonSave = new System.Windows.Forms.Button();
             this.buttonLoad = new System.Windows.Forms.Button();
             this.checkBoxDeleteFolders = new System.Windows.Forms.CheckBox();
-            this.rbUseServerRestoreFiles = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -404,7 +403,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(927, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(931, 24);
             this.menuStrip1.TabIndex = 26;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -462,9 +461,9 @@
             this.checkBoxCopyFiles.AutoSize = true;
             this.checkBoxCopyFiles.Location = new System.Drawing.Point(442, 224);
             this.checkBoxCopyFiles.Name = "checkBoxCopyFiles";
-            this.checkBoxCopyFiles.Size = new System.Drawing.Size(240, 17);
+            this.checkBoxCopyFiles.Size = new System.Drawing.Size(136, 17);
             this.checkBoxCopyFiles.TabIndex = 30;
-            this.checkBoxCopyFiles.Text = "Copy Base restore files and Unzip.exe from Z:";
+            this.checkBoxCopyFiles.Text = "Copy Unzip.exe from Z:";
             this.checkBoxCopyFiles.UseVisualStyleBackColor = true;
             // 
             // textBoxBackupClient
@@ -575,35 +574,24 @@
             this.checkBoxDeleteFolders.Text = "Delete old TRUNK database folders";
             this.checkBoxDeleteFolders.UseVisualStyleBackColor = true;
             // 
-            // rbUseServerRestoreFiles
+            // comboBox1
             // 
-            this.rbUseServerRestoreFiles.AutoSize = true;
-            this.rbUseServerRestoreFiles.Location = new System.Drawing.Point(442, 275);
-            this.rbUseServerRestoreFiles.Name = "rbUseServerRestoreFiles";
-            this.rbUseServerRestoreFiles.Size = new System.Drawing.Size(85, 17);
-            this.rbUseServerRestoreFiles.TabIndex = 61;
-            this.rbUseServerRestoreFiles.TabStop = true;
-            this.rbUseServerRestoreFiles.Text = "radioButton1";
-            this.rbUseServerRestoreFiles.UseVisualStyleBackColor = true;
-            // 
-            // radioButton2
-            // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(442, 297);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(85, 17);
-            this.radioButton2.TabIndex = 62;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "radioButton2";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "Use restorefiles from z:",
+            "Copy restorefiles from z: to local folder and use",
+            "Use restorefiles from local folder"});
+            this.comboBox1.Location = new System.Drawing.Point(442, 275);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(259, 21);
+            this.comboBox1.TabIndex = 61;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(927, 477);
-            this.Controls.Add(this.radioButton2);
-            this.Controls.Add(this.rbUseServerRestoreFiles);
+            this.ClientSize = new System.Drawing.Size(931, 461);
+            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.checkBoxDeleteFolders);
             this.Controls.Add(this.buttonLoad);
             this.Controls.Add(this.buttonSave);
@@ -716,8 +704,7 @@
         private System.Windows.Forms.Button buttonLoad;
         private System.Windows.Forms.RadioButton rbBackupDb;
         private System.Windows.Forms.CheckBox checkBoxDeleteFolders;
-        private System.Windows.Forms.RadioButton rbUseServerRestoreFiles;
-        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }
 

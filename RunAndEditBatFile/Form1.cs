@@ -207,10 +207,10 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                                 isFromBaseToQf1 = true;
                                 if (checkBoxRestoreDB.Checked == true)
                                 {
-                                    createFile("C:\\Databaser\\DBupdate_restoreSQL.sql", sqlRestoreScript);
+                                    createRestoreScript("C:\\Databaser\\DBupdate_restoreSQL.sql", sqlRestoreScript);
                                     if (checkBoxCopyFiles.Checked == true)
                                     {
-                                        if (isLocalServer())
+                                        if (comboBox1.Text.Contains("Copy restorefiles from z: to local folder and use"))
                                             restoreAndToQF1bat = copyUnzipFile + copyDbFiles + runRestoreScript + upgradeToQF1;
                                         else
                                             restoreAndToQF1bat = copyUnzipFile + runRestoreScript + upgradeToQF1;
@@ -226,7 +226,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                                     isRestored = false;
                                 }
                                 toQf = 1;
-                                createFile("C:\\Databaser\\DBupdate_RestoreQF.bat", restoreAndToQF1bat);
+                                createBatFile("C:\\Databaser\\DBupdate_RestoreQF.bat", restoreAndToQF1bat);
                                 startFile("C:\\Databaser\\DBupdate_RestoreQF.bat");
                             }
 
@@ -237,7 +237,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                                     fromQf++;
                                 toQf = fromQf + 1;
 
-                                createFile("C:\\Databaser\\DBupdate_QfToQf.bat", upgradeFromQfToQf);
+                                createBatFile("C:\\Databaser\\DBupdate_QfToQf.bat", upgradeFromQfToQf);
                                 startFile("C:\\Databaser\\DBupdate_QfToQf.bat");
 
                                 if (textBoxFrom.Text != "0")
@@ -284,15 +284,15 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 restoreToBaseBat = "";
                 if (checkBoxCopyFiles.Checked == true)
                 {
-                    if (isLocalServer())
+                    if (comboBox1.Text.Contains("Copy restorefiles from z: to local folder and use"))
                         restoreToBaseBat = copyUnzipFile + copyDbFiles + runRestoreScript;
                     else
                         restoreToBaseBat = copyUnzipFile + runRestoreScript;
                 }
                 else
                     restoreToBaseBat = runRestoreScript;
-                createFile("C:\\Databaser\\DBupdate_restoreSQL.sql", sqlRestoreScript);
-                createFile("C:\\Databaser\\DBupdate_RestoreToBase.bat", restoreToBaseBat);
+                createRestoreScript("C:\\Databaser\\DBupdate_restoreSQL.sql", sqlRestoreScript);
+                createBatFile("C:\\Databaser\\DBupdate_RestoreToBase.bat", restoreToBaseBat);
                 isRestored = true;
                 startFile("C:\\Databaser\\DBupdate_RestoreToBase.bat");
             }
@@ -314,15 +314,15 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 setupLocalTrunkBat = "";
                 if (checkBoxCopyFiles.Checked == true)
                 {
-                    if (isLocalServer())
+                    if (comboBox1.Text.Contains("Copy restorefiles from z: to local folder and use"))
                         setupLocalTrunkBat = copyUnzipFile + copyDbFiles + runRestoreScript + upgradeToLatestTrunk;
                     else
                         setupLocalTrunkBat = copyUnzipFile + runRestoreScript + upgradeToLatestTrunk;
                 }
                 else
                     setupLocalTrunkBat = runRestoreScript + upgradeToLatestTrunk;
-                createFile("C:\\Databaser\\DBupdate_restoreSQL.sql", sqlRestoreScript);
-                createFile("C:\\Databaser\\DBupdate_SetupLocalTrunk.bat", setupLocalTrunkBat);
+                createRestoreScript("C:\\Databaser\\DBupdate_restoreSQL.sql", sqlRestoreScript);
+                createBatFile("C:\\Databaser\\DBupdate_SetupLocalTrunk.bat", setupLocalTrunkBat);
                 isRestored = true;
                 startFile("C:\\Databaser\\DBupdate_SetupLocalTrunk.bat");
 
@@ -343,20 +343,20 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 {
                     if (String.IsNullOrEmpty(textBoxDatabaseP.Text) || String.IsNullOrEmpty(textBoxFileProd.Text))
                     {
-                        createFile("C:\\Databaser\\DBupdate_restoreSQL.sql", sqlRestoreScriptHist);
-                        createFile("C:\\Databaser\\DBupdate_RestoreFromOtherFiles.bat", runRestoreScriptHist);
+                        createRestoreScript("C:\\Databaser\\DBupdate_restoreSQL.sql", sqlRestoreScriptHist);
+                        createBatFile("C:\\Databaser\\DBupdate_RestoreFromOtherFiles.bat", runRestoreScriptHist);
                     }
 
                     if (String.IsNullOrEmpty(textBoxDatabaseH.Text) || String.IsNullOrEmpty(textBoxFileHist.Text))
                     {
-                        createFile("C:\\Databaser\\DBupdate_restoreSQL.sql", sqlRestoreScriptProd);
-                        createFile("C:\\Databaser\\DBupdate_RestoreFromOtherFiles.bat", runRestoreScript);
+                        createRestoreScript("C:\\Databaser\\DBupdate_restoreSQL.sql", sqlRestoreScriptProd);
+                        createBatFile("C:\\Databaser\\DBupdate_RestoreFromOtherFiles.bat", runRestoreScript);
                     }
 
                     if (!String.IsNullOrEmpty(textBoxDatabaseP.Text) && !String.IsNullOrEmpty(textBoxDatabaseH.Text))
                     {
-                        createFile("C:\\Databaser\\DBupdate_restoreSQL.sql", sqlRestoreScript);
-                        createFile("C:\\Databaser\\DBupdate_RestoreFromOtherFiles.bat", runRestoreScript);
+                        createRestoreScript("C:\\Databaser\\DBupdate_restoreSQL.sql", sqlRestoreScript);
+                        createBatFile("C:\\Databaser\\DBupdate_RestoreFromOtherFiles.bat", runRestoreScript);
                     }
                     startFile("C:\\Databaser\\DBupdate_RestoreFromOtherFiles.bat");
                     isRestored = true;
@@ -374,7 +374,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             {
                 if (Directory.Exists(textBoxPath.Text))
                 {
-                    createFile("C:\\Databaser\\DBupdate_upgradeFromPath.bat", upgradeFromPath);
+                    createBatFile("C:\\Databaser\\DBupdate_upgradeFromPath.bat", upgradeFromPath);
                     startFile("C:\\Databaser\\DBupdate_upgradeFromPath.bat");
                 }
                 else
@@ -390,7 +390,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 this.textBoxBackupPath.Text = folderBrowserDialog1.SelectedPath;
         }
 
-        private void createFile(string filePath, string content)
+        private void createBatFile(string filePath, string content)
         {
             if (textBoxVersion.Text.Contains("."))
                 replaceFileLatestVersion = textBoxVersion.Text.Replace(".", "") + "0";
@@ -414,33 +414,33 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             if (rbUpgradeFromPath.Checked == true)
                 content = content.Replace("%PATH%", textBoxPath.Text);
 
-            if (radioButtonRestoreFromOtherFiles.Checked)
-            {
-                if (!String.IsNullOrEmpty(textBoxFileProd.Text))
-                    content = content.Replace("%RESTORE_FILE_PROD%", textBoxFileProd.Text);
-                if (!String.IsNullOrEmpty(textBoxFileHist.Text))
-                    content = content.Replace("%RESTORE_FILE_HIST%", textBoxFileHist.Text);
-                //else
-                //{
-                //    if (!String.IsNullOrEmpty(textBoxFileProd.Text))
-                //        content = content.Replace("%RESTORE_FILE_PROD%", @"\\" + myHostName + textBoxFileProd.Text.Remove(0, 2));
-                //    if (!String.IsNullOrEmpty(textBoxFileHist.Text))
-                //        content = content.Replace("%RESTORE_FILE_HIST%", @"\\" + myHostName + textBoxFileHist.Text.Remove(0, 2));
-                //}
-            }
-            else
-            {
-                if (isLocalServer())
-                {
-                    content = content.Replace("%RESTORE_FILE_PROD%", @"C:\Databaser\P" + replaceFileLatestVersion + "TCO_LATEST.bak");
-                    content = content.Replace("%RESTORE_FILE_HIST%", @"C:\Databaser\H" + replaceFileLatestVersion + "TCO_LATEST.bak");
-                }
-                else
-                {
-                    content = content.Replace("%RESTORE_FILE_PROD%", @"\\profdoc.lab\dfs01\Databaser\Test\Orginal\" + textBoxVersion.Text.Replace(",", ".") + @"\P" + replaceFileLatestVersion + "TCO_LATEST.bak");
-                    content = content.Replace("%RESTORE_FILE_HIST%", @"\\profdoc.lab\dfs01\Databaser\Test\Orginal\" + textBoxVersion.Text.Replace(",", ".") + @"\H" + replaceFileLatestVersion + "TCO_LATEST.bak");
-                }
-            }
+            //if (radioButtonRestoreFromOtherFiles.Checked)
+            //{
+            //    if (!String.IsNullOrEmpty(textBoxFileProd.Text))
+            //        content = content.Replace("%RESTORE_FILE_PROD%", textBoxFileProd.Text);
+            //    if (!String.IsNullOrEmpty(textBoxFileHist.Text))
+            //        content = content.Replace("%RESTORE_FILE_HIST%", textBoxFileHist.Text);
+            //    //else
+            //    //{
+            //    //    if (!String.IsNullOrEmpty(textBoxFileProd.Text))
+            //    //        content = content.Replace("%RESTORE_FILE_PROD%", @"\\" + myHostName + textBoxFileProd.Text.Remove(0, 2));
+            //    //    if (!String.IsNullOrEmpty(textBoxFileHist.Text))
+            //    //        content = content.Replace("%RESTORE_FILE_HIST%", @"\\" + myHostName + textBoxFileHist.Text.Remove(0, 2));
+            //    //}
+            //}
+            //else
+            //{
+            //    if (comboBox1.Text.Contains("Use restorefiles from z:"))
+            //    {
+            //        content = content.Replace("%RESTORE_FILE_PROD%", @"\\profdoc.lab\dfs01\Databaser\Test\Orginal\" + textBoxVersion.Text.Replace(",", ".") + @"\P" + replaceFileLatestVersion + "TCO_LATEST.bak");
+            //        content = content.Replace("%RESTORE_FILE_HIST%", @"\\profdoc.lab\dfs01\Databaser\Test\Orginal\" + textBoxVersion.Text.Replace(",", ".") + @"\H" + replaceFileLatestVersion + "TCO_LATEST.bak");
+            //    }
+            //    else
+            //    {
+            //        content = content.Replace("%RESTORE_FILE_PROD%", @"C:\Databaser\P" + replaceFileLatestVersion + "TCO_LATEST.bak");
+            //        content = content.Replace("%RESTORE_FILE_HIST%", @"C:\Databaser\H" + replaceFileLatestVersion + "TCO_LATEST.bak");
+            //    }
+            //}
 
             if (isLocalServer())
             {
@@ -459,6 +459,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                     str = str.Insert(str.IndexOf(@"\"), " ");
                 }
                 content = content.Replace("%CLIENT_UPGRADE%", str);
+
                 if (textBoxClient.Text.IndexOf(@"/") != -1)
                 {
                     str = textBoxClient.Text;
@@ -484,7 +485,64 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             //}
             content = content.Replace("%DATABASE%", textBoxBackupDb.Text);
             content = content.Replace("%FILENAME%", textBoxBackupFile.Text);
-   
+
+            StreamWriter writer = new StreamWriter(filePath);
+            writer.Write(content);
+            writer.Close();
+        }
+
+        private void createRestoreScript(string filePath, string content)
+        {
+            if (textBoxVersion.Text.Contains("."))
+                replaceFileLatestVersion = textBoxVersion.Text.Replace(".", "") + "0";
+            if (textBoxVersion.Text.Contains(","))
+                replaceFileLatestVersion = textBoxVersion.Text.Replace(",", "") + "0";
+
+            content = content.Replace("%DATABASE_P%", textBoxDatabaseP.Text);
+            content = content.Replace("%DATABASE_H%", textBoxDatabaseH.Text);
+
+            if (isLocalServer())
+                content = content.Replace("%CLIENT%", textBoxClient.Text);
+            else
+            {
+                string str = textBoxClient.Text;
+                //if (textBoxClient.Text.IndexOf(@"\") != -1)
+                //    str = str.Insert(str.IndexOf(@"\"), " ");
+                if (textBoxClient.Text.IndexOf(@"/") != -1)
+                {
+                    str = str.Replace(@"/", @"\");
+                    //str = str.Insert(str.IndexOf(@"\"), " ");
+                }
+                content = content.Replace("%CLIENT%", str);
+            }
+
+            if (radioButtonRestoreFromOtherFiles.Checked)
+            {
+                if (!String.IsNullOrEmpty(textBoxFileProd.Text))
+                    content = content.Replace("%RESTORE_FILE_PROD%", textBoxFileProd.Text);
+                if (!String.IsNullOrEmpty(textBoxFileHist.Text))
+                    content = content.Replace("%RESTORE_FILE_HIST%", textBoxFileHist.Text);
+                //else
+                //{
+                //    if (!String.IsNullOrEmpty(textBoxFileProd.Text))
+                //        content = content.Replace("%RESTORE_FILE_PROD%", @"\\" + myHostName + textBoxFileProd.Text.Remove(0, 2));
+                //    if (!String.IsNullOrEmpty(textBoxFileHist.Text))
+                //        content = content.Replace("%RESTORE_FILE_HIST%", @"\\" + myHostName + textBoxFileHist.Text.Remove(0, 2));
+                //}
+            }
+            else
+            {
+                if (comboBox1.Text.Contains("Use restorefiles from z:"))
+                {
+                    content = content.Replace("%RESTORE_FILE_PROD%", @"\\profdoc.lab\dfs01\Databaser\Test\Orginal\" + textBoxVersion.Text.Replace(",", ".") + @"\P" + replaceFileLatestVersion + "TCO_LATEST.bak");
+                    content = content.Replace("%RESTORE_FILE_HIST%", @"\\profdoc.lab\dfs01\Databaser\Test\Orginal\" + textBoxVersion.Text.Replace(",", ".") + @"\H" + replaceFileLatestVersion + "TCO_LATEST.bak");
+                }
+                else
+                {
+                    content = content.Replace("%RESTORE_FILE_PROD%", @"C:\Databaser\P" + replaceFileLatestVersion + "TCO_LATEST.bak");
+                    content = content.Replace("%RESTORE_FILE_HIST%", @"C:\Databaser\H" + replaceFileLatestVersion + "TCO_LATEST.bak");
+                }
+            }
             StreamWriter writer = new StreamWriter(filePath);
             writer.Write(content);
             writer.Close();
@@ -674,6 +732,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             MessageBox.Show("Made by:\nPeter Gustafsson\ngustafsson.peter@gmail.com\n\nVersion : " + About);
         }
 
+        //Upgrade database to QF
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
             textBoxFrom.Enabled = true;
@@ -724,8 +783,10 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 checkBoxCopyFiles.Enabled = false;
             }
             checkBoxDeleteFolders.Enabled = false;
+            comboBox1.Enabled = true;
         }
 
+        //Restore to base
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
             textBoxFrom.Enabled = false;
@@ -766,8 +827,10 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             textBoxBackupFile.Enabled = false;
             button1.Text = "Restore from base";
             checkBoxDeleteFolders.Enabled = false;
+            comboBox1.Enabled = true;
         }
 
+        //Restore to Trunk
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
         {
             textBoxFrom.Enabled = false;
@@ -808,8 +871,10 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             textBoxBackupFile.Enabled = false;
             button1.Text = "Restore/upgrade to TRUNK";
             checkBoxDeleteFolders.Enabled = true;
+            comboBox1.Enabled = true;
         }
 
+        //Restore from other files
         private void radioButtonRestoreOtherFiles_CheckedChanged(object sender, EventArgs e)
         {
             textBoxFrom.Enabled = false;
@@ -850,6 +915,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             textBoxBackupFile.Enabled = false;
             button1.Text = "Restore from files";
             checkBoxDeleteFolders.Enabled = false;
+            comboBox1.Enabled = false;
         }
 
         private void rbUpgradeFromPath_CheckedChanged(object sender, EventArgs e)
@@ -892,6 +958,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             textBoxBackupFile.Enabled = false;
             button1.Text = "Upgrade from path";
             checkBoxDeleteFolders.Enabled = false;
+            comboBox1.Enabled = false;
         }
 
         private void rbBackupDb_CheckedChanged(object sender, EventArgs e)
@@ -934,6 +1001,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             textBoxBackupFile.Enabled = true;
             button1.Text = "Backup database";
             checkBoxDeleteFolders.Enabled = false;
+            comboBox1.Enabled = false;
         }
 
         static public void startFile(string file)

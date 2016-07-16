@@ -214,5 +214,17 @@ namespace DB_Updater {
                 this["checkBoxDeleteFolder"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool checkBoxAutoSave {
+            get {
+                return ((bool)(this["checkBoxAutoSave"]));
+            }
+            set {
+                this["checkBoxAutoSave"] = value;
+            }
+        }
     }
 }

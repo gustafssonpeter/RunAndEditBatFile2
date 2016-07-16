@@ -2,6 +2,7 @@
 using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Linq;
 
 namespace DB_Updater
 {
@@ -10,30 +11,30 @@ namespace DB_Updater
         int fromQf, toQf, rbState;
         bool isFirstRun, isNumberFrom, isNumberTo, isFromBaseToQf1, isRestored;
         string replaceFileLatestVersion, strFileProd, strFileHist, strSearch, strSearchResult,
-          restoreToBaseBat, setupLocalTrunkBat, restoreAndToQF1bat;
+          restoreToBaseBat, setupLocalTrunkBat, restoreAndToQF1bat, versionDot, dirForUpgradeFiles, qfFileName, dirForCopyQfFiles, qfServerPath;
         string myHostName = System.Net.Dns.GetHostName();
         string About = File.GetLastWriteTime(System.Reflection.Assembly.GetExecutingAssembly().Location).ToString("yyyy.MM.dd.HHmm");
 
         string help =
 @"To use this program you need to create the directory C:\Databaser on your computer. This directory need to be shared to the network.
 
-You also need to put the unziped Database QF files in the same direcory as ""Path to QF folder""
+QF files will automatically be copied to the directory -> ""Path to QF folder""
 
 To restore to Trunk the Base version needs to be the previous version as Trunk.
 e.g. if Trunk is 5.12, base should be 5.11";
 
         string copyUnzipFile =
 @"
-xcopy \\profdoc.lab\dfs01\Gemensam\Test\Verktyg\unzip.exe c:\Databaser\unzip.exe /D /Y";
+copy \\profdoc.lab\dfs01\Gemensam\Test\Verktyg\unzip.exe c:\Databaser\unzip.exe /Y";
 
         string copyDbFiles =
 @"
-xcopy \\profdoc.lab\dfs01\Databaser\Test\Orginal\%VERSION%\P%FILE_VERSION%TCO_LATEST.bak c:\Databaser\P%FILE_VERSION%TCO_LATEST.bak /D /Y
-xcopy \\profdoc.lab\dfs01\Databaser\Test\Orginal\%VERSION%\H%FILE_VERSION%TCO_LATEST.bak c:\Databaser\H%FILE_VERSION%TCO_LATEST.bak /D /Y";
+copy \\profdoc.lab\dfs01\Databaser\Test\Orginal\%VERSION%\P%FILE_VERSION%TCO_LATEST.bak c:\Databaser\P%FILE_VERSION%TCO_LATEST.bak /Y
+copy \\profdoc.lab\dfs01\Databaser\Test\Orginal\%VERSION%\H%FILE_VERSION%TCO_LATEST.bak c:\Databaser\H%FILE_VERSION%TCO_LATEST.bak /Y";
 
         string upgradeToLatestTrunk =
 @"
-for /f ""delims="" %%i in (\\profdoc.lab\dfs01\System\Autobuild\dblatest.txt) do xcopy ""\\profdoc.lab\dfs01\System\Autobuild\%%i.exe"" ""c:\databaser"" /D /Y
+for /f ""delims="" %%i in (\\profdoc.lab\dfs01\System\Autobuild\dblatest.txt) do copy ""\\profdoc.lab\dfs01\System\Autobuild\%%i.exe"" ""c:\databaser"" /Y
 for /f ""delims="" %%i in (\\profdoc.lab\dfs01\System\Autobuild\dblatest.txt) do unzip ""c:\databaser\%%i.exe""
 for /f ""delims="" %%i in (\\profdoc.lab\dfs01\System\Autobuild\dblatest.txt) do cd ""c:\databaser\%%i""
 START /B ""Upgrade historic"" ""Upgrade Historic.bat"" SYSADM SYSADM %DATABASE_H% %CLIENT_UPGRADE%
@@ -51,14 +52,22 @@ sqlcmd -S %CLIENT% -d %DATABASE_H% -U SYSADM -P SYSADM -i DBupdate_restoreSQL.sq
 
         string upgradeFromQfToQf =
 @"
-cd ""%QF_PATH%""
+copy \\profdoc.lab\dfs01\Gemensam\Test\Verktyg\unzip.exe %QF_DIR_PATH%\unzip.exe /Y
+copy ""\\profdoc.lab\dfs01\Utveckling\Delivery\%VERSION_DOT%\Arkiv\QF Database\%QF_SERVER_PATH%\\%QF_FILE_NAME%"" ""%QF_DIR_PATH%\%QF_FILE_NAME%"" /Y
+cd ""%QF_DIR_PATH%""
+unzip -o ""%QF_DIR_PATH%\%QF_FILE_NAME%""
+cd ""%QF_FILE_PATH%""
 START /B ""Upgrade historic"" ""Upgrade Historic From %VERSION% QF%FROM% To %VERSION% QF%TO%.bat"" SYSADM SYSADM %DATABASE_H% %CLIENT_UPGRADE%
 START /B ""Upgrade production"" ""Upgrade Production From %VERSION% QF%FROM% To %VERSION% QF%TO%.bat"" SYSADM SYSADM %DATABASE_P% %CLIENT_UPGRADE% 
 pause";
 
         string upgradeToQF1 =
 @"
-cd ""%QF_PATH%""
+copy \\profdoc.lab\dfs01\Gemensam\Test\Verktyg\unzip.exe %QF_DIR_PATH%\unzip.exe /Y
+copy ""\\profdoc.lab\dfs01\Utveckling\Delivery\%VERSION_DOT%\Arkiv\QF Database\%QF_SERVER_PATH%\\%QF_FILE_NAME%"" ""%QF_DIR_PATH%\%QF_FILE_NAME%"" /Y
+cd ""%QF_DIR_PATH%""
+unzip -o ""%QF_DIR_PATH%\%QF_FILE_NAME%""
+cd ""%QF_FILE_PATH%""
 START /B ""Upgrade production"" ""Upgrade Production From %VERSION% To %VERSION% QF1.bat"" SYSADM SYSADM %DATABASE_P% %CLIENT_UPGRADE% 
 START /B ""Upgrade historic"" ""Upgrade Historic From %VERSION% To %VERSION% QF1.bat"" SYSADM SYSADM %DATABASE_H% %CLIENT_UPGRADE% 
 pause";
@@ -121,7 +130,10 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
         private void button1_Click(object sender, EventArgs e)
         {
             if (radioButtonUpgradeQFdb.Checked)
+            {
                 startQfUpgrade();
+                //deleteFolderPath(textBoxQfPath.Text, @"CGM ANALYTIX Database*");
+            }
 
             if (radioButtonRestoreToBase.Checked)
                 restoreToBaseVersion();
@@ -154,6 +166,8 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 MessageBox.Show(File.ReadAllText("C:\\databaser\\DBupdate_restoreSQL.txt"), "Restore result!");
                 isRestored = false;
             }
+            if (checkBoxAutoSave.Checked == true)
+                saveSettings();
         }
 
         //Clear button
@@ -205,6 +219,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                             {
                                 restoreAndToQF1bat = "";
                                 isFromBaseToQf1 = true;
+                                toQf = 1;
                                 if (checkBoxRestoreDB.Checked == true)
                                 {
                                     createFile("C:\\Databaser\\DBupdate_restoreSQL.sql", sqlRestoreScript);
@@ -225,7 +240,6 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                                     restoreAndToQF1bat = upgradeToQF1;
                                     isRestored = false;
                                 }
-                                toQf = 1;
                                 createFile("C:\\Databaser\\DBupdate_RestoreQF.bat", restoreAndToQF1bat);
                                 startFile("C:\\Databaser\\DBupdate_RestoreQF.bat");
                             }
@@ -246,6 +260,9 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                             count--;
                             isFirstRun = false;
                             isFromBaseToQf1 = false;
+                            //Delete zip file
+                            if (File.Exists(textBoxQfPath.Text + @"\" + qfFileName) && isFileInUse(textBoxQfPath.Text + @"\" + qfFileName) == false)
+                                File.Delete(textBoxQfPath.Text + @"\" + qfFileName);
                         }
                     }
                     else
@@ -393,22 +410,70 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
         private void createFile(string filePath, string content)
         {
             if (textBoxVersion.Text.Contains("."))
+            {
                 replaceFileLatestVersion = textBoxVersion.Text.Replace(".", "") + "0";
+                versionDot = textBoxVersion.Text;
+            }
+            replaceFileLatestVersion = textBoxVersion.Text.Replace(".", "") + "0";
             if (textBoxVersion.Text.Contains(","))
+            {
                 replaceFileLatestVersion = textBoxVersion.Text.Replace(",", "") + "0";
+                versionDot = textBoxVersion.Text.Replace(",", ".");
+            }
+
 
             if (radioButtonUpgradeQFdb.Checked == true)
             {
-                strSearch = @"*database*" + textBoxVersion.Text.Replace(",", ".") + @"*" + "qf" + @"*" + toQf.ToString() + @"*";
-                strSearchResult = getSubFolderPath(textBoxQfPath.Text, strSearch);
-                content = content.Replace("%QF_PATH%", strSearchResult);
+                int t = int.Parse(versionDot.Replace(".", ""));
+                if (t <= 59)
+                {
+                    dirForCopyQfFiles = @"\\profdoc.lab\dfs01\Utveckling\Delivery\" + versionDot + @"\Arkiv\QF Database\";
+                    string pattern = "CGM LAB ANALYTIX Database " + versionDot + " QF" + toQf.ToString() + "*";
+
+                    if (toQf == 1)
+                    {
+                        var dirInfo = new DirectoryInfo(dirForCopyQfFiles);
+                        var file = (from f in dirInfo.GetFiles(pattern) orderby f.LastWriteTime descending select f).Last();
+                        qfFileName = file.ToString();
+                        dirForUpgradeFiles = file.ToString().Replace(".exe", "");
+                    }
+                    else
+                    {
+                        var dirInfo = new DirectoryInfo(dirForCopyQfFiles);
+                        var file = (from f in dirInfo.GetFiles(pattern) orderby f.LastWriteTime descending select f).First();
+                        qfFileName = file.ToString();
+                        dirForUpgradeFiles = file.ToString().Replace(".exe", "");
+                    }
+                    qfServerPath = "";
+                }
+                else
+                {
+                    dirForCopyQfFiles = @"\\profdoc.lab\dfs01\Utveckling\Delivery\" + versionDot + @"\Arkiv\QF Database\QF" + toQf.ToString() + @"\";
+                    var directory = new DirectoryInfo(dirForCopyQfFiles);
+                    var myFile = directory.GetFiles()
+                   .OrderByDescending(f => f.LastWriteTime)
+                   .First();
+                    qfFileName = myFile.ToString();
+                    dirForUpgradeFiles = myFile.ToString().Replace(".exe", "");
+                    qfServerPath = "QF" + toQf.ToString();
+                }
+
+                //strSearch = @"*database*" + textBoxVersion.Text.Replace(",", ".") + @"*" + "qf" + @"*" + toQf.ToString() + @"*";
+                //strSearchResult = getSubFolderPath(textBoxQfPath.Text, strSearch);
+                //content = content.Replace("%QF_FILE_PATH%", strSearchResult);
+                content = content.Replace("%QF_FILE_PATH%", textBoxQfPath.Text + @"\" + dirForUpgradeFiles);
                 content = content.Replace("%TO%", toQf.ToString());
                 content = content.Replace("%FROM%", fromQf.ToString());
+                content = content.Replace("%VERSION_DOT%", versionDot);
+                content = content.Replace("%QF_FILE_NAME%", qfFileName);
+                content = content.Replace("%QF_DIR_PATH%", textBoxQfPath.Text);
+                content = content.Replace("%QF_SERVER_PATH%", qfServerPath);
             }
 
             content = content.Replace("%DATABASE_P%", textBoxDatabaseP.Text);
             content = content.Replace("%DATABASE_H%", textBoxDatabaseH.Text);
-            content = content.Replace("%VERSION%", textBoxVersion.Text.Replace(",", "."));
+            //content = content.Replace("%VERSION%", textBoxVersion.Text.Replace(",", "."));
+            content = content.Replace("%VERSION%", versionDot);
             if (checkBoxCopyFiles.Checked == true && checkBoxCopyFiles.Enabled == true)
                 content = content.Replace("%FILE_VERSION%", replaceFileLatestVersion);
             if (rbUpgradeFromPath.Checked == true)
@@ -484,7 +549,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             //}
             content = content.Replace("%DATABASE%", textBoxBackupDb.Text);
             content = content.Replace("%FILENAME%", textBoxBackupFile.Text);
-   
+
             StreamWriter writer = new StreamWriter(filePath);
             writer.Write(content);
             writer.Close();
@@ -562,6 +627,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             checkBoxRestoreDB.Checked = MySettings.Default.checkBoxRestoreDB;
             checkBoxCopyFiles.Checked = MySettings.Default.checkBoxCopyFiles;
             checkBoxDeleteFolders.Checked = MySettings.Default.checkBoxDeleteFolder;
+            checkBoxAutoSave.Checked = MySettings.Default.checkBoxAutoSave;
 
             switch (MySettings.Default.rb)
             {
@@ -613,6 +679,10 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 MySettings.Default.checkBoxDeleteFolder = true;
             if (checkBoxDeleteFolders.Checked == false)
                 MySettings.Default.checkBoxDeleteFolder = false;
+            if (checkBoxAutoSave.Checked == true)
+                MySettings.Default.checkBoxAutoSave = true;
+            if (checkBoxAutoSave.Checked == false)
+                MySettings.Default.checkBoxAutoSave = false;
 
             MySettings.Default.version = textBoxVersion.Text;
             MySettings.Default.client = textBoxClient.Text;

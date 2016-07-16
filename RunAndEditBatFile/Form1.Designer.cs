@@ -82,6 +82,7 @@
             this.buttonSave = new System.Windows.Forms.Button();
             this.buttonLoad = new System.Windows.Forms.Button();
             this.checkBoxDeleteFolders = new System.Windows.Forms.CheckBox();
+            this.checkBoxAutoSave = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -573,11 +574,22 @@
             this.checkBoxDeleteFolders.Text = "Delete old TRUNK database folders";
             this.checkBoxDeleteFolders.UseVisualStyleBackColor = true;
             // 
+            // checkBoxAutoSave
+            // 
+            this.checkBoxAutoSave.AutoSize = true;
+            this.checkBoxAutoSave.Location = new System.Drawing.Point(655, 403);
+            this.checkBoxAutoSave.Name = "checkBoxAutoSave";
+            this.checkBoxAutoSave.Size = new System.Drawing.Size(110, 17);
+            this.checkBoxAutoSave.TabIndex = 61;
+            this.checkBoxAutoSave.Text = "Autosave settings";
+            this.checkBoxAutoSave.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(864, 456);
+            this.ClientSize = new System.Drawing.Size(864, 457);
+            this.Controls.Add(this.checkBoxAutoSave);
             this.Controls.Add(this.checkBoxDeleteFolders);
             this.Controls.Add(this.buttonLoad);
             this.Controls.Add(this.buttonSave);
@@ -690,6 +702,7 @@
         private System.Windows.Forms.Button buttonLoad;
         private System.Windows.Forms.RadioButton rbBackupDb;
         private System.Windows.Forms.CheckBox checkBoxDeleteFolders;
+        private System.Windows.Forms.CheckBox checkBoxAutoSave;
     }
 }
 

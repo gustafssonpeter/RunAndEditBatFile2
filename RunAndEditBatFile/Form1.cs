@@ -132,7 +132,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             if (radioButtonUpgradeQFdb.Checked)
             {
                 string path = @"\\profdoc.lab\dfs01\Utveckling\Delivery\" + getVersionDot() + @"\Arkiv\QF Database\";
-                //To check how many qf files there is
+                //To check how many qf dirs there is
                 if (int.Parse(getVersionDot().Replace(".", "")) >= 510)
                 {
                     if (countDirs(path, "*QF*") < int.Parse(textBoxTo.Text))
@@ -145,6 +145,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                     else
                         startQfUpgrade();
                 }
+                //To check how many qf files there is
                 else
                 {
                     if (countFiles(path, "*QF*") < int.Parse(textBoxTo.Text))
@@ -497,13 +498,6 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                     content = content.Replace("%RESTORE_FILE_PROD%", textBoxFileProd.Text);
                 if (!String.IsNullOrEmpty(textBoxFileHist.Text))
                     content = content.Replace("%RESTORE_FILE_HIST%", textBoxFileHist.Text);
-                //else
-                //{
-                //    if (!String.IsNullOrEmpty(textBoxFileProd.Text))
-                //        content = content.Replace("%RESTORE_FILE_PROD%", @"\\" + myHostName + textBoxFileProd.Text.Remove(0, 2));
-                //    if (!String.IsNullOrEmpty(textBoxFileHist.Text))
-                //        content = content.Replace("%RESTORE_FILE_HIST%", @"\\" + myHostName + textBoxFileHist.Text.Remove(0, 2));
-                //}
             }
             else
             {
@@ -553,12 +547,6 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
         private void createBackupSqlFile(string filePath, string content)
         {
             content = content.Replace("%FOLDER_PATH%", textBoxBackupPath.Text);
-            //else
-            //{
-            //    string str = textBoxBackupPath.Text.Remove(0, 2);
-            //    str = @"\\" + myHostName + str;
-            //    content = content.Replace("%FOLDER_PATH%", str);
-            //}
             content = content.Replace("%DATABASE%", textBoxBackupDb.Text);
             content = content.Replace("%FILENAME%", textBoxBackupFile.Text);
 
@@ -1049,7 +1037,6 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                         path = dir;
                 }
                 return path;
-
             }
             catch (Exception ee)
             {

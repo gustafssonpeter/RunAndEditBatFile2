@@ -10,8 +10,8 @@ namespace DB_Updater
     {
         int fromQf, toQf, rbState;
         bool isFirstRun, isNumberFrom, isNumberTo, isFromBaseToQf1, isRestored;
-        string replaceFileLatestVersion, strFileProd, strFileHist, strSearch, strSearchResult,
-          restoreToBaseBat, setupLocalTrunkBat, restoreAndToQF1bat, versionDot, dirForUpgradeFiles, qfFileName, dirForCopyQfFiles, qfServerPath;
+        string replaceFileLatestVersion, strFileProd, strFileHist, restoreToBaseBat, setupLocalTrunkBat,
+            restoreAndToQF1bat, dirForUpgradeFiles, qfFileName, dirForCopyQfFiles, qfServerPath;
         string myHostName = System.Net.Dns.GetHostName();
         string About = File.GetLastWriteTime(System.Reflection.Assembly.GetExecutingAssembly().Location).ToString("yyyy.MM.dd.HHmm");
 
@@ -131,8 +131,32 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
         {
             if (radioButtonUpgradeQFdb.Checked)
             {
-                startQfUpgrade();
-                //deleteFolderPath(textBoxQfPath.Text, @"CGM ANALYTIX Database*");
+                string path = @"\\profdoc.lab\dfs01\Utveckling\Delivery\" + getVersionDot() + @"\Arkiv\QF Database\";
+                //To check how many qf files there is
+                if (int.Parse(getVersionDot().Replace(".", "")) >= 510)
+                {
+                    if (countDirs(path, "*QF*") < int.Parse(textBoxTo.Text))
+                    {
+                        if (countDirs(path, "*QF*") != -1)
+                            MessageBox.Show("There are only " + countDirs(path, "*QF*") + " QF's available!");
+                        else
+                            MessageBox.Show("There are no QF's available for version " + getVersionDot());
+                    }
+                    else
+                        startQfUpgrade();
+                }
+                else
+                {
+                    if (countFiles(path, "*QF*") < int.Parse(textBoxTo.Text))
+                    {
+                        if (countFiles(path, "*QF*") != -1)
+                            MessageBox.Show("There are only " + countFiles(path, "*QF*") + " QF's available!");
+                        else
+                            MessageBox.Show("There are no QF's available for version " + getVersionDot());
+                    }
+                    else
+                        startQfUpgrade();
+                }
             }
 
             if (radioButtonRestoreToBase.Checked)
@@ -410,25 +434,17 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
         private void createFile(string filePath, string content)
         {
             if (textBoxVersion.Text.Contains("."))
-            {
                 replaceFileLatestVersion = textBoxVersion.Text.Replace(".", "") + "0";
-                versionDot = textBoxVersion.Text;
-            }
-            replaceFileLatestVersion = textBoxVersion.Text.Replace(".", "") + "0";
             if (textBoxVersion.Text.Contains(","))
-            {
                 replaceFileLatestVersion = textBoxVersion.Text.Replace(",", "") + "0";
-                versionDot = textBoxVersion.Text.Replace(",", ".");
-            }
 
 
             if (radioButtonUpgradeQFdb.Checked == true)
             {
-                int t = int.Parse(versionDot.Replace(".", ""));
-                if (t <= 59)
+                if (int.Parse(getVersionDot().Replace(".", "")) <= 59)
                 {
-                    dirForCopyQfFiles = @"\\profdoc.lab\dfs01\Utveckling\Delivery\" + versionDot + @"\Arkiv\QF Database\";
-                    string pattern = "CGM LAB ANALYTIX Database " + versionDot + " QF" + toQf.ToString() + "*";
+                    dirForCopyQfFiles = @"\\profdoc.lab\dfs01\Utveckling\Delivery\" + getVersionDot() + @"\Arkiv\QF Database\";
+                    string pattern = "CGM LAB ANALYTIX Database " + getVersionDot() + " QF" + toQf.ToString() + "*";
 
                     if (toQf == 1)
                     {
@@ -448,7 +464,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 }
                 else
                 {
-                    dirForCopyQfFiles = @"\\profdoc.lab\dfs01\Utveckling\Delivery\" + versionDot + @"\Arkiv\QF Database\QF" + toQf.ToString() + @"\";
+                    dirForCopyQfFiles = @"\\profdoc.lab\dfs01\Utveckling\Delivery\" + getVersionDot() + @"\Arkiv\QF Database\QF" + toQf.ToString() + @"\";
                     var directory = new DirectoryInfo(dirForCopyQfFiles);
                     var myFile = directory.GetFiles()
                    .OrderByDescending(f => f.LastWriteTime)
@@ -458,13 +474,10 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                     qfServerPath = "QF" + toQf.ToString();
                 }
 
-                //strSearch = @"*database*" + textBoxVersion.Text.Replace(",", ".") + @"*" + "qf" + @"*" + toQf.ToString() + @"*";
-                //strSearchResult = getSubFolderPath(textBoxQfPath.Text, strSearch);
-                //content = content.Replace("%QF_FILE_PATH%", strSearchResult);
                 content = content.Replace("%QF_FILE_PATH%", textBoxQfPath.Text + @"\" + dirForUpgradeFiles);
                 content = content.Replace("%TO%", toQf.ToString());
                 content = content.Replace("%FROM%", fromQf.ToString());
-                content = content.Replace("%VERSION_DOT%", versionDot);
+                content = content.Replace("%VERSION_DOT%", getVersionDot());
                 content = content.Replace("%QF_FILE_NAME%", qfFileName);
                 content = content.Replace("%QF_DIR_PATH%", textBoxQfPath.Text);
                 content = content.Replace("%QF_SERVER_PATH%", qfServerPath);
@@ -472,8 +485,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
 
             content = content.Replace("%DATABASE_P%", textBoxDatabaseP.Text);
             content = content.Replace("%DATABASE_H%", textBoxDatabaseH.Text);
-            //content = content.Replace("%VERSION%", textBoxVersion.Text.Replace(",", "."));
-            content = content.Replace("%VERSION%", versionDot);
+            content = content.Replace("%VERSION%", getVersionDot());
             if (checkBoxCopyFiles.Checked == true && checkBoxCopyFiles.Enabled == true)
                 content = content.Replace("%FILE_VERSION%", replaceFileLatestVersion);
             if (rbUpgradeFromPath.Checked == true)
@@ -1097,6 +1109,44 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 else
                     return true;
             }
+        }
+
+        private int countDirs(string path, string searchString)
+        {
+            try
+            {
+                string[] dirs = Directory.GetDirectories(path, searchString);
+                return dirs.Length;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("The process failed: {0}", e.ToString());
+            }
+            return -1;
+        }
+
+        private int countFiles(string path, string searchString)
+        {
+            try
+            {
+                string[] files = Directory.GetFiles(path, searchString);
+                return files.Length;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("The process failed: {0}", e.ToString());
+            }
+            return -1;
+        }
+
+        private string getVersionDot()
+        {
+            string strVersionDot = "";
+            if (textBoxVersion.Text.Contains("."))
+                strVersionDot = textBoxVersion.Text;
+            if (textBoxVersion.Text.Contains(","))
+                strVersionDot = textBoxVersion.Text.Replace(",", ".");
+            return strVersionDot;
         }
     }
 }

@@ -226,5 +226,29 @@ namespace DB_Updater {
                 this["checkBoxAutoSave"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string QFfrom {
+            get {
+                return ((string)(this["QFfrom"]));
+            }
+            set {
+                this["QFfrom"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string QFto {
+            get {
+                return ((string)(this["QFto"]));
+            }
+            set {
+                this["QFto"] = value;
+            }
+        }
     }
 }

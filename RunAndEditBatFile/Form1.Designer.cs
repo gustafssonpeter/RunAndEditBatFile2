@@ -452,9 +452,9 @@
             this.labelQfPath.AutoSize = true;
             this.labelQfPath.Location = new System.Drawing.Point(34, 207);
             this.labelQfPath.Name = "labelQfPath";
-            this.labelQfPath.Size = new System.Drawing.Size(87, 13);
+            this.labelQfPath.Size = new System.Drawing.Size(108, 13);
             this.labelQfPath.TabIndex = 29;
-            this.labelQfPath.Text = "Path to QF folder";
+            this.labelQfPath.Text = "Path to QF files folder";
             // 
             // checkBoxCopyFiles
             // 
@@ -588,7 +588,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(864, 457);
+            this.ClientSize = new System.Drawing.Size(864, 456);
             this.Controls.Add(this.checkBoxAutoSave);
             this.Controls.Add(this.checkBoxDeleteFolders);
             this.Controls.Add(this.buttonLoad);

@@ -69,7 +69,6 @@
             this.textBoxQfPath = new System.Windows.Forms.TextBox();
             this.buttonQfPath = new System.Windows.Forms.Button();
             this.labelQfPath = new System.Windows.Forms.Label();
-            this.checkBoxCopyFiles = new System.Windows.Forms.CheckBox();
             this.textBoxBackupClient = new System.Windows.Forms.TextBox();
             this.textBoxBackupDb = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -456,16 +455,6 @@
             this.labelQfPath.TabIndex = 29;
             this.labelQfPath.Text = "Path to QF files folder";
             // 
-            // checkBoxCopyFiles
-            // 
-            this.checkBoxCopyFiles.AutoSize = true;
-            this.checkBoxCopyFiles.Location = new System.Drawing.Point(406, 224);
-            this.checkBoxCopyFiles.Name = "checkBoxCopyFiles";
-            this.checkBoxCopyFiles.Size = new System.Drawing.Size(240, 17);
-            this.checkBoxCopyFiles.TabIndex = 30;
-            this.checkBoxCopyFiles.Text = "Copy Base restore files and Unzip.exe from Z:";
-            this.checkBoxCopyFiles.UseVisualStyleBackColor = true;
-            // 
             // textBoxBackupClient
             // 
             this.textBoxBackupClient.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
@@ -602,7 +591,6 @@
             this.Controls.Add(this.label8);
             this.Controls.Add(this.textBoxBackupDb);
             this.Controls.Add(this.textBoxBackupClient);
-            this.Controls.Add(this.checkBoxCopyFiles);
             this.Controls.Add(this.labelQfPath);
             this.Controls.Add(this.buttonQfPath);
             this.Controls.Add(this.textBoxQfPath);
@@ -688,7 +676,6 @@
         private System.Windows.Forms.TextBox textBoxQfPath;
         private System.Windows.Forms.Button buttonQfPath;
         private System.Windows.Forms.Label labelQfPath;
-        private System.Windows.Forms.CheckBox checkBoxCopyFiles;
         private System.Windows.Forms.TextBox textBoxBackupClient;
         private System.Windows.Forms.TextBox textBoxBackupDb;
         private System.Windows.Forms.Label label8;

@@ -236,7 +236,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             textBoxTo.Clear();
             //checkBoxCopyFiles.Checked = false;
             checkBoxRestoreDB.Checked = false;
-            checkBoxDeleteFolders.Checked = false;
+            //checkBoxDeleteFolders.Checked = false;
         }
 
         private void startQfUpgrade()
@@ -405,7 +405,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             {
                 String strDbFileName = "";
                 //Delete old db folders
-                if (checkBoxDeleteFolders.Checked == true)
+                //if (checkBoxDeleteFolders.Checked == true)
                     deleteFolderPath(@"c:\databaser", @"CGM ANALYTIX database*");
                 if (File.Exists(@"\\profdoc.lab\dfs01\System\Autobuild\dblatest.txt"))
                     strDbFileName = File.ReadAllText(@"\\profdoc.lab\dfs01\System\Autobuild\dblatest.txt");
@@ -740,7 +740,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             textBoxTo.Text = MySettings.Default.QFto;
             checkBoxRestoreDB.Checked = MySettings.Default.checkBoxRestoreDB;
             //checkBoxCopyFiles.Checked = MySettings.Default.checkBoxCopyFiles;
-            checkBoxDeleteFolders.Checked = MySettings.Default.checkBoxDeleteFolder;
+            //checkBoxDeleteFolders.Checked = MySettings.Default.checkBoxDeleteFolder;
             checkBoxAutoSave.Checked = MySettings.Default.checkBoxAutoSave;
 
             switch (MySettings.Default.rb)
@@ -789,10 +789,10 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             //    MySettings.Default.checkBoxCopyFiles = true;
             //if (checkBoxCopyFiles.Checked == false)
             //    MySettings.Default.checkBoxCopyFiles = false;
-            if (checkBoxDeleteFolders.Checked == true)
-                MySettings.Default.checkBoxDeleteFolder = true;
-            if (checkBoxDeleteFolders.Checked == false)
-                MySettings.Default.checkBoxDeleteFolder = false;
+            //if (checkBoxDeleteFolders.Checked == true)
+            //    MySettings.Default.checkBoxDeleteFolder = true;
+            //if (checkBoxDeleteFolders.Checked == false)
+            //    MySettings.Default.checkBoxDeleteFolder = false;
             if (checkBoxAutoSave.Checked == true)
                 MySettings.Default.checkBoxAutoSave = true;
             if (checkBoxAutoSave.Checked == false)
@@ -909,7 +909,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
                 button1.Text = "Upgrade to QF";
                 //checkBoxCopyFiles.Enabled = false;
             }
-            checkBoxDeleteFolders.Enabled = false;
+           // checkBoxDeleteFolders.Enabled = false;
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
@@ -951,7 +951,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             textBoxBackupPath.Enabled = false;
             textBoxBackupFile.Enabled = false;
             button1.Text = "Restore from base";
-            checkBoxDeleteFolders.Enabled = false;
+            //checkBoxDeleteFolders.Enabled = false;
         }
 
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
@@ -993,7 +993,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             textBoxBackupPath.Enabled = false;
             textBoxBackupFile.Enabled = false;
             button1.Text = "Restore/upgrade to TRUNK";
-            checkBoxDeleteFolders.Enabled = true;
+            //checkBoxDeleteFolders.Enabled = true;
         }
 
         private void radioButtonRestoreOtherFiles_CheckedChanged(object sender, EventArgs e)
@@ -1035,7 +1035,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             textBoxBackupPath.Enabled = false;
             textBoxBackupFile.Enabled = false;
             button1.Text = "Restore from files";
-            checkBoxDeleteFolders.Enabled = false;
+            //checkBoxDeleteFolders.Enabled = false;
         }
 
         private void rbUpgradeFromPath_CheckedChanged(object sender, EventArgs e)
@@ -1077,7 +1077,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             textBoxBackupPath.Enabled = false;
             textBoxBackupFile.Enabled = false;
             button1.Text = "Upgrade from path";
-            checkBoxDeleteFolders.Enabled = false;
+            //checkBoxDeleteFolders.Enabled = false;
         }
 
         private void rbBackupDb_CheckedChanged(object sender, EventArgs e)
@@ -1119,7 +1119,7 @@ sqlcmd -S %CLIENT% -d %DATABASE% -U SYSADM -P SYSADM -i DbBackup.sql -o ""c:\dat
             textBoxBackupPath.Enabled = true;
             textBoxBackupFile.Enabled = true;
             button1.Text = "Backup database";
-            checkBoxDeleteFolders.Enabled = false;
+            //checkBoxDeleteFolders.Enabled = false;
         }
 
         static public void startFile(string file)

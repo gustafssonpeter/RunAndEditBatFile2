@@ -80,7 +80,6 @@
             this.label11 = new System.Windows.Forms.Label();
             this.buttonSave = new System.Windows.Forms.Button();
             this.buttonLoad = new System.Windows.Forms.Button();
-            this.checkBoxDeleteFolders = new System.Windows.Forms.CheckBox();
             this.checkBoxAutoSave = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -553,16 +552,6 @@
             this.buttonLoad.UseVisualStyleBackColor = true;
             this.buttonLoad.Click += new System.EventHandler(this.buttonLoad_Click);
             // 
-            // checkBoxDeleteFolders
-            // 
-            this.checkBoxDeleteFolders.AutoSize = true;
-            this.checkBoxDeleteFolders.Location = new System.Drawing.Point(406, 248);
-            this.checkBoxDeleteFolders.Name = "checkBoxDeleteFolders";
-            this.checkBoxDeleteFolders.Size = new System.Drawing.Size(196, 17);
-            this.checkBoxDeleteFolders.TabIndex = 41;
-            this.checkBoxDeleteFolders.Text = "Delete old TRUNK database folders";
-            this.checkBoxDeleteFolders.UseVisualStyleBackColor = true;
-            // 
             // checkBoxAutoSave
             // 
             this.checkBoxAutoSave.AutoSize = true;
@@ -579,7 +568,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(864, 456);
             this.Controls.Add(this.checkBoxAutoSave);
-            this.Controls.Add(this.checkBoxDeleteFolders);
             this.Controls.Add(this.buttonLoad);
             this.Controls.Add(this.buttonSave);
             this.Controls.Add(this.label11);
@@ -688,7 +676,6 @@
         private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.Button buttonLoad;
         private System.Windows.Forms.RadioButton rbBackupDb;
-        private System.Windows.Forms.CheckBox checkBoxDeleteFolders;
         private System.Windows.Forms.CheckBox checkBoxAutoSave;
     }
 }

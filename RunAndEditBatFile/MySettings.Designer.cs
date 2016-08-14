@@ -181,18 +181,6 @@ namespace DB_Updater {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool checkBoxCopyFiles {
-            get {
-                return ((bool)(this["checkBoxCopyFiles"]));
-            }
-            set {
-                this["checkBoxCopyFiles"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool checkBoxRestoreDB {
             get {
@@ -200,18 +188,6 @@ namespace DB_Updater {
             }
             set {
                 this["checkBoxRestoreDB"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool checkBoxDeleteFolder {
-            get {
-                return ((bool)(this["checkBoxDeleteFolder"]));
-            }
-            set {
-                this["checkBoxDeleteFolder"] = value;
             }
         }
         
